@@ -1,30 +1,108 @@
 ::: {.hidden}
+<!-- ====================================
+     Vectors (bolds)
+     ====================================
+-->
 $$
 \newcommand{\vect}[1]{\boldsymbol{#1}}
 \newcommand{\x}{\vect{x}}
-\newcommand{\p}{\vect{p}}
+\newcommand{\y}{\vect{y}}
+\newcommand{\z}{\vect{z}}
+\newcommand{\e}{\vect{e}}
+\newcommand{\f}{\vect{f}}
 \newcommand{\g}{\vect{g}}
+\newcommand{\G}{\vect{G}}
+\newcommand{\h}{\vect{h}}
+\newcommand{\J}{\vect{J}}
+\newcommand{\n}{\vect{n}}
+\newcommand{\p}{\vect{p}}
 \newcommand{\q}{\vect{q}}
+\newcommand{\s}{\vect{s}}
+\newcommand{\w}{\vect{w}}
+\newcommand{\m}{\vect{m}}
+\renewcommand{\a}{\vect{a}}
+\renewcommand{\b}{\vect{b}}
+\renewcommand{\c}{\vect{c}}
+\renewcommand{\d}{\vect{d}}
+\renewcommand{\r}{\vect{r}}
+\renewcommand{\u}{\vect{u}}
+\renewcommand{\v}{\vect{v}} % Problems?
 \newcommand{\vv}{\vect{v}}
-\newcommand{\R}{\mathbb{R}}
+\newcommand{\rr}{\vect{r}}
+\newcommand{\bv}{\vect{v}}
+$$
+<!-- Special for i, j, k -->
+$$
+\newcommand{\vi}{\vect{i}}
+\newcommand{\vj}{\vect{j}}
+\newcommand{\vk}{\vect{k}}
+$$
+<!-- Bold for greek letters -->
+$$
+\newcommand{\bomega}{\vect{\omega}}
+\newcommand{\bphi}{\vect{\phi}}
+\newcommand{\bepsilon}{\vect{\epsilon}}
+\newcommand{\btheta}{\vect{\theta}}
+\newcommand{\btau}{\vect{\tau}}
+\newcommand{\bmu}{\vect{\mu}}
+\newcommand{\bvarphi}{\vect{\varphi}}
+\newcommand{\bxi}{\vect{\xi}}
+$$
+<!-- Bold for numbers -->
+$$
+\newcommand{\zeros}{\vect{0}}
+$$
+<!-- Bold with derivatives -->
+$$
+\newcommand{\dq}{\dot {\vect{q}}}
+\newcommand{\ddq}{\ddot {\vect{q}}}
+\newcommand{\dx}{\dot {\vect{x}}}
+\newcommand{\ddx}{\ddot {\vect{x}}}
+$$
+<!-- Jacobians -->
+$$
+\newcommand{\Ja}{{J_{_{\!A}}}}
 $$
 
-<!-- 
-% ====================================
-% Reference frames (systems)
-% ====================================
-% For letters 
+<!-- ====================================
+     Fractions
+     ==================================== 
+-->
+$$
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\quarter}{\frac{1}{4}}
+$$
+
+<!-- ====================================
+     Matrices
+     ====================================
+-->
+$$
+\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\Rot}{\mat{R}}
+\newcommand{\Tran}{\mat{T}}
+\newcommand{\tr}{\text{tr}}  % For trace
+$$
+
+<!-- ====================================
+     Other special rules
+     ====================================
+-->
+$$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dt}{\Delta t}
+$$
+<!-- ===================================
+     Reference frames (systems)
+     ====================================
 -->
 $$
 \renewcommand{\frame}[1]{\{\mathcal{#1}\}}
 $$
 
-<!-- 
-% ====================================
-% Matrices
-% ==================================== 
--->
-$$
-\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
-$$
+
+
+
+
 :::
