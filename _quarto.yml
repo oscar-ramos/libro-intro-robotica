@@ -1,9 +1,9 @@
 project:
   type: book
   output-dir: _book
-  preview:
-    port: 4200
-    browser: false
+  # preview:
+  #   port: 4200
+  #   browser: false
 
 language: _lang_es.yml
 
@@ -39,5 +39,5 @@ format:
       - _bookstyle.scss
     code-link: true
     author-meta: "Oscar E. Ramos Ponce"
-  pdf:
-    documentclass: scrreprt
+  # pdf:
+  #   documentclass: scrreprt
