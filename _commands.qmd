@@ -7,16 +7,24 @@ $$
 \newcommand{\q}{\vect{q}}
 \newcommand{\vv}{\vect{v}}
 \newcommand{\R}{\mathbb{R}}
+$$
 
+<!-- 
 % ====================================
 % Reference frames (systems)
 % ====================================
-% For letters
+% For letters 
+-->
+$$
 \renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+$$
 
+<!-- 
 % ====================================
 % Matrices
-% ====================================
+% ==================================== 
+-->
+$$
 \newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
 $$
 :::
