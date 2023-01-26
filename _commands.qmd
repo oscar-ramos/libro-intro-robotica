@@ -1,0 +1,22 @@
+::: {.hidden}
+$$
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\x}{\vect{x}}
+\newcommand{\p}{\vect{p}}
+\newcommand{\g}{\vect{g}}
+\newcommand{\q}{\vect{q}}
+\newcommand{\vv}{\vect{v}}
+\newcommand{\R}{\mathbb{R}}
+
+% ====================================
+% Reference frames (systems)
+% ====================================
+% For letters
+\renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+
+% ====================================
+% Matrices
+% ====================================
+\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
+$$
+:::

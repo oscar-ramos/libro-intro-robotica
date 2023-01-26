@@ -1,0 +1,40 @@
+project:
+  type: book
+  output-dir: _book
+  preview:
+    port: 4200
+    browser: false
+
+language: _lang_es.yml
+
+book:
+  title: "Introducción a la Robótica"
+  # author: "Oscar E. Ramos Ponce"
+  # date: "1/25/2023"
+
+  reader-mode: true
+
+  page-footer:
+    left: |
+      Copyright 2023, Oscar E. Ramos. Todos los derechos reservados.
+    right: |
+      Introducción a la Robótica - Oscar E. Ramos
+  
+  site-url: index.qmd
+
+  chapters:
+    - index.qmd
+    - conceptos_introductorios.qmd
+    - referencias.qmd
+
+bibliography: referencias.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - _bookstyle.scss
+    code-link: true
+    author-meta: "Oscar E. Ramos Ponce"
+  pdf:
+    documentclass: scrreprt

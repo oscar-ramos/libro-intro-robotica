@@ -1,0 +1,13 @@
+# Prefacio {.unnumbered}
+
+Esta es la página web del libro en progreso *"Introducción a la Robótica"* escrito por [*Oscar E. Ramos Ponce*](https://profesores.utec.edu.pe/oramos), quien es Profesor Investigador de Ingeniería Mecatrónica en la Universidad de Ingeniería y Tecnología - UTEC, en Lima, Perú. El libro presenta conceptos básicos utilizados en el diseño, análisis y control de robots manipuladores y robots móviles, desde un punto de vista analítico y con ejemplos desarrollados paso a paso y, en algunos casos, con ayuda de Python. 
+
+La versión online de este libro está siendo continuamente actualizada. De encontrar algún error, por favor reportarlo [aquí](mailto:oramos@utec.edu.pe). 
+
+Este sitio web es libre y se encuentra licenciado por la Licencia [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). 
+
+Este libro fue creado usando <a href="https://quarto.org/">Quarto</a>.
+
+
+<!-- ## Agradecimientos {.unnumbered}
+ -->
