@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Oscar E. Ramos Ponce">
+
+<title>Introducción a la Robótica - 1&nbsp; Conceptos Introductorios</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./referencias.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a la Robótica</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conceptos_introductorios.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#sec-cuerpo-rigido" id="toc-sec-cuerpo-rigido" class="nav-link active" data-scroll-target="#sec-cuerpo-rigido"><span class="toc-section-number">1.1</span>  Cuerpo Rígido</a>
+  <ul class="collapse">
+  <li><a href="#sec-definiciones-cuerpo-rigido" id="toc-sec-definiciones-cuerpo-rigido" class="nav-link" data-scroll-target="#sec-definiciones-cuerpo-rigido"><span class="toc-section-number">1.1.1</span>  Definiciones</a></li>
+  <li><a href="#sec-gdl-cuerpo-rigido" id="toc-sec-gdl-cuerpo-rigido" class="nav-link" data-scroll-target="#sec-gdl-cuerpo-rigido"><span class="toc-section-number">1.1.2</span>  Grados de Libertad de un Cuerpo Rígido</a></li>
+  <li><a href="#sec-mecanismos" id="toc-sec-mecanismos" class="nav-link" data-scroll-target="#sec-mecanismos"><span class="toc-section-number">1.1.3</span>  Mecanismos</a></li>
+  </ul></li>
+  <li><a href="#sec-caracterizacion-robot" id="toc-sec-caracterizacion-robot" class="nav-link" data-scroll-target="#sec-caracterizacion-robot"><span class="toc-section-number">1.2</span>  Caracterización de un Robot</a>
+  <ul class="collapse">
+  <li><a href="#sec-partes-robot" id="toc-sec-partes-robot" class="nav-link" data-scroll-target="#sec-partes-robot"><span class="toc-section-number">1.2.1</span>  Partes de un Robot</a></li>
+  <li><a href="#sec-modelamiento-robot" id="toc-sec-modelamiento-robot" class="nav-link" data-scroll-target="#sec-modelamiento-robot"><span class="toc-section-number">1.2.2</span>  Modelamiento Mecánico de un Robot</a></li>
+  <li><a href="#sec-articulaciones" id="toc-sec-articulaciones" class="nav-link" data-scroll-target="#sec-articulaciones"><span class="toc-section-number">1.2.3</span>  Articulaciones</a></li>
+  <li><a href="#sec-configuracion-gdl-robot" id="toc-sec-configuracion-gdl-robot" class="nav-link" data-scroll-target="#sec-configuracion-gdl-robot"><span class="toc-section-number">1.2.4</span>  Configuración y Grados de Libertad de un Robot</a></li>
+  </ul></li>
+  <li><a href="#sec-formula-grubler" id="toc-sec-formula-grubler" class="nav-link" data-scroll-target="#sec-formula-grubler"><span class="toc-section-number">1.3</span>  Fórmula de Grübler</a></li>
+  <li><a href="#sec-espacio-configuracion" id="toc-sec-espacio-configuracion" class="nav-link" data-scroll-target="#sec-espacio-configuracion"><span class="toc-section-number">1.4</span>  Espacio de Configuración</a>
+  <ul class="collapse">
+  <li><a href="#sec-topologia" id="toc-sec-topologia" class="nav-link" data-scroll-target="#sec-topologia"><span class="toc-section-number">1.4.1</span>  Topología del Espacio de Configuración</a></li>
+  <li><a href="#espacio-articular" id="toc-espacio-articular" class="nav-link" data-scroll-target="#espacio-articular"><span class="toc-section-number">1.4.2</span>  Espacio Articular</a></li>
+  <li><a href="#sec-representacion-configuracion" id="toc-sec-representacion-configuracion" class="nav-link" data-scroll-target="#sec-representacion-configuracion"><span class="toc-section-number">1.4.3</span>  Representación del Espacio de Configuración</a></li>
+  </ul></li>
+  <li><a href="#espacio-operacional" id="toc-espacio-operacional" class="nav-link" data-scroll-target="#espacio-operacional"><span class="toc-section-number">1.5</span>  Espacio Operacional</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="chap-conceptos-introductorios" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="hidden">
+<!-- ====================================
+     Vectors (bolds)
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\x}{\vect{x}}
+\newcommand{\y}{\vect{y}}
+\newcommand{\z}{\vect{z}}
+\newcommand{\e}{\vect{e}}
+\newcommand{\f}{\vect{f}}
+\newcommand{\g}{\vect{g}}
+\newcommand{\G}{\vect{G}}
+\newcommand{\h}{\vect{h}}
+\newcommand{\J}{\vect{J}}
+\newcommand{\n}{\vect{n}}
+\newcommand{\p}{\vect{p}}
+\newcommand{\q}{\vect{q}}
+\newcommand{\s}{\vect{s}}
+\newcommand{\w}{\vect{w}}
+\newcommand{\m}{\vect{m}}
+\renewcommand{\a}{\vect{a}}
+\renewcommand{\b}{\vect{b}}
+\renewcommand{\c}{\vect{c}}
+\renewcommand{\d}{\vect{d}}
+\renewcommand{\r}{\vect{r}}
+\renewcommand{\u}{\vect{u}}
+\renewcommand{\v}{\vect{v}} % Problems?
+\newcommand{\vv}{\vect{v}}
+\newcommand{\rr}{\vect{r}}
+\newcommand{\bv}{\vect{v}}
+\]</span> <!-- Special for i, j, k --> <span class="math display">\[
+\newcommand{\vi}{\vect{i}}
+\newcommand{\vj}{\vect{j}}
+\newcommand{\vk}{\vect{k}}
+\]</span> <!-- Bold for greek letters --> <span class="math display">\[
+\newcommand{\bomega}{\vect{\omega}}
+\newcommand{\bphi}{\vect{\phi}}
+\newcommand{\bepsilon}{\vect{\epsilon}}
+\newcommand{\btheta}{\vect{\theta}}
+\newcommand{\btau}{\vect{\tau}}
+\newcommand{\bmu}{\vect{\mu}}
+\newcommand{\bvarphi}{\vect{\varphi}}
+\newcommand{\bxi}{\vect{\xi}}
+\]</span> <!-- Bold for numbers --> <span class="math display">\[
+\newcommand{\zeros}{\vect{0}}
+\]</span> <!-- Bold with derivatives --> <span class="math display">\[
+\newcommand{\dq}{\dot {\vect{q}}}
+\newcommand{\ddq}{\ddot {\vect{q}}}
+\newcommand{\dx}{\dot {\vect{x}}}
+\newcommand{\ddx}{\ddot {\vect{x}}}
+\]</span> <!-- Jacobians --> <span class="math display">\[
+\newcommand{\Ja}{{J_{_{\!A}}}}
+\]</span></p>
+<!-- ====================================
+     Fractions
+     ==================================== 
+-->
+<p><span class="math display">\[
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\quarter}{\frac{1}{4}}
+\]</span></p>
+<!-- ====================================
+     Matrices
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\Rot}{\mat{R}}
+\newcommand{\Tran}{\mat{T}}
+\newcommand{\tr}{\text{tr}}  % For trace
+\]</span></p>
+<!-- ====================================
+     Other special rules
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dt}{\Delta t}
+\]</span> <!-- ===================================
+     Reference frames (systems)
+     ====================================
+--> <span class="math display">\[
+\renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+\]</span></p>
+</div>
+<p>Un robot es un sistema complejo formado por diversos componentes mecánicos y electrónicos, así como por componentes computacionales, y su modelamiento completo implica el modelo de todos estos componentes físicos. Sin embargo, con fines de generación de movimiento, un robot suele ser modelado como un conjunto de cuerpos rígidos unidos mediante articulaciones. Este capítulo presenta algunos conceptos elementales relacionados tanto con los cuerpos rígidos que lo conforman, como con las articulaciones que unen dichos cuerpos rígidos. Se presenta, además, algunos conceptos relacionados con los grados de libertad de un robot, y los espacios que se utiliza para describir la configuración y las tareas que realiza un robot.</p>
+<section id="sec-cuerpo-rigido" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-cuerpo-rigido"><span class="header-section-number">1.1</span> Cuerpo Rígido</h2>
+<p>Una de las características principales de un robot es el poseer partes que pueden realizar diversos tipos de movimientos. Por ejemplo, la garra de un robot manipulador puede desplazarse hacia arriba o hacia abajo a través del movimiento coordinado de las partes que conforman la estructura del manipulador, llamadas eslabones. De igual manera, un robot cuadrúpedo puede desplazarse de un punto a otro a través del movimiento de sus patas, las cuales son parte de su estructura. En robótica, cada una de estas partes en movimiento es usualmente rígida y se modela como un cuerpo rígido (la excepción son los llamados robots blandos, o en inglés <em>soft robots</em>, cuyas partes son deformables). En esta sección se introducirá conceptos básicos relacionados con cuerpos rígidos.</p>
+<section id="sec-definiciones-cuerpo-rigido" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="sec-definiciones-cuerpo-rigido"><span class="header-section-number">1.1.1</span> Definiciones</h3>
+<dl>
+<dt><strong>Cuerpo Rígido</strong></dt>
+<dd>
+Un cuerpo rígido es una colección de partículas con la propiedad que la distancia relativa entre todas las partículas permanece siempre constante. Esto es, si se tiene dos puntos cualesquiera en un cuerpo rígido, representados por los vectores posición <span class="math inline">\(\p_i\)</span> y <span class="math inline">\(\p_j\)</span> como se muestra en la <a href="#fig-cuerpo-rigido">Figura&nbsp;<span>1.1</span></a>, estos deben satisfacer la siguiente relación: <span class="math display">\[
+  \Vert \p_i(0) - \p_j(0) \Vert = \Vert \p_i(t) - \p_j(t) \Vert
+\]</span> donde <span class="math inline">\(t\)</span> indica un tiempo arbitrario y <span class="math inline">\(\Vert . \Vert\)</span> representa la norma <span class="math inline">\(L\)</span>-2 de un vector. Así, sea cual fuere el movimiento del cuerpo rígido, la distancia entre los puntos de este cuerpo permanece fija todo el tiempo.
+</dd>
+</dl>
+<div id="fig-cuerpo-rigido" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/cuerpo-rigido.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.1: La distancia entre dos puntos de un cuerpo rígido es constante. En el tiempo <span class="math inline">\(t=0\)</span> (izquierda) la distancia es <span class="math inline">\(d\)</span>, y en un tiempo arbitrario <span class="math inline">\(t\)</span> (derecha), la distancia no varía, sigue siendo <span class="math inline">\(d\)</span>.</figcaption><p></p>
+</figure>
+</div>
+<dl>
+<dt><strong>Movimiento Rígido</strong></dt>
+<dd>
+Sea un objeto descrito como un subconjunto <span class="math inline">\(\mathcal{O} \subset \R^3\)</span> del espacio tridimensional. Un movimiento rígido del objeto <span class="math inline">\(\mathcal O\)</span> es un movimiento continuo durante el cual <span class="math inline">\(\mathcal O\)</span> se comporta como un cuerpo rígido; es decir, la distancia entre dos partículas cualesquiera del objeto permanece constante durante todo el movimiento. Matemáticamente, un movimiento rígido puede ser representado por una familia continua de mapas <span class="math inline">\(\g(t)\)</span> que describen cómo se mueve el objeto en el espacio: <span class="math display">\[
+  \g(t):\mathcal{O} \rightarrow \R^3.
+\]</span> Si el objeto se mueve a lo largo de una trayectoria continua, <span class="math inline">\(\g(t)\)</span> mapea las coordenadas iniciales de un punto en el cuerpo a las coordenadas del mismo punto en el cuerpo pero en un tiempo <span class="math inline">\(t\)</span> posterior.
+</dd>
+<dt><strong>Desplazamiento Rígido</strong></dt>
+<dd>
+Un desplazamiento rígido de un objeto <span class="math inline">\(\mathcal O\)</span> es el cambio de una locación inicial a una locación final de dicho objeto mediante un movimiento rígido. En términos matemáticos, un desplazamiento rígido mapea los puntos de un cuerpo rígido de su configuración inicial a su configuración final mediante un único mapa <span class="math inline">\(g\)</span>, donde <span class="math display">\[
+  \g:\mathcal{O} \rightarrow \R^3.
+\]</span> Dado un vector libre <span class="math inline">\(\vv=\p_i-\p_j\)</span> con <span class="math inline">\(\p_i,\p_j \in \R^3\)</span>, el efecto de un desplazamiento rígido en el vector <span class="math inline">\(\vv\)</span> se representa por el mapa <span class="math inline">\(\overline{\g}\)</span> tal que <span class="math display">\[
+  \overline{\g}(\vv)=\g(\p_i)-\g(\p_j).
+\]</span> Resulta común denominar <span class="math inline">\(\overline{\g}\)</span> al mapa que actúa sobre vectores y <span class="math inline">\(\g\)</span> al mapa correspondiente que actúa sobre puntos. En general, un desplazamiento rígido está compuesto por rotaciones y traslaciones de un objeto rígido, como se verá más adelante, en el capítulo~<span class="math inline">\(\ref{ch:representaciones-cuerpos-rigidos}\)</span>.
+</dd>
+<dt><strong>Cuerpo Rígido Espacial y Planar</strong></dt>
+<dd>
+Según el entorno donde se realiza el movimiento, es conveniente distinguir entre los siguientes dos tipos de cuerpos rígidos.
+</dd>
+</dl>
+<ul>
+<li><em>Cuerpo rígido espacial.</em> Es un cuerpo rígido cuyo movimiento se realiza en el espacio de 3 dimensiones. Un ejemplo es la estructura mecánica de un robot móvil aéreo, tal como un quadcópter.</li>
+<li><em>Cuerpo rígido planar.</em> Es un cuerpo rígido cuyo movimiento está restringido a un plano bidimensional. Un ejemplo es el chasis de un robot móvil terrestre con ruedas que se desplaza sobre una superficie horizontal lisa.</li>
+</ul>
+<dl>
+<dt><strong>Configuración de un Cuerpo Rígido</strong></dt>
+<dd>
+De manera general, una configuración es un conjunto de parámetros que permiten determinar dónde se encuentra un cuerpo rígido. Dado que un cuerpo rígido está compuesto por un conjunto de puntos o partículas, la configuración es la especificación de la posición de cada uno de estos puntos. De manera equivalente, si se considera al cuerpo rígido como un todo, su configuración está dada por los parámetros que representan su posición y orientación, siempre que la forma del cuerpo rígido sea conocida (la forma es necesaria para conocer dónde se encuentran todos los puntos que lo conforman).
+</dd>
+</dl>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-configuracion-cuerpo-rigido" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.1 (Representación de la configuración) </strong></span>Determinar cómo se representa la configuración de: a) una puerta cuyo movimiento está restringido por una bisagra, b) un punto en un plano, c) un cuerpo rígido en un plano.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>La configuración de una puerta con la restricción indicada queda completamente descrita por el ángulo de giro <span class="math inline">\(\theta\)</span> alrededor del eje de la bisagra, como se muestra en la <a href="#fig-bisagra">Figura&nbsp;<span>1.2 (a)</span></a>. Es decir, asumiendo que se conoce la forma de la puerta, si se conoce <span class="math inline">\(\theta\)</span> se sabrá con exactitud dónde se encuentra la puerta.</p></li>
+<li><p>Los parámetros que representan la configuración de un punto en el plano son sus dos coordenadas cartesianas <span class="math inline">\((x,y)\)</span>, como se esquematiza en la <a href="#fig-punto-xy-config">Figura&nbsp;<span>1.2 (b)</span></a>. De manera alternativa, pero equivalente, se puede utilizar las coordenadas polares <span class="math inline">\((\theta, \rho)\)</span> para representar la configuración.</p></li>
+<li><p>Para el caso de un cuerpo rígido en el plano, como se muestra en la <a href="#fig-cuerpo-plano-config">Figura&nbsp;<span>1.2 (c)</span></a>, su configuración necesita la especificación de su posición <span class="math inline">\((x,y)\)</span>, así como la especificación de su orientación <span class="math inline">\(\theta\)</span>. En este caso se requiere tres parámetros.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="fig-ejemplo-configuracion" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-bisagra" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/bisagra.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplo-configuracion"></p>
+<p></p><figcaption class="figure-caption">(a) Bisagra</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-punto-xy-config" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/punto-xy.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplo-configuracion"></p>
+<p></p><figcaption class="figure-caption">(b) Punto en un plano</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-cuerpo-plano-config" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/cuerpo-plano.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplo-configuracion"></p>
+<p></p><figcaption class="figure-caption">(c) Cuerpo rígido planar</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.2: Ejemplos de parámetros utilizados para representar la configuración de diversos elementos. Para una bisagra, la configuración es el ángulo <span class="math inline">\(\theta\)</span>, para un punto en el plano es su coordenada <span class="math inline">\((x,y)\)</span>, y para un cuerpo rígido en el plano es su posición <span class="math inline">\((x,y)\)</span> y su orientación <span class="math inline">\(\theta\)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="sec-gdl-cuerpo-rigido" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="sec-gdl-cuerpo-rigido"><span class="header-section-number">1.1.2</span> Grados de Libertad de un Cuerpo Rígido</h3>
+<p>La configuración de un cuerpo rígido está representada por un conjunto de parámetros. Se denomina <em>grado de libertad</em> (<em>gdl</em>) de un cuerpo rígido al mínimo número de parámetros necesarios para representar la configuración del cuerpo rígido. De manera equivalente, se puede decir que el grado de libertad es el número de parámetros independientes que se requiere para representar la configuración de un cuerpo rígido. Por ejemplo, un cuerpo rígido en el plano tiene tres grados de libertad, ya que para especificar dónde se encuentra el cuerpo se requiere por lo menos tres elementos: dos para su posición (<span class="math inline">\(x,y\)</span>), y uno para su orientación (<span class="math inline">\(\theta\)</span>). Por otro lado, un cuerpo rígido en el espacio tiene seis grados de libertad ya que se requiere tres parámetros para representar su posición, y tres parámetros para representar su orientación.</p>
+<p>Es importante tener en cuenta que cuando el movimiento de un cuerpo rígido se encuentra restringido, sus grados de libertad disminuyen; es decir, se requiere menos parámetros para saber dónde se encuentra el cuerpo debido a la restricción. Debido a esto, se debe considerar que el número de grados de libertad no es necesariamente igual a la dimensión del espacio en el cual se encuentra el cuerpo rígido. Por ejemplo, la configuración de un punto sobre una esfera tridimensional tiene solamente 2 grados de libertad ya que, a pesar de que se podrían utilizar 3 coordenadas para su representación, solo dos (correspondientes a la latitud y a la longitud) son necesarias, pues la forma de la esfera restringe el movimiento. Por esta consideración, los grados de libertad también indican la cantidad de movimientos independientes que tiene un cuerpo rígido.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-gdl-cuerpo-rigido" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.2 (Grados de libertad) </strong></span>Determinar cuántos grados de libertad tiene cada uno de los casos del <a href="#exm-configuracion-cuerpo-rigido">Ejemplo&nbsp;<span>1.1</span></a>.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>Si bien la puerta con una bisagra es un cuerpo rígido, su movimiento se encuentra restringido por la bisagra, y por tanto no tiene los 6 grados de libertad de un cuerpo rígido en el espacio. Por el contrario, la bisagra impone ciertas restricciones de tal modo que el sistema solo tiene un grado de libertad dado por su ángulo de giro.</p></li>
+<li><p>A pesar de que la definición anterior solo abarca a cuerpos rígidos, también puede extenderse a otros elementos como un punto. Así, dado que la configuración de un punto en el plano requiere dos parámetros, independientemente del conjunto de coordenadas que se utilice, el número de grados de libertad que presenta es dos.</p></li>
+<li><p>Debido a que la configuración de un cuerpo rígido en el plano requiere tres parámetros como mínimo, el número de grados de libertad que este cuerpo tiene es tres.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-mecanismos" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="sec-mecanismos"><span class="header-section-number">1.1.3</span> Mecanismos</h3>
+<p>Los cuerpos rígidos son importantes debido a que cuando se encuentran unidos a través de articulaciones permiten el movimiento estructurado de cada una de sus partes y así dan lugar a los mecanismos. Un <em>mecanismo</em> es un sistema mecánico que realiza cierto movimiento y está compuesto por dos elementos principales: cuerpos rígidos y articulaciones que los enlazan. Los cuerpos rígidos que conforman un mecanismo son usualmente llamados eslabones (<em>links</em>, en inglés), y las articulaciones (<em>joints</em>, en inglés) también son denominadas <em>ejes</em>, <em>junturas</em>, o <em>juntas</em>. Desde un punto de vista puramente mecánico, un robot es un ejemplo de mecanismo.</p>
+<div id="fig-ejemplos-mecanismos" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-cadena-abierta" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/cadena-abierta.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-mecanismos"></p>
+<p></p><figcaption class="figure-caption">(a) Cadena abierta</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-4bar-linkage" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/4-bar-linkage.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-mecanismos"></p>
+<p></p><figcaption class="figure-caption">(b) Mecanismo de 4 barras</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-robot-paralelo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/robot-paralelo.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-mecanismos"></p>
+<p></p><figcaption class="figure-caption">(c) Robot paralelo</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<!-- De: https://www.intechopen.com/books/parallel_manipulators_towards_new_applications/a_novel_4-dof_parallel_manipulator_h4
+A Novel 4-DOF Parallel Manipulator H4 By Jinbo Wu and Zhouping Yin, 2008 -->
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.3: Ejemplos de mecanismos de cadena cinemática abierta y de cadena cinemática cerrada.</figcaption><p></p>
+</figure>
+</div>
+<dl>
+<dt><strong>Cadena Cinemática</strong></dt>
+<dd>
+A una secuencia de eslabones y articulaciones, en algún orden, se le denomina <em>cadena cinemática</em>; por tanto, los mecanismos están formados por cadenas cinemáticas. Para un eslabón de una cadena cinemática, se define su <em>grado de conexión</em> (<span class="math inline">\(gdc\)</span>) como el número de eslabones a los cuales se encuentra conectado mediante articulaciones. Por ejemplo, si un eslabón tiene en ambos extremos una articulación, y cada una de estas articulaciones está a su vez conectada a otro eslabón, se dice que su grado de conexión es dos, ya que está conectado a dos eslabones.
+</dd>
+<dt><strong>Clasificación de Mecanismos</strong></dt>
+<dd>
+Según la estructura que presentan las cadenas cinemáticas, los mecanismos se pueden clasificar de la siguiente manera.
+</dd>
+</dl>
+<ol type="1">
+<li><p><em>Mecanismos de cadena abierta</em>. Un mecanismo se denomina de cadena cinemática abierta cuando existe una sola secuencia de eslabones que conecta ambos extremos de la cadena. Esto significa que cada par de eslabones está conectado por una sola articulación, y la estructura de la cadena cinemática es una secuencia compuesta por eslabón - articulación - eslabón - articulación, etc.</p>
+<p>De manera más formal, se dice que en una cadena cinemática abierta cada eslabón tiene un grado de conexión 2, excepto los eslabones de los extremos, llamados eslabón de base y eslabón final, los cuales tienen un grado de conexión 1. Los eslabones con <span class="math inline">\(gdc=2\)</span> se denominan eslabones internos y se conectan, mediante las respectivas articulaciones, al eslabón anterior y al eslabón siguiente. El eslabón de base solo se conecta a un eslabón interno ya que por el otro lado se encuentra fijo en un soporte, y el eslabón final tiene uno de sus extremos libres.</p>
+<p>Los robots que tienen cadena abierta se denominan robots seriales, y su estructura se esquematiza en la <a href="#fig-cadena-abierta">Figura&nbsp;<span>1.3 (a)</span></a>.</p></li>
+<li><p><em>Mecanismos de cadena cerrada</em>. Un mecanismo se dice que es de cadena cinemática cerrada cuando presenta bucles en su estructura; es decir, si se comienza en un eslabón y se sigue parte de la cadena cinemática en una sola dirección, existe por lo menos una manera diferente de regresar al mismo eslabón de partida. Como consecuencia, existe más de una secuencia de eslabones que conecta a ambos extremos de la cadena.</p>
+<p>Las cadenas cinemáticas cerradas se pueden clasificar, a su vez, como cadenas cerradas <em>simples</em> y cadenas cerradas <em>complejas</em>. En el caso de las cadenas simples, todos los eslabones tienen grado de conexión 2, y por tanto solo existe un bucle en la estructura. Un ejemplo es el denominado mecanismo de cuatro barras, mostrado en la <a href="#fig-4bar-linkage">Figura&nbsp;<span>1.3 (b)</span></a>. Por otro lado, en las cadenas cerradas complejas al menos un eslabón (diferente del eslabón de la base) tiene <span class="math inline">\(gdc  \geq 3\)</span>, lo cual implica que existen tres o más cadenas cinemáticas que unen la base con el eslabón final.</p>
+<p>Los robots que presentan una cadena cinemática cerrada compleja se denominan robots paralelos. Un ejemplo de este tipo de robots se muestra en la <a href="#fig-robot-paralelo">Figura&nbsp;<span>1.3 (c)</span></a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="sec-caracterizacion-robot" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-caracterizacion-robot"><span class="header-section-number">1.2</span> Caracterización de un Robot</h2>
+<p>No existe una definición universalmente aceptada de lo que es un robot, y, más aún, las definiciones han variado con el tiempo, dado que los robots y sus capacidades también se han incrementado con el tiempo. De manera informal, se puede definir un robot como un mecanismo reprogramable que, con base en diversas mediciones obtenidas mediante de sus sensores, interactúa a través de acciones independientes e inteligentes con su entorno, realizando una variedad de tareas. El hecho de ser reprogramable lo diferencia de otros mecanismos creados para alguna actividad específica, y lo hacen versátil: un robot puede cambiar de tarea según sea necesario. Estas tareas para un robot manipulador consisten en agarrar objetos y trasladarlos entre dos puntos, realizar pintura, soldadura, etc., y en robots móviles consisten en desplazarse de un lugar a otro realizando exploración, búsqueda, etc. Idealmente, las acciones de un robot deben ser inteligentes o, mejor dicho, autónomas, de tal modo que el usuario solamente brinda tareas de alto nivel y el robot se encarga de todos los detalles del bajo nivel. Esta autonomía tiene como base el procesamiento de la información proporcionada por los sensores del robot acerca de su entorno. Por ejemplo, uno solo comanda a un robot a traer un objeto, y el robot autónomamente busca el objeto, lo identifica y lo trae, sin que uno mencione explícitamente dónde se encuentra el objeto, cómo agarrarlo, qué velocidades aplicar a los motores, entre otros detalles.</p>
+<p>Para poder lograr toda esta sinergia, un robot está constituido por diversas partes mecánicas, electrónicas y computacionales. Esta sección introduce de forma general las partes que constituyen un robot, así como algunos conceptos mecánicos aplicados a la robótica.</p>
+<section id="sec-partes-robot" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="sec-partes-robot"><span class="header-section-number">1.2.1</span> Partes de un Robot</h3>
+<p>El funcionamiento de un robot normalmente tiene como entrada la especificación de una o más tareas por parte de un usuario. Estas tareas pueden tener distintos niveles de complejidad, siendo por ejemplo referencias específicas para los motores, o tareas de más alto nivel como traer un objeto. Para poder satisfacer estas instrucciones, el robot ejecuta ciertas acciones sobre su entorno, las cuales normalmente implican algún tipo de movimiento, como mover el efector final para agarrar un objeto, o desplazarse de un lugar a otro. Tanto las instrucciones como las acciones, que son entradas y salidas del sistema robótico, requieren de subsistemas que sean capaces de interpretarlas y generarlas apropiadamente. Estos subsistemas son de tipo mecánico, electrónico y computacional, por lo que un robot es considerado como un sistema mecatrónico. La <a href="#fig-componentes-robot-intro">Figura&nbsp;<span>1.4</span></a> muestra de manera esquemática estos subsistemas, así como las entradas y salidas del sistema completo.</p>
+<div id="fig-componentes-robot-intro" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/componentes-robot.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.4: Esquema que muestra los componentes principales de un robot. Además, se ilustra que el robot recibe una serie de tareas como instrucciones, y ejecuta acciones en su espacio de trabajo</figcaption><p></p>
+</figure>
+</div>
+<p>A continuación se brinda una breve descripción de los sub-sistemas que conforman un robot genérico, que podría ser un robot manipulador o un robot móvil.</p>
+<ul>
+<li><p><strong>Sub-sistema mecánico</strong>. Este subsistema es también conocido como la estructura mecánica del robot y está compuesto por eslabones usualmente rígidos conectados a través de articulaciones, las cuales permiten el movimiento. Así, como se mencionó en la <a href="#sec-mecanismos"><span>Sección&nbsp;1.1.3</span></a>, mecánicamente un robot es un mecanismo. Por ejemplo, un robot manipulador como el mostrado en la <a href="#fig-subsistema-mecanico">Figura&nbsp;<span>1.5</span></a> tiene una base (que se suele considerar como el eslabón 0 y que va fijo sobre alguna superficie), eslabones, y un efector final también llamado órgano terminal. En el ejemplo mostrado, este efector final es una mano de tres dedos, pero podría ser cualquier otro elemento que le permita al manipulador ejecutar su tarea, como una garra o alguna herramienta específica. Para robots móviles, la estructura mecánica está formada por el soporte, dado por el chasis, y por elementos que son necesarios para el movimiento del robot. Por ejemplo, en robots terrestres pueden ser las ruedas, usualmente modeladas como cuerpos rígidos a pesar de tener cierta flexibilidad, y en robots aéreos pueden ser las hélices.</p></li>
+<li><p><strong>Sub-sistema de sensado</strong>. Este subsistema se encarga de obtener información externa o interna del robot a través de sensores. Los sensores que obtienen información del estado interno del robot, como por ejemplo la posición de las articulaciones o la orientación del robot, son denominados <em>sensores propioceptivos</em>. Por otro lado, los sensores que brindan información externa del entorno que rodea al robot, como sensores de fuerza-torque, sensores de proximidad, diversos tipos de cámaras, son denominados <em>sensores exteroceptivos</em>. En algunos casos, algunos sensores podrían caer en ambos grupos dependiendo de qué es lo que miden. Se debe considerar que este subsistema tiene normalmente una fabricación basada en principios electro-mecánicos pero la información es recuperada de manera electrónica.</p></li>
+<li><p><strong>Sub-sistema de actuación</strong>. Este subsistema genera movimiento para el robot y está compuesto por actuadores, los cuales son usualmente motores en robótica. Estos motores pueden clasificarse como eléctricos, hidráulicos o neumáticos, según el tipo de energía que utilicen para generar movimiento. El subsistema de actuación también incluye la forma en la que el movimiento se transmite desde los motores hacia los ejes mismos de un robot, a través de transmisiones mecánicas como fajas o engranajes. <!-- En algunos casos se puede incluir también los algoritmos de bajo nivel que controlan directamente los motores.
+   --></p></li>
+<li><p><strong>Sub-sistema de control</strong>. Es el subsistema encargado de generar los comandos que determinan las acciones del robot, y por analogía con el ser humano se le suele denominar el cerebro del robot. Este subsistema tiene dos niveles: el bajo nivel y el alto nivel. El control de bajo nivel genera señales para controlar directamente al sub-sistema de actuación, e incluye diversos algoritmos de control de motores. El control de alto nivel asume que ya existen controladores de bajo nivel, y se enfoca en controlar tareas especificadas desde un punto de vista más alto, a través del planeamiento de trayectorias, aprendizaje por reforzamiento, optimización de trayectorias en el espacio operacional, entre otras.</p></li>
+</ul>
+<div id="fig-subsistema-mecanico" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/subsistema-mecanico.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.5: Ejemplos de los componentes mecánicos de un robot. Se muestra a la izquierda la base, eslabones, articulaciones y efector final de un robot manipulador (JACO de Kinova). A la derecha se muestra el chasis de dos robots móviles: uno terrestre con ruedas (Pioneer), y uno aéreo.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="sec-modelamiento-robot" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-modelamiento-robot"><span class="header-section-number">1.2.2</span> Modelamiento Mecánico de un Robot</h3>
+<p>Un robot puede ser modelado con distintos niveles de complejidad, desde el modelo más simple hasta el más detallado, dependiendo del objetivo de modelamiento. Para un análisis cinemático y dinámico básico basta con especificar la estructura mecánica del robot que genera movimiento, ya que lo importante es establecer relaciones entre los componentes que generan el movimiento, y la posición u orientación de algún punto como el efector final. Desde este punto de vista, un robot está constituido mecánicamente por dos componentes principales:</p>
+<ul>
+<li><em>Eslabones</em>. Son cuerpos rígidos que conforman la estructura mecánica de un robot, y se encuentran unidos unos a otros a través de articulaciones. Para el modelamiento de un eslabón es importante conocer variables físicas como su dimensión, masa, tensor de inercia y centro de masa. Otras características mecánicas, como la rigidez, no son tomadas en cuenta en el modelamiento, pero sí son importantes para el diseño, de tal modo que cada eslabón sea capaz de soportar toda la estructura mecánica.</li>
+<li><em>Articulaciones</em>. También se denominan <em>ejes</em>, <em>junturas</em>, o <em>juntas</em> y son los componentes que permiten el movimiento relativo entre dos eslabones. Este movimiento es posible gracias a las fuerzas o torques que brindan los actuadores, que pueden estar localizados sobre el eje de movimiento articular, o a una cierta distancia. En el segundo caso es necesario incluir el efecto de la transmisión en un análisis dinámico. En robótica las articulaciones son usualmente de dos tipos: de revolución, o prismáticas.</li>
+</ul>
+<p>Usando estos dos componentes básicos, un robot es comúnmente representado o modelado como una cadena cinemática de eslabones conectados mediante articulaciones, como se esquematiza en la <a href="#fig-esquema-modelo-robot">Figura&nbsp;<span>1.6</span></a>. Este modelo será el más utilizado no solo en este capítulo sino en los correspondientes a la cinemática y dinámica. Al final de la cadena cinemática de un robot manipulador se coloca usualmente un efector final que le permite al robot realizar una tarea determinada, como agarrar objetos.</p>
+<div id="fig-esquema-modelo-robot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/esquema-modelo-robot.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.6: Esquema que muestra el modelo utilizado para el análisis cinemático y dinámico básico de un robot manipulador. Se muestra una base, eslabones y articulaciones de revolución.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="sec-articulaciones" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="sec-articulaciones"><span class="header-section-number">1.2.3</span> Articulaciones</h3>
+<p>Una articulación es una conexión entre dos eslabones que restringe el movimiento de uno de ellos con respecto al otro. Esta restricción de movimiento reduce el número de grados de libertad del eslabón con respecto al número que tendría si estuviese libre en el espacio o en el plano. A pesar de dicha reducción, la articulación permite ciertos tipos controlados de movimiento entre los eslabones. Por este motivo, y de manera equivalente, se puede decir que una articulación provee movimiento a un eslabón con respecto a otro.</p>
+<p>Debido a la relación inherente de una articulación con el movimiento de un eslabón, se define el número de <em>grados de libertad de una articulación</em> como el número de movimientos independientes que tiene un eslabón con respecto a otro cuando ambos están unidos mediante dicha articulación. Es decir, es el número de movimientos independientes que permite la articulación. Por ejemplo, una articulación de traslación, que tiene un grado de libertad, solo permite el desplazamiento en un eje de un eslabón con respecto a otro, restringiendo todos los demás desplazamientos (en los otros dos ejes) y todas las posibles rotaciones relativas.</p>
+<!-- En general, el número de grados de libertad de un robot depende del número de
+eslabones y del tipo de articulaciones (a través de la fórmula de Grübler). -->
+<dl>
+<dt><strong>Articulaciones más usadas en Robótica</strong></dt>
+<dd>
+La gran mayoría de robots existentes actualmente, tanto industriales como de investigación, utilizan principalmente dos tipos de articulaciones: prismáticas y de revolución. A continuación se realiza una breve descripción de estas articulaciones.
+</dd>
+</dl>
+<!-- ::: {#fig-articulaciones-pr layout-ncol=1}
+
+Articulaciones más utilizadas en robótica. A la izquierda se muestra un esquema de su funcionamiento, y a la derecha la simbología que se utiliza para su representación.
+
+::: -->
+<ul>
+<li><p><strong>Articulación prismática (P)</strong>. También es denominada articulación <em>lineal</em>, <em>de deslizamiento</em>, o <em>de traslación</em>, ya que permite la traslación de un eslabón en la dirección del eje de la articulación. Cada una de estas articulaciones posee un solo eje y, por tanto, un solo grado de libertad, ya que restringe el movimiento a la traslación sobre dicho eje. De manera equivalente, se puede decir que impone 5 restricciones al movimiento espacial, o 2 restricciones al movimiento planar. Un esquema de esta articulación, así como la simbología que se suele utilizar para su representación se muestra en la <a href="#fig-articulacion-prismatica">Figura&nbsp;<span>1.7</span></a>.</p>
+<div id="fig-articulacion-prismatica" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-prismatica.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.7: Articulación prismática y su representación</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><strong>Articulación de revolución (R)</strong>. En algunos casos se denomina articulación de <em>giro</em> o de <em>rotación</em>, ya que permite la rotación de un eslabón alrededor del eje de la articulación. Cada articulación tiene un solo eje de rotación, por lo que provee un solo grado de libertad al movimiento. Equivalentemente, impone 5 restricciones al movimiento espacial, o 2 al movimiento planar. Un esquema de esta articulación junto con la simbología que es normalmente usada para su representación se presenta en la <a href="#fig-articulacion-revolucion">Figura&nbsp;<span>1.8</span></a>.</p>
+<div id="fig-articulacion-revolucion" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-revolucion.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.8: Articulación de revolución y su representación</figcaption><p></p>
+</figure>
+</div></li>
+</ul>
+<p>De estos dos tipos de articulación, la articulación de revolución es, de lejos, la más utilizada actualmente. La articulación prismática se emplea en algunas configuraciones clásicas de robots, como por ejemplo el robot SCARA o el manipulador Stanford, en mecanismos semejantes a los de una impresora 3D, en mecanismos que permiten la traslación vertical u horizontal del torso o parte de un robot, entre otras aplicaciones específicas.</p>
+<dl>
+<dt><strong>Otras Articulaciones</strong></dt>
+<dd>
+Las siguientes son algunas articulaciones utilizadas con mucho menor frecuencia en robótica, pero que pueden ser útiles para diseños orientados a aplicaciones específicas.
+</dd>
+</dl>
+<ul>
+<li><p><strong>Articulación Hélica</strong>. También es conocida como articulación de tipo tornillo, ya que permite la rotación y traslación simultánea, pero dependiente, alrededor del eje de la articulación. Debido a que tanto la rotación como la traslación son interdependientes (siempre que hay traslación también hay rotación, y viceversa), solamente provee un grado de libertad espacial. Equivalentemente, impone 5 restricciones espaciales al eslabón al cual está unido. El esquema de su funcionamiento se ilustra en la <a href="#fig-articulacion-helica">Figura&nbsp;<span>1.9</span></a>.</p>
+<div id="fig-articulacion-helica" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-helica.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.9: Articulación hélica</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><strong>Articulación Cilíndrica</strong>. Es una articulación que permite la rotación y traslación simultánea e independiente alrededor del eje de la articulación. A diferencia de la articulación hélica, en este caso se puede realizar una traslación sin modificar la rotación, y viceversa, como se esquematiza en la <a href="#fig-articulacion-cilindrica">Figura&nbsp;<span>1.10</span></a>. Por este motivo provee 2 grados de libertad espaciales o, equivalentemente, impone 4 restricciones espaciales.</p>
+<div id="fig-articulacion-cilindrica" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-cilindrica.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.10: Articulación cilíndrica</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><strong>Articulación universal</strong>. Esta articulación está compuesta internamente por 2 articulaciones de revolución, dispuestas de tal modo que sus ejes son ortogonales y se intersectan, como se esquematiza en la <a href="#fig-articulacion-universal">Figura&nbsp;<span>1.11</span></a>. Debido a que en realidad son dos articulaciones de revolución, provee 2 grados de libertad al movimiento espacial y, equivalentemente, impone 4 restricciones espaciales.</p>
+<div id="fig-articulacion-universal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-universal.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.11: Articulación universal</figcaption><p></p>
+</figure>
+</div></li>
+<li><p><strong>Articulación esférica</strong>. La articulación esférica tiene un mecanismo similar a una esfera dentro de un socket con envoltura esférica, como se ilustra en la <a href="#fig-articulacion-esferica">Figura&nbsp;<span>1.12</span></a>. Dicha esfera siempre mantiene su posición fija, pero su orientación es completamente libre, brindando 3 grados de libertad al movimiento espacial. De manera equivalente, impone 3 restricciones espaciales correspondientes al desplazamiento en los 3 ejes.</p>
+<div id="fig-articulacion-esferica" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/articulacion-esferica.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.12: Articulación esférica</figcaption><p></p>
+</figure>
+</div></li>
+</ul>
+<dl>
+<dt><strong>Robots según sus Articulaciones</strong></dt>
+<dd>
+Una forma de clasificar a los robots manipuladores consiste en agruparlos según el tipo de articulación que posean, y el orden en el que aparezcan dichas articulaciones. Cuando se usa esta clasificación no se considera las longitudes de los eslabones u otros detalles de tamaño o fuerza que pudiesen diferenciarlos. Para nombrar a los robots según sus articulaciones se utiliza la letra <em>R</em>, para una articulación de revolución, y la letra <em>P</em> para una articulación prismática. Por ejemplo, si la primera articulación de un robot es de revolución, la segunda es prismática, y la tercera es de revolución, este robot se denomina robot RPR. Se debe notar que el orden es muy importante, y que será muy diferente un robot RPR de un robot PRR o RRP.
+</dd>
+</dl>
+<p>Algunas configuraciones usuales de robots manipuladores, según su tipo de articulación, se muestran en la <a href="#fig-configuraciones-robots">Figura&nbsp;<span>1.13</span></a> y son: robots cartesianos (con configuración PPP), robots cilíndricos (con configuración RPP), robots esféricos (con configuración RRP), robots antropomórficos (con configuración RRR), robots SCARA (con configuración RRP), entre otros.</p>
+<div id="fig-configuraciones-robots" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-configuracion-scara" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/configuracion-scara.png" class="img-fluid figure-img" data-ref-parent="fig-configuraciones-robots"></p>
+<p></p><figcaption class="figure-caption">(a) Robot SCARA</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-configuracion-ppp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/configuracion-ppp.png" class="img-fluid figure-img" data-ref-parent="fig-configuraciones-robots"></p>
+<p></p><figcaption class="figure-caption">(b) Robot PPP</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-configuracion-rpp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/configuracion-rpp.png" class="img-fluid figure-img" data-ref-parent="fig-configuraciones-robots"></p>
+<p></p><figcaption class="figure-caption">(c) Robot RPP</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-configuracion-rrp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/configuracion-rrp.png" class="img-fluid figure-img" data-ref-parent="fig-configuraciones-robots"></p>
+<p></p><figcaption class="figure-caption">(d) Robot RRP</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-configuracion-rrr" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/configuracion-rrr.png" class="img-fluid figure-img" data-ref-parent="fig-configuraciones-robots"></p>
+<p></p><figcaption class="figure-caption">(e) Robot RRR</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.13: Ejemplos de tipos de robots manipuladores según sus articulaciones.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="sec-configuracion-gdl-robot" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="sec-configuracion-gdl-robot"><span class="header-section-number">1.2.4</span> Configuración y Grados de Libertad de un Robot</h3>
+<p>Debido a que un robot se considera como un conjunto de cuerpos rígidos, su configuración consiste en la especificación completa de cada cuerpo rígido que lo conforma. Esta especificación se da a través de la representación de la posición y orientación de cada eslabón del robot. Así, la <em>configuración</em> de un robot consiste en especificar la posición y orientación de cada uno de sus eslabones a través de un conjunto de parámetros.</p>
+<dl>
+<dt><strong>Restricciones</strong></dt>
+<dd>
+Para representar un cuerpo rígido libre en el espacio, como se vio en la <a href="#sec-gdl-cuerpo-rigido"><span>Sección&nbsp;1.1.2</span></a>, se requiere utilizar 6 parámetros, debido a que el cuerpo posee 6 grados de libertad. Sin embargo, en un robot estos cuerpos rígidos no se encuentran libres, sino en una cadena cinemática conectados mediante articulaciones, las cuales imponen restricciones al movimiento. Por ejemplo, una articulación de revolución solo permite el giro del eslabón alrededor de un eje; es decir, restringe 5 de los 6 grados de libertad que poseería el eslabón si estuviese libre en el espacio, dejándolo con un solo grado de libertad. Debido a estas restricciones, en un robot se requiere menos de 6 parámetros para la especificación completa de cada eslabón que lo conforma.
+</dd>
+</dl>
+<p>La gran mayoría de robots solamente posee articulaciones de revolución y articulaciones prismáticas. Ambas articulaciones, como se describe en la <a href="#sec-articulaciones"><span>Sección&nbsp;1.2.3</span></a>, imponen 5 restricciones al movimiento de un eslabón, dejándolo con solamente 1 grado de libertad. De este modo, se suele necesitar solo un parámetro para representar la configuración de un eslabón: si el eslabón se encuentra unido a una articulación de revolución el parámetro es el ángulo de giro de la articulación, y si se encuentra unido a una articulación prismática el parámetro será el desplazamiento que presente la articulación. Por tanto, un robot con <span class="math inline">\(n\)</span> articulaciones requiere <span class="math inline">\(n\)</span> parámetros para la representación de su configuración, siempre que solo posea articulaciones prismáticas y de revolución.</p>
+<dl>
+<dt><strong>Espacio de Configuración</strong></dt>
+<dd>
+Es el espacio <span class="math inline">\(n\)</span>-dimensional que contiene todas las posibles configuraciones de un robot, de tal modo que la configuración de un robot se representa por un punto en este espacio. Se debe notar que el espacio de configuración varía de robot a robot, según la cantidad y el tipo de articulaciones que posea. Las características de este espacio se presentarán con más detalle en la sección~<span class="math inline">\(\ref{sec-espacio-configuracion}\)</span>.
+</dd>
+</dl>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-configuracion-rr" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.3 (Configuración de un robot RR) </strong></span>Determinar y analizar el número de parámetros que se requiere para especificar la configuración de un robot RR, donde RR significa que el robot posee dos articulaciones de revolución (R).</p>
+<p><em>Solución:</em></p>
+<p>La cadena cinemática de un robot RR está compuesta de la siguiente forma: base <span class="math inline">\(\rightarrow\)</span> articulación 1 <span class="math inline">\(\rightarrow\)</span> eslabón 1 <span class="math inline">\(\rightarrow\)</span> articulación 2 <span class="math inline">\(\rightarrow\)</span> eslabón 2, donde ambas articulaciones son de revolución. La base es un eslabón que se encuentra fijo en el entorno de trabajo, y por tanto no se requiere ningún parámetro para su descripción ya que no presenta movimiento alguno. El eslabón 1 se encuentra unido a la articulación 1, y el eslabón 2 se encuentra unido a la articulación 2. Cada una de estas articulaciones impone 5 restricciones en su respectivo eslabón, sumando 10 restricciones en total. Si los eslabones estuviesen libres tendrían 6 grados de libertad cada uno, sumando 12 parámetros necesarios para su descripción. Debido a las uniones articulación-eslabón, se impone 10 restricciones a estos 12 parámetros, quedando únicamente <span class="math inline">\(12-10=2\)</span> parámetros. Por tanto, la configuración completa del robot requiere solamente 2 parámetros, que en este caso serán los ángulos de giro <span class="math inline">\(q_1\)</span> y <span class="math inline">\(q_2\)</span> alrededor de cada articulación.</p>
+<p>Un análisis más simple consiste en observar que cada articulación de revolución reduce a un solo parámetro la especificación de la configuración de su eslabón asociado. Así, debido a que se tiene dos de estas articulaciones, se requerirá dos parámetros para describir completamente la configuración del robot.</p>
+</div>
+</div>
+</div>
+</div>
+<dl>
+<dt><strong>Grados de Libertad de un Robot</strong></dt>
+<dd>
+El número de grados de libertad (<em>gdl</em>) de un robot es el número mínimo de parámetros necesarios para representar la configuración completa del robot. De igual manera, se puede definir como el número de parámetros independientes que se requiere para representar la configuración del robot.
+</dd>
+</dl>
+<p>Este número caracteriza de alguna manera la estructura de cada robot, y por ello en robótica es común referirse a los robots mediante el número de grados de libertad que poseen. Por ejemplo, se habla de un robot de 5 grados de libertad al referirse a un robot que posee 5 articulaciones prismáticas o de revolución; el robot Sawyer (de Rethink Robotics) tiene 7 articulaciones de revolución y es común referirse al mismo como un robot de 7 grados de libertad. Cada grado de libertad se asocia típicamente con una articulación, y constituye una variable articular.</p>
+<p>Debido a que los grados de libertad se asocian con el número de parámetros necesarios para la configuración del robot, su cálculo requiere un análisis semejante al realizado para determinar la representación de la configuración. Es decir, se requiere sumar todos los grados de libertad que poseería cada eslabón en el espacio (si se trata de un robot espacial) o en el plano (si es un robot planar) y se resta el número total de restricciones que imponen las articulaciones, como se hizo en el <a href="#exm-configuracion-rr">Ejemplo&nbsp;<span>1.3</span></a>. Para mecanismos más complejos, el número de grados de libertad se puede obtener, en general, a través de la fórmula de Grübler, la cual se presenta en la <a href="#sec-formula-grubler"><span>Sección&nbsp;1.3</span></a>.</p>
+</section>
+</section>
+<section id="sec-formula-grubler" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-formula-grubler"><span class="header-section-number">1.3</span> Fórmula de Grübler</h2>
+<p>La fórmula de Grübler, también conocida como la fórmula de Chebychev-Grübler-Kutzbach, es un criterio que determina el número de grados de libertad o grados de mobilidad de una cadena cinemática. Se basa en el hecho que las articulaciones imponen restricciones al movimiento de los eslabones, reduciendo la libertad de movimiento que estos poseerían si estuviesen libres. Considerando que <span class="math inline">\(n_g\)</span> representa el número de grados de libertad de un mecanismo, se puede decir que: <span class="math display">\[
+  n_g = \sum \text{libertad de eslabones} - \sum \text{restricciones de articulaciones}
+\]</span> donde la primera suma se realiza para todos los eslabones y la segunda para todas las articulaciones. La libertad de cada eslabón depende de si se encuentra en el espacio o en el plano: debido a que un eslabón es un cuerpo rígido, en el espacio posee 6 grados de libertad y en el plano 3 grados de libertad. Las restricciones de las articulaciones dependen de su tipo, y para el caso espacial se describen en la <a href="#sec-articulaciones"><span>Sección&nbsp;1.2.3</span></a>. Por ejemplo, las articulaciones prismáticas y de revolución presentan cada una cinco restricciones espaciales, permitiendo solamente un movimiento relativo entre los eslabones a los cuales unen.</p>
+<p>A partir de las sumatorias anteriores se puede obtener una expresión más concreta para el cálculo del número de grados de libertad. Considérese un mecanismo con <span class="math inline">\(N_{_L}\)</span> eslabones, donde el componente rígido que permanece inamovible, llamado , también se considera como un eslabón. Cada uno de estos eslabones tendría <span class="math inline">\(m\)</span> grados de libertad si se encontrase libre en el espacio. Si este mecanismo tiene además <span class="math inline">\(N_{_J}\)</span> articulaciones y cada articulación <span class="math inline">\(k\)</span> impone <span class="math inline">\(c_k\)</span> restricciones al movimiento de los dos eslabones que une, el número de grados de libertad <span class="math inline">\(n_g\)</span> del mecanismo será <span class="math display">\[
+  n_g = m(N_{_L}-1) - \sum_{k=1}^{N_{_J}}c_k
+\]</span> donde el primer término corresponde a la libertad de los eslabones, y el segundo término a las restricciones que imponen las articulaciones. En el primer término se resta uno a <span class="math inline">\(N_{_L}\)</span> debido a que el valor de <span class="math inline">\(N_{_L}\)</span> incluye la tierra, la cual permanece fija y no aporta ningún movimiento. Como se mencionó anteriormente, si el movimiento de los eslabones se realiza en el espacio tridimensional se tiene <span class="math inline">\(m=6\)</span>, y si se realiza en el plano se tiene <span class="math inline">\(m=3\)</span>. Como se vio en la <a href="#sec-articulaciones"><span>Sección&nbsp;1.2.3</span></a>, cada eslabón impone ciertas restricciones pero equivalentemente permite cierto movimiento. Sea <span class="math inline">\(f_k\)</span> la cantidad de movimientos independientes que permite la articulación <span class="math inline">\(k\)</span>-ésima, de tal modo que <span class="math inline">\(f_k+c_k=m\)</span>. Utilizando <span class="math inline">\(f_k\)</span> se puede reformular la anterior expresión como <span class="math display">\[
+  n_g = m(N_{_L}-1) - \sum_{k=1}^{N_{_J}}(m-f_k).
+\]</span> Debido a las propiedades de la sumatoria se cumple la igualdad <span class="math inline">\(\sum_{k=1}^{N_{_J}}m=mN_{_J}\)</span>. Reemplazando esta igualdad en la expresión anterior, y agrupando términos, se obtiene la como: <span id="eq-grubler"><span class="math display">\[
+  n_g = m (N_{_L}-1- N_{_J}) + \sum_{k=1}^{N_{J}}f_k.
+\tag{1.1}\]</span></span> Esta fórmula brinda el número de grados de libertad <span class="math inline">\(n_g\)</span> de un mecanismo. A veces, a esta cantidad también se le conoce como el <em>grado de movilidad</em>. La fórmula de Grübler dada en <a href="#eq-grubler">Ecuación&nbsp;<span>1.1</span></a> solo es válida si todas las restricciones impuestas por las articulaciones son independientes. Si al menos una restricción no es independiente, entonces la fórmula de Grübler no brinda el número exacto de grados de libertad del mecanismo sino solamente una cota inferior. Es importante recalcar que en <a href="#eq-grubler">Ecuación&nbsp;<span>1.1</span></a> se considera que cada articulación une solamente dos eslabones. <!-- (si llegase a unir tres eslabones, tendría que separarse ficticiamente en dos
+% articulaciones). --></p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-gdl-4barras" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.4 (Grados de libertad de un mecanismo de cuatro barras) </strong></span>La <a href="#fig-ejemplo-garra">Figura&nbsp;<span>1.14 (a)</span></a> muestra un mecanismo simple utilizado como garra de un robot manipulador. A su vez, este mecanismo consta de dos <em>mecanismos de cuatro barras</em>, cada uno de los cuales es utilizado para mover un extremo de la garra. El detalle de este mecanismo se muestra en la <a href="#fig-ejemplo-4barlinkage">Figura&nbsp;<span>1.14 (b)</span></a>. Determinar el número de grados de libertad del mecanismo de cuatro barras utilizando la fórmula de Grübler.</p>
+<p><em>Solución:</em></p>
+<p>El mecanismo de cuatro barras está compuesto por 3 eslabones que pueden moverse y una tierra fija, de tal modo que <span class="math inline">\(N_{_L}=4\)</span>. Asimismo, el mecanismo presenta cuatro articulaciones, siendo <span class="math inline">\(N_{_J}=4\)</span>. Como se observa en el diagrama, todas las articulaciones son de revolución, por lo que brindan un solo posible movimiento (rotación alrededor del eje), siendo <span class="math inline">\(f_k=1\)</span> para cada <span class="math inline">\(k\)</span> articulación. Se puede además observar que el movimiento de este mecanismo está restringido a un plano, por lo que <span class="math inline">\(m=3\)</span>. Reemplazando estos elementos en <a href="#eq-grubler">Ecuación&nbsp;<span>1.1</span></a>, el número de grados de libertad del mecanismo es <span class="math display">\[
+  n_g = 3(4-1-4) + (1+1+1+1) = 1.
+\]</span> La fórmula de Grübler muestra que este mecanismo tiene solo un grado de libertad, siendo necesario solo un motor para el control de las cuatro articulaciones si las otras articulaciones no son actuadas. Esto justifica el diseño de la garra de la <a href="#fig-ejemplo-garra">Figura&nbsp;<span>1.14 (a)</span></a>, donde existe un solo motor para abrir o cerrar la garra.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="fig-ejemplos-4barlinkage" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 48.3%;justify-content: center;">
+<div id="fig-ejemplo-garra" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/garra.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-4barlinkage"></p>
+<p></p><figcaption class="figure-caption">(a) Ejemplo de garra</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 51.7%;justify-content: center;">
+<div id="fig-ejemplo-4barlinkage" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/4-bar-linkage.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-4barlinkage"></p>
+<p></p><figcaption class="figure-caption">(b) Mecanismo de 4 barras</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.14: Mecanismo de 4 barras y una de sus aplicaciones en robótica.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-gdl-robot-serial" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.5 (Grados de libertad de un robot serial) </strong></span>Un robot serial es un mecanismo de cadena abierta formado por una secuencia eslabón-articulación-eslabón-articulación, etc. como se muestra en la <a href="#fig-cadena-abierta">Figura&nbsp;<span>1.3 (a)</span></a>. Utilizando la fórmula de Grübler, determinar el número de grados de libertad de un robot serial con <span class="math inline">\(n\)</span> articulaciones que pueden ser de revolución o prismáticas. Considerar que un extremo del robot se encuentra fijo en su entorno, pero no considerar los posibles grados de libertad que da el efector final.</p>
+<p><em>Solución:</em></p>
+<p>Para un robot con <span class="math inline">\(n\)</span> articulaciones se tiene <span class="math inline">\(N_{_J}=4\)</span>, donde <span class="math inline">\(f_k=1\)</span> para cada articulacion <span class="math inline">\(k\)</span> que es o prismática o de revolución. Debido a que en un robot serial cada eslabón está unido a una articulación, se tiene <span class="math inline">\(N_{_L}=n+1\)</span>, donde se suma uno al considerar el eslabón fijo (tierra). Ya que se trata de una configuración genérica, se asume que el desplazamiento es espacial, siendo <span class="math inline">\(m=6\)</span>. Reemplazando estos valores en la fórmula de Grübler se llega a <span class="math display">\[
+  n_g = 6((n+1)-1-n) + n  = n.
+\]</span> Con este resultado se justifica el hecho que un robot serial con <span class="math inline">\(n\)</span> articulaciones prismáticas o de revolución se denomina un robot con <span class="math inline">\(n\)</span> grados de libertad.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-gdl-chimp" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.6 (Grados de libertad del robot CHIMP) </strong></span>El robot CHIMP, desarrollado por NREC (<em>National Robotics Engineering Center</em>}, parte de <em>Carnegie Mellon University</em>) y mostrado en la <a href="#fig-chimp">Figura&nbsp;<span>1.15 (a)</span></a>, es un robot con cuatro extremidades y 26 articulaciones en total. La estructura cinemática de cada extremidad es similar a la mostrada en la <a href="#fig-chimp-arm">Figura&nbsp;<span>1.15 (b)</span></a>, donde las flechas señalan las articulaciones de revolución. La diferencia entre las extremidades delanteras y posteriores radica en el efector final que se usa: las delanteras tienen una garra y un motor adicional, mientras que las posteriores no.</p>
+<p>Utilizando la fórmula de Grübler determinar el número de grados de libertad que tiene el robot en el espacio cuando las cuatro extremidades se encuentran apoyadas en el suelo, en la configuración mostrada en la <a href="#fig-chimp">Figura&nbsp;<span>1.15 (a)</span></a>. En esta configuración, la principal restricción es que las orugas (el elemento entre la articulación 5 y 6) permanecen fijas en el suelo. Notar, además, que con esta configuración el último motor de cada extremidad (el más lejano del torso del robot) no contribuye al movimiento global del sistema y debido a esto todas las cuatro extremidades son semejantes.</p>
+<p><em>Solución:</em></p>
+<p>Para la configuración indicada solo 5 articulaciones son utilizadas en cada extremidad, desde el torso del robot hasta la oruga que se encuentra en el suelo. Debido a que hay 4 extremidades, se tendrá en total <span class="math inline">\(N_{_J}=20\)</span>. Cada extremidad está unida por un lado al torso y por otro lado al suelo, el cual se considera como el elemento fijo o tierra mecánica. Entre el torso y la tierra existen 4 eslabones, y dado que hay 4 extremidades, habrá 16 eslabones que junto con el torso y la tierra dan <span class="math inline">\(N_{_L}=18\)</span>. Ya que el robot se mueve en el espacio, se tiene <span class="math inline">\(m=6\)</span>, y debido a que cada articulación es de revolución, <span class="math inline">\(f_k=1\)</span> para todo <span class="math inline">\(k\)</span>. Así, utilizando la fórmula de Grübler se llega a <span class="math display">\[
+  n_g = 6(18-1-20) + 20  = 2.
+\]</span> En la configuración mostrada, el torso del robot CHIMP tiene solamente dos grados de libertad de movimiento, o dos grados de movilidad, a pesar de la cantidad de motores que posee. La reducción de los grados de libertad se debe a las restricciones que imponen las cadenas cinemáticas cerradas.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="fig-robot-chimp" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-chimp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/chimp.png" class="img-fluid figure-img" data-ref-parent="fig-robot-chimp"></p>
+<p></p><figcaption class="figure-caption">(a) Robot CHIMP</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-chimp-arm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/chimp-arm.png" class="img-fluid figure-img" data-ref-parent="fig-robot-chimp"></p>
+<p></p><figcaption class="figure-caption">(b) Extremidad del robot (Stenz et al.&nbsp;2015)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.15: Robot CHIMP desarrollado en NREC, CMU.</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="sec-espacio-configuracion" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-espacio-configuracion"><span class="header-section-number">1.4</span> Espacio de Configuración</h2>
+<p>Como se definió en la <a href="#sec-configuracion-gdl-robot"><span>Sección&nbsp;1.2.4</span></a>, el espacio de configuración, también llamado espacio <span class="math inline">\(\mathcal C\)</span> (en inglés: <span class="math inline">\(\mathcal C\)</span>-space), es un espacio de dimensión <span class="math inline">\(n\)</span> que contiene todas las posibles configuraciones de un robot. La dimensión de este espacio es igual al número de grados de libertad que posee el robot: si un robot tiene <span class="math inline">\(n\)</span> grados de libertad, la dimensión de su espacio de configuración será también <span class="math inline">\(n\)</span>. Por ejemplo, un robot RR como el analizado en el <a href="#exm-configuracion-rr">Ejemplo&nbsp;<span>1.3</span></a> tiene 2 grados de libertad y por tanto su espacio de configuración es de dimensión 2.</p>
+<section id="sec-topologia" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="sec-topologia"><span class="header-section-number">1.4.1</span> Topología del Espacio de Configuración</h3>
+<p>De manera informal, la topología del espacio de configuración se puede entender como la forma que este espacio posee. Sin mucha rigurosidad matemática, se puede además decir que un espacio que posee una topología definida se denomina un espacio topológico. Algunos espacios topológicos genéricos pero importantes en robótica son los siguientes:</p>
+<ul>
+<li><p>El espacio Euclideano <span class="math inline">\(n\)</span>-dimensional representado por <span class="math inline">\(\mathbb R^n\)</span> o <span class="math inline">\(\mathbb E^n\)</span>. Por ejemplo, cuando <span class="math inline">\(n=2\)</span> la forma de este espacio es un plano que se extiende hasta el infinito por los cuatro lados. La <a href="#fig-ejemplo-plano">Figura&nbsp;<span>1.16 (a)</span></a> esquematiza la topología de <span class="math inline">\(\mathbb R^3\)</span>. Se debe notar que para este espacio se cumple que <span class="math inline">\(\mathbb R^n \times \mathbb R^m = \mathbb R^{n+m}\)</span>.</p></li>
+<li><p>El espacio <span class="math inline">\(n\)</span>-dimensional de la superficie de una esfera, el cual se representa como <span class="math inline">\(\mathbb S^n\)</span>. Este espacio de dimensión <span class="math inline">\(n\)</span> siempre se encuentra dentro de un espacio de dimensión <span class="math inline">\(n+1\)</span>. Cuando <span class="math inline">\(n=1\)</span>, el espacio <span class="math inline">\(\mathbb S^1\)</span> tiene la forma de una circunferencia unitaria en el plano <span class="math inline">\(\mathbb R^2\)</span>, y los valores que especifican la posición a lo largo de esta circunferencia se encuentran en el intervalo <span class="math inline">\([0, 2\pi[\)</span>. Así, cualquier valor angular se encuentra en <span class="math inline">\(\mathbb S^1\)</span>. Cuando <span class="math inline">\(n=2\)</span>, el espacio <span class="math inline">\(\mathbb S^2\)</span>, el cual se muestra en la <a href="#fig-ejemplo-esfera">Figura&nbsp;<span>1.16 (b)</span></a>, tiene la forma de la superficie de una esfera en <span class="math inline">\(\mathbb R^3\)</span>.</p></li>
+<li><p>El espacio <span class="math inline">\(n\)</span>-dimensional de la superficie de un toroide, el cual se representa como <span class="math inline">\(\mathcal T^n\)</span>. Esta superficie se obtiene como el producto cartesiano de <span class="math inline">\(n\)</span> superficies de una esfera; es decir <span class="math display">\[
+  \mathbb T^n = \mathbb S^1 \times \cdots \times \mathbb S^1 ~~(n\text{ veces})
+\]</span> Por ejemplo, cuando <span class="math inline">\(n=2\)</span> se tiene el toroide <span class="math inline">\(\mathbb T^2\)</span>, mostrado en la <a href="#fig-ejemplo-toroide">Figura&nbsp;<span>1.16 (c)</span></a>, el cual está compuesto por dos superficies de circunferencia (<span class="math inline">\(\mathbb T^2 = \mathbb S^1 \times \mathbb S^1\)</span>), una a lo largo del toroide, y la otra en cada uno de los cortes perpendiculares que se podrían realizar. Es importante notar un toroide <span class="math inline">\(T^n\)</span> se encuentra siempre contenido en un espacio de dimensión <span class="math inline">\(n+1\)</span>.</p></li>
+</ul>
+<div id="fig-ejemplos-topologias" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-ejemplo-plano" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/ejemplo-plano.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-topologias"></p>
+<p></p><figcaption class="figure-caption">(a) Espacio <span class="math inline">\(\mathbb R^3\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-ejemplo-esfera" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/ejemplo-esfera.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-topologias"></p>
+<p></p><figcaption class="figure-caption">(b) Superficie de Esfera <span class="math inline">\(\mathbb S^2\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-ejemplo-toroide" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/cintro/ejemplo-toroide.png" class="img-fluid figure-img" data-ref-parent="fig-ejemplos-topologias"></p>
+<p></p><figcaption class="figure-caption">(c) Superficie de Toroide <span class="math inline">\(\mathbb T^2\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1.16: Ejempos de espacios topológicos usados en robótica.</figcaption><p></p>
+</figure>
+</div>
+<dl>
+<dt><strong>Topología de las Articulaciones</strong></dt>
+<dd>
+Las dos articulaciones más utilizadas en robótica son la articulación de revolución y la articulación prismática. A continuación se presenta la topología de estas dos articulaciones.
+</dd>
+</dl>
+<ul>
+<li><strong>Articulaciones prismáticas</strong>. Cada articulación prismática se describe por un desplazamiento lineal <span class="math inline">\(\q \in \R\)</span> a lo largo de un eje direccional. Por este motivo, la topología de una articulación prismática está dada por la recta <span class="math inline">\(\mathbb R^1\)</span>.</li>
+<li><strong>Articulaciones de revolución</strong>. Una articulación de revolución se encuentra descrita mediante una variable angular, la cual se representa como el ángulo <span class="math inline">\(q \in \mathbb S^1\)</span>, donde <span class="math inline">\(S^1\)</span> contiene los valores <span class="math inline">\([0,2\pi[\)</span>. Todos los ángulos se miden usando un sistema coordenado dextrógiro, de tal modo que un ángulo alrededor de un eje es positivo si representa una rotación en sentido horario cuando es vista desde la dirección del eje. Así, la topología de una articulación de revolución es <span class="math inline">\(S^1\)</span>.</li>
+</ul>
+<p>La topología de la configuración de un robot manipulador se puede determinar como el producto cartesiano de la topología de cada una de sus articulaciones. En el caso de un robot móvil, su topología incluirá la topología de la configuración del espacio en el que se mueven.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-topologia-configuraciones" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.7 (Topología de algunas configuraciones) </strong></span>Determinar la topología de las siguientes configuraciones: a) un robot móvil en el plano, b) un robot 3R, c) un robot PR, d) un robot móvil terrestre con un brazo manipulador 5R.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>La configuración de un robot móvil en el plano se representa con dos coordenadas para la posición y una coordenada para la orientación. Dado que la posición en el plano se representa mediante un valor en <span class="math inline">\(\mathbb R^2\)</span> y la orientación mediante un ángulo en <span class="math inline">\(\mathbb S^1\)</span>, la topología de esta configuración es <span class="math inline">\(\mathbb R^2 \times \mathbb S^1\)</span>. <!-- Esta representación se puede interpretar como dos articulaciones prismáticas y una articulación de revolución, siendo la topología resultante el producto cartesiano de estas topologías: $\mathbb R^2 \times \mathbb S^1$. --></p></li>
+<li><p>Un robot 3R se encuentra formado por tres articulaciones de revolución, siendo su topología resultante <span class="math inline">\(\mathbb S^1 \times \mathbb S^1 \times \mathbb S^1\)</span>. De manera equivalente, esta topología se puede representar como <span class="math inline">\(\mathbb T^3\)</span>. <!-- y su configuración necesita la especificación de estos tres ves $\mathbb T^3 = \mathbb S^1 \times \mathbb S^1 \times \mathbb S^1$, dado que su configuración tiene 3 articulaciones de revolución ($q_1, q_2, q_3$). --></p></li>
+<li><p>Un robot PR tiene una primera articulación prismática y una segunda articulación de revolución. Por tanto, su topología es <span class="math inline">\(\mathbb R^1 \times \mathbb S^1\)</span>.</p></li>
+<li><p>La topología de un robot móvil terrestre con un brazo manipulador 5R se puede obtener como el producto cartesiano de la topología del robot móvil con la topología del brazo manipulador. Como se vio en el caso a, la topología del robot móvil es <span class="math inline">\(\mathbb R^2 \times \mathbb S^1\)</span>. Por otro lado, la topología del robot 5R es <span class="math inline">\(\mathbb T^5\)</span>. Finalmente, la topología de todo el sistema es el producto cartesiano <span class="math inline">\(\mathbb R^2 \times \mathbb S^1 \times \mathbb T^5\)</span>, o equivalentemente <span class="math inline">\(\mathbb R^2 \times \mathbb T^6\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="espacio-articular" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="espacio-articular"><span class="header-section-number">1.4.2</span> Espacio Articular</h3>
+<p>En un robot manipulador basta con especificar el valor de todas las articulaciones para que la configuración del mismo quede completamente definida. Estos valores articulares especifican indirectamente la localización espacial de todos los eslabones del robot. Por este motivo, en el caso de los robots manipuladores es común denominar <em>espacio articular</em> <span class="math inline">\(\mathcal Q\)</span> a su espacio de configuración. Considerando que la articulación <span class="math inline">\(i\)</span>-ésima de un robot se representa como <span class="math inline">\(q_i\)</span>, el vector de variables articulares, que contiene todos los valores de las articulaciones del robot, se representa como <span class="math display">\[
+  \q=\bm{q_1 &amp; q_1 &amp; q_3 &amp; \cdots &amp; q_n}^T,
+\]</span> asumiendo que el robot posee <span class="math inline">\(n\)</span> articulaciones. El vector <span class="math inline">\(\q \in \mathcal Q\)</span> es a veces denominado vector de <em>configuración articular</em> del robot y representa cada elemento de su espacio articular.</p>
+<p>El espacio articular <span class="math inline">\(\mathcal Q\)</span> depende de la cantidad y del tipo de articulaciones que el robot posee. Por ejemplo, un robot de SCARA, cuya configuración articular es RRPR (considerando la orientación del efector final), tendrá como espacio articular a <span class="math inline">\(\mathcal Q = \mathbb S^1 \times \mathbb S^1 \times \mathbb R \times \mathbb S^1\)</span>, o equivalentemente a <span class="math inline">\(\mathcal Q = \mathbb T^2 \times \mathbb R \times \mathbb S^1\)</span>. Por otro lado, si un robot posee cuatro articulaciones, y todas son de revolución, su espacio articular estará dado por <span class="math inline">\(\mathcal Q = \mathbb S^1 \times \mathbb S^1 \times \mathbb S^1 \times \mathbb S^1\)</span>, que se puede representar de manera equivalente como <span class="math inline">\(\mathcal Q = \mathbb T^4\)</span>. En general, un robot con <span class="math inline">\(n\)</span> grados de libertad cuyas articulaciones sean todas de revolución, tendrá un espacio articular dado por <span class="math inline">\(\mathcal Q = \mathbb T^n\)</span>.</p>
+<!-- La configuración de los robots manipuladores queda completamente especificada mediante la configuración de sus articulaciones, debido a su estructura serial. Así, por ejemplo, para determinar la configuración de un robot de $n$ grados de libertad es necesario especificar. El espacio articular $Q$ de un manipulador consiste en todos los posibles valores de las variables articulares del robot. También se le conoce como el espacio de configuración, dado que especificando los valores angulares se especifica la localización de todos los eslabones del robot. -->
+<p>Para robots móviles, su espacio de configuración está dado por su posición y orientación. De tratarse de robots móviles terrestres, tanto la posición como la orientación se encuentran en el plano y son tres valores que representan los tres grados de libertad planares. En el caso de robots móviles aéreos o submarinos, la posición y orientación deben describir los seis grados de libertad espaciales. La posición no suele ser un problema, pero sí lo es la representación de la orientación, la cual será descrita con mayor detalle en el capítulo~<span class="math inline">\(\ref{ch:representaciones-cuerpos-rigidos}\)</span>. Si un robot posee partes articuladas y una base móvil, como un robot cuadrúpedo o humanoide, su espacio articular consiste en la representación de la posición y orientación de algún punto del cuerpo llamado la base, y en la configuración articular. A veces esto suele ser denominado el <em>espacio articular generalizado</em>.</p>
+</section>
+<section id="sec-representacion-configuracion" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="sec-representacion-configuracion"><span class="header-section-number">1.4.3</span> Representación del Espacio de Configuración</h3>
+<p>La representación del espacio de configuración es el conjunto de parámetros que describen de manera completa cualquier configuración. Por ejemplo, el espacio euclideano tridimensional puede ser representado utilizando coordenadas cartesianas (<span class="math inline">\(x,y,z\)</span>), coordenadas esféricas (<span class="math inline">\(r, \theta, \varphi\)</span>), o coordenadas cilíndricas. Por otro lado, la superficie de una esfera <span class="math inline">\(\mathbb S^2\)</span> puede ser representada por dos coordenadas que son la latitud y la longitud (<span class="math inline">\(\varphi_{lat}, \varphi_{long}\)</span>), o por un punto en tres dimensiones (<span class="math inline">\(x,y,z\)</span>), notando que la última representación es redundante ya que la propia topología del espacio genera una restricción y por tanto solo requiere 2 variables mínimas para su representación. A partir de estos ejemplos es importante notar que la representación de cada espacio de configuración en general no es única y pueden existir múltiples representaciones para un mismo espacio.</p>
+<dl>
+<dt><strong>Singularidades de la Representación</strong></dt>
+<dd>
+Las singularidades de la representación consisten en casos que no se encuentran bien definidos para una determinada representación. En otros términos, son casos mal condicionados. Por ejemplo, si se utiliza las coordenadas de latitud y longitud para representar a <span class="math inline">\(\mathbb S^2\)</span>, la longitud del mismo polo norte o del mismo polo sur no se encuentra bien representada ya que todas las longitudes convergen en estos puntos. Así, cualquier longitud puede ser asociada al polo norte o al polo sur, constituyéndose estos polos en singularidades de esta representación. Más aún, movimientos muy pequeños cerca al polo norte o al polo sur generan grandes variaciones en la longitud.
+</dd>
+<dt><strong>Parametrizaciones</strong></dt>
+<dd>
+A cada conjunto de parámetros utilizados para representar un espacio de configuración se le denomina una <em>parametrización</em>. Los principales tipos de parametrizaciones de un espacio de configuración son los siguientes:
+</dd>
+</dl>
+<ul>
+<li><p><strong>Parametrizaciones explícitas</strong>. Para un espacio de dimensión <span class="math inline">\(n\)</span>, una parametrización explícita utiliza <span class="math inline">\(n\)</span> parámetros para su representación. Por ejemplo, una parametrización explícita para el espacio Euclideano, cuya dimensión es tres, está dada por las coordenadas cartesianas <span class="math inline">\(x,y,z\)</span>, que son también tres. Asimismo, dado que el espacio <span class="math inline">\(\mathbb S^2\)</span> es de dimensión dos, una parametrización explícita está dada por la latitud y la longitud, aunque esta parametrización presenta problemas de singularidades como se detalló anteriormente. En general, las parametrizaciones explícitas utilizan el número mínimo de parámetros, pero pueden llevar a problemas de singularidad en algunos casos.</p></li>
+<li><p><strong>Parametrizaciones implícitas</strong>. Para un espacio de dimensión <span class="math inline">\(n\)</span>, una parametrización implícita usa más de <span class="math inline">\(n\)</span> parámetros para su representación, añadiendo restricciones entre los parámetros. Por ejemplo, una parametrización implícita de <span class="math inline">\(\mathbb S^2\)</span>, cuya dimensión es dos, está dada por las coordenadas cartesianas en el espacio <span class="math inline">\((x,y,z)\)</span>, añadiendo la restricción <span class="math inline">\(x^2+y^2+z^2=r\)</span> que indica que todos los puntos deben estar en la superficie de la circunferencia. La ventaja de utilizar este tipo de parametrizaciones es que evitan las singularidades de la representación.</p></li>
+</ul>
+<p>Debido a que normalmente existe más de una forma de representar un espacio, la parametrización que se utilice dependerá de cada caso particular.</p>
+</section>
+</section>
+<section id="espacio-operacional" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="espacio-operacional"><span class="header-section-number">1.5</span> Espacio Operacional</h2>
+<p>El espacio operacional, también denominado <em>espacio de la tarea</em>, es un espacio en el cual se puede expresar de manera natural cada una de las tareas que un robot debe realizar. A diferencia del espacio de configuración, el espacio operacional solamente describe la tarea para alguna parte del robot, pero no describe, en general, la configuración completa del robot. Por ejemplo, el espacio operacional puede describir las posiciones que el efector final de un robot debe seguir, sin tomar en cuenta lo que debe hacer el resto del robot ni los valores articulares del mismo. Un concepto útil para describir los espacios operacionales más utilizados es el de un <em>punto operacional</em>, en cuyo caso el espacio operacional suele ser denominado espacio cartesiano.</p>
+<dl>
+<dt><strong>Punto Operacional</strong></dt>
+<dd>
+En un robot, un punto operacional es un punto de interés que se encuentra fijo en alguna parte de un eslabón, o que se mueve de manera solidaria con este. La importancia de un punto operacional es que, en general, cada tarea que define el movimiento de un robot normalmente se encuentra asociada a uno de estos puntos. Para el caso de un manipulador tradicional, su único punto operacional suele ser denominado <em>efector final</em>. Los robots manipuladores redundantes (con más de seis grados de libertad) suelen además considerar al codo como un punto operacional ya que, debido a la redundancia, este presenta cierto movimiento independiente del efector final. En robots de más grados de libertad como, por ejemplo, un robot humanoide, los puntos operacionales podrían ser las manos, los tobillos, la cintura, el pecho, la cabeza, entre otras partes de interés.
+</dd>
+<dt><strong>Espacio Cartesiano</strong></dt>
+<dd>
+El espacio cartesiano, también denominado <em>espacio euclideano</em>, es el espacio operacional que contiene todas las configuraciones de un punto operacional, y se encuentra conformado por la posición y orientación del mismo. Considerando que se asocia un sistema de referencia <span class="math inline">\(\frame B\)</span> a un punto operacional llamado <span class="math inline">\(b\)</span>, el espacio cartesiano asociado a dicho punto se puede, en general, representar como <span class="math display">\[
+  \x_b=\bm{x &amp; y &amp; z &amp; \alpha &amp; \beta &amp;\gamma}^T
+\]</span> donde las coordenadas <span class="math inline">\((x,y,z)\)</span> describen la posición de <span class="math inline">\(\frame B\)</span>, y los parámetros <span class="math inline">\((\alpha, \beta, \gamma)\)</span> describen su orientación. Sin embargo, debe tenerse en cuenta que el espacio cartesiano depende de la tarea, por lo que los seis elementos mostrados no siempre son todos usados. Por ejemplo, si la tarea solo implica la posición del punto operacional, entonces solo se utilizará las coordenadas correspondientes a la posición. El espacio cartesiano constituye la forma más utilizada del espacio operacional para la descripción de las tareas de un robot.
+</dd>
+</dl>
+<!-- Está relacionado al punto operacional, y no a todo el robot. -->
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-espacio-operacional-ejemplo" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1.8 (Algunos espacios operacionales) </strong></span>Determinar el espacio operacional en los siguientes casos: a) Cuando la tarea de un robot manipulador de siete grados de libertad consiste en dibujar en una hoja que se encuentra en un plano; b) cuando la tarea de un robot cuadrúpedo consiste en levantar una pata hasta una posición determinada.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>Para este caso, dado que la hoja se encuentra en un plano, el espacio operacional está dado por el espacio del plano <span class="math inline">\(\mathbb R^2\)</span>, y puede ser representado por coordenadas cartesianas o polares que describen la posición en el plano.</p></li>
+<li><p>Este robot se encuentra en el espacio, y debido a que solamente la posición de una pata es importante, su espacio operacional será <span class="math inline">\(\mathbb R^3\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prefacio</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./referencias.html" class="pagination-link">
+        <span class="nav-page-text">Referencias</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Oscar E. Ramos. Todos los derechos reservados.</div>   
+    <div class="nav-footer-right">Introducción a la Robótica - Oscar E. Ramos</div>
+  </div>
+</footer>
+
+
+
+</body></html>
