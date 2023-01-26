@@ -29,6 +29,9 @@ book:
 
 bibliography: referencias.bib
 
+execute:
+  freeze: auto
+  
 format:
   html:
     theme:
