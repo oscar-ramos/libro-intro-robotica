@@ -1,0 +1,2138 @@
+{{< include _commands.qmd >}}
+
+# Posición y Orientación de Cuerpos Rígidos {#sec-chapter-pos-or-cuerpos-rigidos}
+
+Uno de los aspectos fundamentales para lograr el movimiento adecuado de un
+robot es poder representar la posición y orientación de los principales
+elementos que lo conforman. Como se vio en el [capítulo -@sec-chapter-conceptos-introductorios], el modelo típicamente utilizado
+de un robot abstrae todo el sistema como una serie de eslabones conectados
+mediante articulaciones, donde los eslabones se consideran cuerpos rígidos. La
+representación adecuada de estos eslabones permitirá generar trayectorias para
+partes importantes del robot, como el efector final de un manipulador, y
+permitirá definir algoritmos de control para que el robot alcance alguna
+configuración deseada. Esto es posible ya que el movimiento mismo se expresa en
+función de posiciones y orientaciones espaciales, e incluso el control de
+fuerza requiere del conocimiento de la posición y orientación del elemento
+rígido que aplica o donde se aplica alguna fuerza. Así, la manipulación
+robótica es posible gracias al conocimiento de posiciones y orientaciones tanto
+de las partes del robot, como de los objetos que son manipulados.
+
+Pero no solo el movimiento de los robots manipuladores se basa en la
+representación espacial de cuerpos rígidos, ya que las partes importantes de
+los robots móviles, como el chasis, también son modeladas como cuerpos rígidos,
+siendo necesario conocer su posición y orientación con respecto a algún sistema
+de referencia. La diferencia principal es que para un robot manipulador el
+sistema de referencia asociado a su base es fijo, mientras que el sistema de
+referencia de la base de un robot móvil se mueve en su entorno, siendo
+necesario establecer un sistema fijo en algún lado de su área de trabajo. Por
+tanto, para poder describir dónde se encuentra un robot móvil, sea terrestre,
+aéreo, o submarino, es necesario poder representar su posición y orientación
+con respecto a un sistema fijo.
+
+En este capítulo se brindará los conceptos básicos necesarios para poder
+representar tanto la posición como la orientación de un cuerpo rígido a través del uso de matrices de rotación y de matrices de transformación homogénea.
+
+## Introducción {#sec-introduccion-representaciones-cuerpos-rigidos}
+
+Para saber dónde se encuentra un cuerpo rígido es necesario asociar un sistema
+de referencia a alguna parte del entorno y otro sistema de referencia al propio
+cuerpo rígido, con el fin de poder representar la posición y orientación de un
+sistema con respecto al otro. Cuando el cuerpo rígido experimenta algún
+movimiento, denominado transformación rígida, su sistema de referencia asociado
+se mueve de manera solidaria con él, siendo en este caso la posición y
+orientación funciones del tiempo, pero manteniéndose la esencia de su
+representación. Esta sección presenta una descripción más detallada de estos
+conceptos.
+
+### Sistema de Referencia {#sec-sistemas-referencia}
+
+Un sistema de referencia, a veces denominado *sistema de coordenadas* o
+*sistema coordenado de referencia* o *marco de referencia*, es un conjunto de vectores que
+conforman una base en un espacio Euclideano. Usualmente se utiliza como base a
+vectores unitarios a lo largo de ejes coordenados perpendiculares entre sí y
+con un origen común, el cual suele ser representado como $\vect o$. En el caso
+tridimensional se utiliza tres ejes coordenados perpendiculares entre sí,
+representados por tres vectores ortonormales típicamente denominados $\hat\x$,
+$\hat \y$ y $\hat \z$, donde $\hat .$ indica que se trata de vectores
+unitarios. Para el caso bidimensional se omite alguno de estos ejes, según sea
+conveniente, utilizando solamente dos vectores. Dado que un sistema de
+referencia siempre necesita de sus ejes, se dice que se encuentra completamente
+descrito si se tiene una completa representación de cada uno de ellos. Esto
+implica que, al describir los ejes, se describe por completo al sistema. En
+robótica se utiliza casi exclusivamente sistemas de referencia en tres
+dimensiones, dado que el movimiento de la mayoría de robots es tridimensional.
+
+Un sistema de referencia tridimensional se denomina *dextrógiro* o
+*derecho* (en inglés: *right-handed*) si cumple con la regla de
+la mano derecha; es decir, si satisface la propiedad
+$$
+\hat{\x} \times\hat{\y} = \hat{\z}
+$$
+donde $\times$ representa el producto cruz para vectores en $\mathbb R^3$. Si
+esta relación no se cumple, pero se cumple que $\hat\x \times\hat\y = -\hat\z$,
+entonces el sistema de referencia se denomina *levógiro* o
+*izquierdo*. En robótica es estándar el uso de sistemas de referencia
+dextrógiros, aunque nada impediría el uso de sistemas levógiros.
+
+**Notación**
+: Existen diversas convenciones para denotar a los sistemas
+de referencia; las principales se muestran a continuación.
+
+* Se puede utilizar el origen del sistema separado por un guión de sus
+  ejes, como por ejemplo $\vect o\!-\!\x\y\z$, donde se entiende que el origen
+  es $\vect o$, y los ejes coordenados son $\x,\y,\z$. Por simplicidad de notación, en este caso no se suele colocar los acentos circunflejos sobre los ejes.
+
+* Se puede asignar un nombre al sistema de referencia a través de una letra
+  o de un número, y referirse a éste como sistema $\{A\}$, sistema $\{B\}$,
+  sistema $\framen 3$, etc. En estos casos, se asume que los ejes coordenados
+  tienen como subíndices el nombre del sistema. Por ejemplo, el sistema
+  $\frame A$ tiene como ejes coordenados a
+  $\hat\x_{_A},\hat\y_{_A},\hat\z_{_A}$.
+
+* Se puede denotar a un sistema utilizando la letra griega sigma con un
+  subíndice que indique el nombre del sistema. Por ejemplo se tiene $\Sigma_A$,
+  $\Sigma_B$. $\Sigma_1$. Al igual que en el caso anterior, los ejes
+  coordenados asociados tienen como subíndice el nombre del sistema de referencia.
+
+Si bien se puede utilizar cualquiera de las notaciones mencionadas, se
+recomienda ser coherentes con la notación escogida; es decir, no pasar de una
+notación a otra. En este capítulo y los siguientes se utilizará la notación que
+lleva llaves. Una observación adicional es que en algunos casos a un sistema de
+referencia se le denomina simplemente *sistema* o *marco* (en inglés
+*frame*) cuando el significado es evidente en el contexto.
+
+
+### Representaciones {#sec-representacion-cuerpo-rigido}
+
+Una representación es un conjunto de parámetros que describen por completo
+alguna configuración. Dependiendo del elemento cuya configuración se desee
+obtener, y del espacio en el que se encuentre, el número de parámetros será
+diferente, siendo la representación también diferente. Usualmente las
+representaciones hacen referencia a configuraciones libres, donde no existen
+restricciones impuestas.
+
+**Representación de un Punto**
+: Para representar adecuadamente un punto, o una partícula, basta con especificar
+sin ambigüedades su posición. Dado que el punto no posee dimensiones, no tiene
+sentido hablar de la orientación de un punto ya que esta orientación sería
+completamente indistinguible y, por tanto, innecesaria. En un plano, un punto
+se puede representar utilizando dos coordenadas para su posición, sean
+cartesianas o polares. Para un punto en el espacio tridimensional, su posición
+está representada utilizando tres parámetros, que normalmente se asocian a las
+coordenadas cartesianas, cilíndricas, o esféricas.
+
+**Representación de un Cuerpo Rígido**
+: Un cuerpo rígido es una colección de partículas y, en principio, su
+representación requeriría la especificación de la posición de cada una de
+ellas. Sin embargo, como se vio en la @sec-definiciones-cuerpo-rigido, en un cuerpo rígido la distancia
+relativa entre todas las partículas permanece siempre constante, por lo que
+bastará con especificar la posición de una de ellas. Por otro lado, cuando el
+cuerpo rígido rota sobre algún eje, aquellos puntos que se encuentran sobre el
+eje de rotación permanecen inamovibles, mientras que las otras partículas rotan
+alrededor de dicho eje. Así, las partículas de un cuerpo rígido pueden
+presentar rotaciones relativas, y no es suficiente con especificar la posición
+de una de ellas, sino que además es necesario especificar de algún modo la
+orientación. Por estos motivos, la representación de un cuerpo rígido requiere
+especificar los siguientes dos componentes:
+
+* La posición del algún punto del cuerpo rígido
+* La orientación del cuerpo rígido
+
+La representación adecuada tanto de la posición como de la orientación requiere
+asociar un sistema de referencia a un punto arbitrario del cuerpo, de tal modo
+que si el cuerpo se mueve, el sistema de referencia se moverá de manera
+solidaria con el cuerpo. De manera general, este sistema asociado no tiene que
+estar necesariamente sobre el cuerpo; puede estar fuera del cuerpo, pero debe
+moverse junto con el cuerpo en todo momento. La representación de la posición y
+orientación de este sistema con respecto a algún otro sistema de referencia
+representará por completo la posición y orientación del cuerpo rígido.
+
+Debido a que los eslabones de un robot se modelan como cuerpos rígidos, se
+asocia sistemas de referencia a cada uno de ellos para poder representarlos
+adecuadamente en el espacio. Más aún, también se asocia sistemas de referencia
+a los objetos que el robot debe manipular o a puntos arbitrarios del espacio de
+trabajo. Por ejemplo, en la @fig-ejemplo-ref-manipulador se asocia al
+robot manipulador un sistema $\frame B$ a su base y un sistema $\frame E$ a su efector final. Además, tanto el objeto a manipular, como una esquina de la faja transportadora también
+presentan sistemas de referencia asociados. La @fig-ejemplo-ref-movil muestra dos robots móviles aéreos con sus sistemas de referencia asociados, $\{\mathcal R_1\}$ y $\{\mathcal R_2\}$ respectivamente, y
+un sistema de referencia $\frame I$ denominado *inercial*, el cual se escoge de
+manera arbitraria, pero permanece siempre fijo.
+
+::: {#fig-ejemplo-sist-ref layout-ncol=2}
+
+![En un robot manipulador](images/represent/frame-manip.png){#fig-ejemplo-ref-manipulador width=60%}
+
+![En robots aéreos](images/represent/frame-aerial.png){#fig-ejemplo-ref-movil width=45%}
+
+Ejemplos de sistema de referencia asociados con un robot manipulador y con robots móviles aéreos. El sistema de referencia que no se mueve es el sistema de la base para el  manipulador, y es el denominado sistema inercial para los robots móviles.
+
+:::
+
+En robótica resulta común denominar al sistema que permanece inamovible como sistema *inercial*, sistema *fijo*, sistema del mundo (en ingles *world frame*), o *sistema espacial* (en inglés: *spatial frame*). Resulta importante representar todos los demás cuerpos rígidos con respecto a este sistema. Por otro lado, al sistema que se asocia a algún cuerpo rígido que forma parte del robot se le suele denominar, de manera general, como *sistema del cuerpo* (en inglés: *body frame*). Los términos sistema espacial y sistema del cuerpo son cada vez más utilizados, incluso en varios paquetes computacionales.
+
+
+### Transformaciones de Cuerpos Rígidos {#sec-definicion-transformaciones-rigidas}
+
+La representación completa de la configuración de un robot se puede describir
+mediante la representación de la posición y orientación de cada uno de sus
+eslabones en cada instante de tiempo. Por ejemplo, para que un robot
+manipulador mueva su efector final de una configuración inicial a una
+configuración final, es necesario una serie de movimientos del efector final y
+de cada uno de los eslabones del robot. Esto requiere desplazar cada cuerpo
+rígido que compone al robot, y a este desplazamiento se le denomina una
+transformación de cuerpo rígido. Por tanto, las transformaciones rígidas están
+ligadas al movimiento que experimenta cada cuerpo rígido que es la base de la
+estructura del robot.
+
+ Una transformación de un cuerpo rígido, también llamada *transformación
+  rígida*, es un mapa $\g:\R^3 \rightarrow \R^3$ que representa un movimiento
+rígido y que cumple con las dos siguientes condiciones.
+
+* Preserva la distancia entre puntos del cuerpo rígido:
+    $$
+    \Vert \g(\p_i)-\g(\p_j)\Vert = \Vert \p_i - \p_j \Vert, ~~\forall \p_i,\p_j \in \R^3.
+    $$
+
+* Preserva la orientación relativa entre puntos del cuerpo rígido. Si se
+  forma dos vectores utilizando tres puntos del cuerpo rígido, esta condición
+  implica que se preserva el producto vectorial:
+  $$
+    \overline{\g}(\vv \times \w) = \overline{\g}(\vv) \times \overline{\g}
+    (\w),  ~~  \forall \vv,\w \in \R^3,
+  $$
+  donde $\overline{\g}$ es el mapa asociado con $\g$ pero que actúa sobre
+  vectores y no puntos. La preservación de la orientación evita reflexiones
+  internas que no son físicamente realizables por objetos rígidos.
+
+
+Algunas consecuencias de las condiciones anteriores que definen una
+transformación rígida, y que son útiles para demostrar algunas propiedades de
+la representación espacial de cuerpos rígidos, son: $i$) el producto
+punto, o producto interno, es preservado por las transformaciones de cuerpos
+rígidos:
+$$
+  \vv_1 \cdot \vv_2 = \overline{\g}(\vv_1) \cdot \overline{\g}(\vv_2);
+$$
+y, $ii$) un sistema coordenado ortonormal es transformado en otro
+sistema coordenado ortonormal, debido a que tanto el producto punto como el
+producto vectorial son preservados. 
+<!-- % Para una demostración, ver Murray pag 21 -->
+La preservación del producto punto implica que vectores ortogonales (cuyo
+producto punto es cero) son transformados en vectores ortogonales. 
+
+La transformación rígida $\g$ definida anteriormente es una transformación
+genérica, pero de manera concreta se trabajará con dos tipos de
+transformaciones: transformación de posición y transformación de
+orientación. Ambas transformaciones son necesarias para representar
+adecuadamente un cuerpo rígido en el espacio y, consecuentemente, las partes
+importantes del robot como, por ejemplo, el efector final de un manipulador, o
+el chasis de un robot móvil. 
+
+
+## Posición de un Cuerpo Rígido {#sec-posicion-cuerpo-rigido}
+
+Considerar el cuerpo rígido con forma de caja mostrado en la @fig-posicion-cuerpo-rigido. La posición del cuerpo rígido
+se describe mediante la posición de un punto $P$ cualquiera fijo en el
+cuerpo. A su vez, este punto $P$ se representa mediante un vector posición
+$\p=\overline{OP}$ con respecto a algún sistema de referencia externo cuyo
+origen es $O$. Como se mencionó en la @sec-representacion-cuerpo-rigido, se suele asociar un sistema de
+coordenadas al cuerpo rígido, siendo común escoger la posición del origen de dicho sistema
+como la posición de todo el cuerpo. Dicho de otro modo, el vector posición del origen
+del sistema asociado con el cuerpo rígido describe su posición. En la @fig-posicion-cuerpo-rigido el punto escogido para describir la
+posición del cuerpo es $P$ pero podría ser, sin pérdida de generalidad,
+cualquier otro punto del cuerpo. Inclusive se podría escoger un punto fuera del cuerpo, siempre que se mueva de manera solidaria con el cuerpo.
+
+![Vector posición que representa la posición de un punto $P$.](images/represent/posicion_cuerpo.png){#fig-posicion-cuerpo-rigido width=35%}
+
+En general, en el espacio $n$-dimensional $\R^n$ se requiere por lo menos $n$
+parámetros para describir por completo la posición. Por este motivo, la
+posición de un punto en el espacio $\R^n$ tiene en general $n$ grados de
+libertad. Los casos bidimensional y tridimensional son importantes en robótica.
+
+* En el espacio bidimensional $\R^2$, la posición presenta dos grados de
+  libertad dado que un vector posición está completamente descrito por dos
+  parámetros independientes. Un ejemplo de estos parámetros son las coordenadas
+  cartesianas $(x,y)$, o las coordenadas polares $(\rho, \theta)$.
+
+* En el espacio tridimensional $\R^3$, la posición tiene tres grados de
+  libertad dado que, sin importar la representación que se use, son necesarios
+  tres parámetros independientes para representar la posición. Un ejemplo de
+  estos parámetros son las coordenadas cartesianas $(x,y,z)$.
+
+La posición de un punto $P$ con respecto al origen $O$ de un sistema de
+referencia queda completamente representada mediante un *vector posición* $\p$. Según el sistema de referencia que se utilice, los
+componentes de este vector de posición variarán. Un punto $P$ representado por
+el vector $\p$ en el sistema $\frame A$ se denotará como $\ssv{A}{\p}{}$ y
+tendrá los siguientes componentes:
+$$
+\ssv{A}{\p}{} = (\sv{A}{x},\sv{A}{y},\sv{A}{z}),
+$$
+donde el superíndice representa el sistema de referencia de cada
+componente. Los vectores siempre se representarán como vectores columna, pero
+al escribirlos en una fila se representarán como una tupla. El mismo vector
+posición, representado con respecto a un sistema de referencia llamado
+$\frame B$ tendrá los siguientes componentes:
+$$
+\ssv{B}{\p}{} = (\sv{B}{x},\sv{B}{y},\sv{B}{z}).
+$$
+Se debe notar que, a pesar de que el vector que describen es el mismo, se tiene
+que $\ssv{A}{\p}{} \neq \ssv{B}{\p}{}$, debido a que sus sistemas de referencia
+son diferentes. En general, la posición con respecto a distintos sistemas de
+referencia tendrá distintos componentes, con distintos valores numéricos, aún
+cuando el punto descrito sea el mismo.
+
+**Representaciones**
+: La posición se representa de forma diferente en los espacios Euclideanos
+$\mathbb R^2$ y $\mathbb R^3$. En el plano $\mathbb R^2$ existen dos formas
+principales de representación: las coordenadas cartesianas $(x,y)$ y las
+coordenadas polares $(\rho, \theta)$. En el espacio tridimensional la posición
+se representa usualmente mediante coordenadas cartesianas, coordenadas
+cilíndricas, o coordenadas esféricas. Según la representación que se utilice,
+los componentes del vector posición serán diferentes, aún cuando el punto que
+describen sea el mismo.
+
+En robótica, las coordenadas más utilizadas son las coordenadas cartesianas,
+tanto en el plano como en el espacio tridimensional. Sin embargo, en algunos
+casos específicos se utiliza otras coordenadas, como cuando la
+configuración del robot es semejante a la definición de estas coordenadas
+alternativas. A continuación se hará una descripción de estas formas de
+representación para el caso tridimensional. 
+
+
+### Coordenadas Cartesianas {#sec-coord-cart}
+
+En coordenadas cartesianas, también denominadas *coordenadas rectangulares*, un punto $P$ se representa mediante tres números reales, los
+cuales indican las magnitudes de las proyecciones perpendiculares en los tres
+ejes coordenados. Es práctica común denominar a cada coordenada con el nombre
+del eje asociado.  En la @fig-coordenadas-cartesianas, el vector
+posición $\p$ que representa al punto $P$ queda definido en coordenadas
+cartesianas como:
+$$
+  \p = (x, y, z)
+$$
+donde, dado un sistema de referencia formado por los ejes $\hat\x$, $\hat\y$,
+$\hat\z$, los componentes cartesianos son las proyecciones en los ejes:
+$$
+  x = \p \cdot \hat\x,\qquad ~~ y = \p \cdot \hat\y, \qquad ~~ z = \p \cdot \hat\z. 
+$$
+La operación $\{\cdot\}$ denota el producto interno, también denominado
+producto escalar o producto punto, y representa la proyección en cada eje
+coordenado, ya que los ejes son vectores unitarios.
+
+::: {#fig-coordenadas-posicion layout-ncol=3}
+
+![Coordenadas Cartesianas](images/represent/coord-cartesianas.png){#fig-coordenadas-cartesianas width=30%}
+
+![Coordenadas cilíndricas](images/represent/coord-cilindricas.png){#fig-coordenadas-cilindricas width=30%}
+
+![Coordenadas esféricas](images/represent/coord-esfericas.png){#fig-coordenadas-esfericas width=30%}
+
+Representación de la posición mediante diferentes sistemas de coordenadas.
+
+:::
+
+### Coordenadas Cilíndricas {#sec-coord-cilindr}
+
+Las coordenadas cilíndricas son una generalización de las coordenadas polares
+de dos a tres dimensiones añadiendo la altura. Las tres coordenadas de un punto
+$P$, mostrado en la @fig-coordenadas-cilindricas, se definen de la
+siguiente manera.
+
+* Distancia radial $\rho$: es la distancia Euclideana del eje $\hat\z$ al
+  punto $P$. Se suele considerar como un valor únicamente positivo.
+
+* Ángulo de azimut $\theta$: es el ángulo entre el eje $\hat\x$ y el
+  rayo que va desde el origen de coordenadas hasta la proyección de $P$ en el
+  plano $xy$.
+
+* Altura $z$: es la distancia (con signo) del plano $xy$ al punto $P$,
+  donde el signo positivo está en la dirección del eje $\hat\z$ positivo.
+
+Usando la definición de estos componentes, el vector posición $\p$ que
+representa la posición del punto $P$ en coordenadas cilíndricas es
+$$
+  \p = (\rho, \theta, z).
+$$
+Otra notación para la distancia radial es $r$ y para el ángulo de azimut es
+$\phi$, llevando a la notación equivalente: $\p=(r,\phi,z)$. Existen otras
+notaciones adicionales, pero son menos comunes.
+
+Se debe tener en cuenta que los vectores unitarios en coordenadas cilíndricas,
+así como sus derivadas, tienen diferentes propiedades que las usuales en
+coordenadas cartesianas. Por este motivo, operaciones matemáticas como
+gradiente, rotacional, divergencia, Laplaciano, entre otras, tienen que ser
+manejadas con cuidado. De igual modo, debido a las propiedades particulares de
+los vectores unitarios, las coordenadas de la velocidad y aceleración son
+diferentes que en coordenadas cartesianas.
+<!-- 
+% TODO: Añadir la velocidad en coordenadas cilíndricas
+% TODO: Añadir referencia para gradiente, velocidad, aceleración, etc.
+-->
+
+**Relación: Coordenadas Cartesianas y Cilíndricas**
+: Utilizando geometría básica se puede demostrar que la relación entre
+coordenadas Cartesianas y cilíndricas está dada por:
+$$
+\begin{align*}
+  x & = \rho\cos\theta, &    \rho & = \sqrt{x^2+y^2} \\
+  y & = \rho\sen\theta, &    \theta & = \atan2~\!(y,x)
+\end{align*}
+$$
+con los componentes antes definidos. El componente $z$ no se incluye en estas
+ecuaciones debido a que es invariante en ambas representaciones. La función
+$\atan2$, descrita con mayor detalle en el [Apéndice -@sec-ap-funcion-atan2], es
+el arco tangente que toma en cuenta el cuadrante correcto de sus argumentos y
+permite que el ángulo de azimut $\theta$ esté en el rango
+$(-180\grad, 180\grad)$.
+
+### Coordenadas Esféricas {#sec-coord-esfer}
+
+Considerar un sistema de referencia con origen $O$, y un punto $P$, como se
+muestra en la @fig-coordenadas-esfericas. Las tres coordenadas
+esféricas de este punto $P$ se definen en este sistema de referencia de la
+siguiente manera.
+
+* Radio o distancia radial $r$: es la distancia Euclideana del origen $O$
+  al punto $P$.
+
+* Inclinación $\theta$ (o *ángulo polar*): es el ángulo que existe
+  desde el eje $\hat\z$ hasta el segmento de recta $OP$.
+* Azimut $\varphi$ (o *ángulo azimutal*): es el ángulo con signo
+  medido desde el eje $\hat\x$ hacia la proyección ortogonal del segmento de
+  línea $OP$ en el plano $xy$.
+
+Usando estos componentes, el vector posición $\p$ que representa al punto $P$
+en coordenadas esféricas es:
+$$
+  \p = (r, \theta, \varphi).
+$$
+El orden en el que aparecen el ángulo de inclinación y el ángulo azimutal no es
+estándar, ya que a veces se invierte el orden de los ángulos como
+$(r,\varphi,\theta)$. Más aún, en ocasiones se utiliza la variable $\varphi$
+para la inclinación y $\theta$ para el azimut, lo cual puede resultar
+confuso. Debido a esta falta de estandarización, cuando se trabaja con
+coordenadas esféricas es necesario tener claro la convención que se está
+utilizando, para evitar confusiones.
+
+Al igual que en coordenadas cilíndricas, se debe tener en cuenta que los
+vectores unitarios en coordenadas esféricas y sus derivadas tienen diferentes
+propiedades que en coordenadas cartesianas. Igualmente, operaciones matemáticas
+como gradiente, rotacional, divergencia, Laplaciano, entre otras, tienen que
+ser manejadas con cuidado en coordenadas esféricas. Asimismo, los componentes
+resultantes para la velocidad y aceleración son diferentes que en coordenadas
+cartesianas o cilíndricas.
+
+**Relación: Coordenadas Esféricas y Cartesianas**
+: A partir de un simple análisis geométrico se puede demostrar las siguientes
+relaciones de las coordenadas esféricas con las coordenadas Cartesianas:
+$$
+\begin{align*}
+  x & = r~\sen\theta\cos\varphi & r & = \sqrt{x^2+y^2+z^2} \\
+  y & = r~\sen\theta\sen\varphi & \theta &=\cos^{-1}\left(\frac{z}{r} \right)\\
+  z & = r\cos\theta       &    \varphi & = \atan2~\!(y,x)
+\end{align*}
+$$
+donde el radio es positivo $r \geq 0$, la inclinación $\theta$ está limitada
+por $0 \leq \theta \leq\pi$, y el azimut $\varphi$ por $0 \leq \varphi < 2\pi$.
+
+**Relación: Coordenadas Esféricas y Cilíndricas**
+: Debido a que el
+ángulo $\theta$ se utiliza tanto en las coordenadas esféricas como en las
+cilíndricas pero con significados diferentes, se denotará a las coordenadas
+cilíndricas utilizando la siguiente notación: $(\rho,\theta_c,z)$, donde la
+única diferencia es el uso de $\theta_c$ para el ángulo de azimut. La notación
+para las coordenadas esféricas será la misma utilizada anteriormente. Con esta
+observación, y usando argumentos geométricos, la relación entre las coordenadas
+esféricas y las coordenadas cilíndricas está dada por:
+$$
+\begin{align*}
+  \rho & = r~\sen\theta & r & = \sqrt{\rho^2+z^2}    \\
+  \theta_c & = \varphi & \theta & = \atan2~\!(\rho,z) \\
+  z & = r\cos\theta & \varphi & = \theta_c
+\end{align*}
+$$
+Una alternativa a estas transformaciones directas consiste en utilizar las
+coordenadas cartesianas como elementos de transformación intermedios. Es decir,
+se puede convertir primero a coordenadas cartesianas y luego de estas
+coordenadas al sistema coordenado deseado.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-posicion-representacion}
+
+## Conversión entre coordenadas de posición
+Dados cuatro puntos representados mediante las siguientes coordenadas
+cartesianas, determinar las coordenadas cilíndricas y esféricas equivalentes:
+a) $(4,~3,~12)$, b) $(-4,-3,~12)$, c) $(4,-3,-12)$, d) $(-4,~3,-12)$.
+
+*Solución:*
+
+Para convertir coordenadas cartesianas a
+coordenadas cilíndricas o esféricas solo se debe reemplazar los valores en las
+expresiones anteriores, teniendo cuidado de utilizar la función $\atan2$ para
+obtener el cuadrante correcto. Con un reemplazo correcto se obtiene los
+siguientes resultados:
+
+a) En coordenadas cilíndricas: $(5,~36.9\grad,~12)$, y en esféricas:
+$(13,~ 22.6\grad, 36.9\grad)$.
+
+b) En coordenadas cilíndricas: $(5,-143.1\grad,~12)$, y en esféricas:
+$(13,~ 22.6\grad, -143.1\grad)$.
+
+c) En coordenadas cilíndricas: $(5,-36.9\grad,-12)$, y en esféricas:
+$(13,~ 157.4\grad, -36.9\grad)$.
+
+d) En coordenadas cilíndricas: $(5,~143.1\grad,-12)$, y en esféricas:
+$(13,~ 157.4\grad, 143.1\grad)$.
+
+Se puede graficar los resultados para ver la coherencia de los mismos,
+principalmente con respecto a los cuadrantes ya que los cuatro puntos tienen la
+misma norma pero se encuentran en cuadrantes diferentes.
+
+:::
+:::
+
+
+## Orientación de un Cuerpo Rígido {#sec-orientacion-cuerpo-rigido}
+
+Como se mencionó en la @sec-representacion-cuerpo-rigido, para
+poder representar completamente un cuerpo rígido no basta con especificar su
+posición, sino que se requiere además especificar su orientación. En la @sec-posicion-cuerpo-rigido se describió que para representar la
+posición del cuerpo es necesario representar la posición de un punto $P$ sobre
+el mismo, con respecto a algún sistema de referencia independiente del cuerpo
+rígido. Este sistema suele recibir el nombre de *sistema inercial* si
+permanece inamovible, y se le asignará arbitrariamente el nombre de $\frame A$
+en la @fig-orientacion-cuerpo-rigido. Para representar la
+orientación, el punto $P$ sobre el cuerpo se utiliza como el origen de un
+sistema de coordenadas $\frame B$, el cual estará fijo en el cuerpo rígido, de
+tal modo que si el cuerpo se mueve, este sistema experimenta el mismo
+movimiento. La relación entre el sistema del cuerpo $\frame B$ y el sistema
+inercial de referencia $\frame A$ determina la orientación del cuerpo.
+
+![Orientación de un cuerpo rígido, representada mediante la orientación de su sistema de referencia asociado $\frame B$, con respecto a un sistema inercial $\frame A$.](images/represent/orientacion_cuerpo.png){#fig-orientacion-cuerpo-rigido width=40%}
+
+Existen varias formas de representar la relación existente entre ambos sistemas
+de referencia y, por tanto, de representar la orientación de un cuerpo
+rígido. La forma canónica de hacerlo es mediante la denominada *matriz
+  de rotación*, cuyas columnas representan los ejes de un sistema expresado en
+el otro sistema. Esta matriz puede ser parametrizada dando origen a otras
+formas de representación, las cuales principalmente son *ángulos de Euler*, *representación eje-ángulo y *cuaterniones. Esta sección describe las matrices de rotación así como sus propiedades fundamentales. Las otras parametrizaciones se describen en el [capítulo -@sec-chapter-parametrizaciones-or].
+
+
+### Matriz de Rotación {#sec-matriz-rotacion-generica}
+
+Considérese un sistema coordenado $\frame A$ constituido por los
+ejes unitarios $\hat \x_{\!_A}$, $\hat \y_{\!_A}$, $\hat \z_{\!_A}$. Dado que
+estos ejes son vectores que representan las coordenadas canónicas del sistema
+$\frame A$, pueden ser expresados con respecto a $\frame A$ como
+$$
+\begin{equation*}
+  \ssv{A}{\hat \x}{A} = \bm{1 \\ 0 \\ 0}, \qquad
+  \ssv{A}{\hat \y}{A} = \bm{0 \\ 1 \\ 0}, \qquad
+  \ssv{A}{\hat \z}{A} = \bm{0 \\ 0 \\ 1},
+\end{equation*}
+$$
+donde el superíndice $^A$ de la izquierda denota que cada vector está
+representado en el sistema $\frame A$, y el subíndice de la derecha indica que
+los ejes pertenecen al sistema $\frame A$. Considérese además un sistema coordenado
+$\frame B$ definido por los ejes unitarios $\hat \x_{\!_B}$, $\hat \y_{\!_B}$,
+$\hat \z_{\!_B}$. Al igual que en el caso anterior, los vectores
+$\hat \x_{\!_B}$, $\hat \y_{\!_B}$, $\hat \z_{\!_B}$ pueden ser representados
+en el sistema $\frame B$ como
+$$
+\begin{equation*}
+  \ssv{B}{\hat \x}{B} = \bm{1 \\ 0 \\ 0}, \qquad
+  \ssv{B}{\hat \y}{B} = \bm{0 \\ 1 \\ 0}, \qquad
+  \ssv{B}{\hat \z}{B} = \bm{0 \\ 0 \\ 1}
+\end{equation*}
+$$
+dado que son los ejes canónicos del sistema $\frame B$. Finalmente, considérese
+que ambos sistemas tienen el mismo punto de origen pero una orientación
+completamente diferente, como se muestra en la @fig-sistemas-A-B. El problema de la orientación consiste en 
+describir al sistema $\frame B$ con respecto al sistema $\frame A$.
+
+![Sistemas $\frame A$ y $\frame B$ con diferente orientación pero origen común.](images/represent/sistemas_A_B.png){#fig-sistemas-A-B width=30%}
+
+Como se mencionó en la @sec-sistemas-referencia, un sistema de
+referencia está completamente descrito por sus ejes unitarios. Así, la
+orientación de $\frame B$ con respecto a $\frame A$ está completamente descrita
+al expresar cada uno de los ejes del sistema $\frame B$ en el sistema
+$\frame A$ o, equivalentemente, al proyectar cada eje de $\frame B$ en
+$\frame A$. Esta proyección se realiza utilizando el producto escalar dado que
+los ejes coordenados son unitarios.
+<!-- Añadir el caso bidimensional? -->
+La proyección de cada eje del sistema $\frame B$ en el sistema $\frame A$ está
+dada por:
+$$
+\begin{align*}
+  \ssv{A}{\hat \x}{B} & = (\hat \x_{\!_B} \cdot \hat \x_{\!_A})\hat \x_{\!_A} +
+                        (\hat \x_{\!_B} \cdot \hat \y_{\!_A})\hat \y_{\!_A} +
+                        (\hat \x_{\!_B} \cdot \hat \z_{\!_A})\hat \z_{\!_A} \\
+  \ssv{A}{\hat \y}{B} & = (\hat \y_{\!_B} \cdot \hat \x_{\!_A})\hat \x_{\!_A} +
+                        (\hat \y_{\!_B} \cdot \hat \y_{\!_A})\hat \y_{\!_A} +
+                        (\hat \y_{\!_B} \cdot \hat \z_{\!_A})\hat \z_{\!_A} \\
+  \ssv{A}{\hat \z}{B} & = (\hat \z_{\!_B} \cdot \hat \x_{\!_A})\hat \x_{\!_A} +
+                        (\hat \z_{\!_B} \cdot \hat \y_{\!_A})\hat \y_{\!_A} +
+                        (\hat \z_{\!_B} \cdot \hat \z_{\!_A})\hat \z_{\!_A},
+\end{align*}
+$$
+donde para cada vector, el primer sumando es el componente en la dirección de
+$\hat\x_{\!_A}$, el segundo es el componente en la dirección de
+$\hat\y_{\!_A}$, y el tercero es el componente en la dirección de
+$\hat\z_{\!_A}$. Cuando se expresa un vector en el sistema $\frame A$, la
+primera coordenada se encuentra en la dirección de $\hat \x_{\!_A}$, la segunda
+en la dirección de $\hat \y_{\!_A}$ y la tercera en la dirección de
+$\hat \z_{\!_A}$. Debido a esto, los componentes de los vectores $\ssv{A}{\hat
+  \x}{B}$, $\ssv{A}{\hat \y}{B}$, $\ssv{A}{\hat \z}{B}$ anteriores pueden ser
+expresados en el sistema $\frame A$ de forma vectorial como
+$$
+\begin{equation*}
+  \ssv{A}{\hat \x}{B} = \bm{
+    \hat \x_{\!_B} \cdot \hat \x_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \y_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \z_{\!_A}}, \qquad
+  \ssv{A}{\hat \y}{B} = \bm{
+    \hat \y_{\!_B} \cdot \hat \x_{\!_A} \\
+    \hat \y_{\!_B} \cdot \hat \y_{\!_A} \\
+    \hat \y_{\!_B} \cdot \hat \z_{\!_A}}, \qquad
+  \ssv{A}{\hat \z}{B} = \bm{
+    \hat \z_{\!_B} \cdot \hat \x_{\!_A} \\
+    \hat \z_{\!_B} \cdot \hat \y_{\!_A} \\
+    \hat \z_{\!_B} \cdot \hat \z_{\!_A}}.
+\end{equation*}
+$$
+
+Las expresiones $\ssv{A}{\hat \x}{B}$, $\ssv{A}{\hat \y}{B}$,
+$\ssv{A}{\hat \z}{B}$ describen por completo al sistema $\frame B$ con respecto
+al sistema $\frame A$. Estos tres vectores pueden ser escritos como vectores
+columna de una matriz $\Rot$ de la siguiente forma:
+$$
+\begin{equation*}
+  \Rot = \bm{| & | & | \\ 
+             \ssv{A}{\hat \x}{B} & \ssv{A}{\hat \y}{B} & \ssv{A}{\hat \z}{B} \\
+             | & | & |} 
+\end{equation*}
+$$
+donde las líneas verticales indican que cada elemento de la matriz es en
+realidad un vector columna. Utilizando esta matriz $\Rot$, los ejes del sistema
+$\frame B$ son representados en el sistema $\frame A$ como
+$$
+\begin{equation*}
+  \ssv{A}{\hat \x}{B} = \Rot ~\ssv{B}{\hat \x}{B}, \qquad
+  \ssv{A}{\hat \y}{B} = \Rot ~\ssv{B}{\hat \y}{B}, \qquad
+  \ssv{A}{\hat \z}{B} = \Rot ~\ssv{B}{\hat \z}{B}, 
+\end{equation*}
+$$
+lo cual puede ser verificado realizando el producto indicado término a término.
+Debido a que la matriz $\Rot$ expresa los ejes del sistema $\frame B$ con
+respecto al sistema $\frame A$, y son estos ejes los que describen completamente a un sistema (ya que forman una base ortonormal), se dice que 
+$\Rot$ representa la orientación de $\frame B$ con respecto a $\frame A$. De
+manera equivalente, la matriz $\Rot$ representa la rotación del sistema
+$\frame B$ con respecto al sistema $\frame A$ y se denomina *matriz de
+  rotación*. La notación utilizada para hacer esto explícito es:
+$$
+\begin{equation*}
+  \Rot = \ssr{A}{B}
+\end{equation*}
+$$
+donde el subíndice y el superíndice indican que se representa la orientación
+del sistema $\frame B$ con respecto al sistema $\frame A$. El superíndice
+izquierdo indica el sistema de referencia, mientras que el subíndice derecho
+indica el sistema actual. Otras notaciones utilizadas para representar
+$\ssr{A}{B}$ son: $\Rot^{A}_{_B}$, ${^{A}_{_B}}\Rot$ o $\Rot_{_{AB}}$, pero en este libro se utilizará la notación $\ssr{A}{B}$ por facilidad.
+
+En resumen, la matriz de rotación que representa la orientación de un sistema
+$\frame B$ con respecto a un sistema $\frame A$ es:
+$$
+\boxed{
+  \ssr{A}{B} = \bm{\ssv{A}{\hat \x}{B} & \ssv{A}{\hat \y}{B} & \ssv{A}{\hat \z}{B}} = 
+  \bm{ 
+    \hat \x_{\!_B} \cdot \hat \x_{\!_A} & \hat \y_{\!_B} \cdot \hat \x_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \x_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \y_{\!_A} & \hat \y_{\!_B} \cdot \hat \y_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \y_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \z_{\!_A} & \hat \y_{\!_B} \cdot \hat \z_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \z_{\!_A}
+  }}.
+$$ {#eq-matriz-rotacion-generica}
+
+Debido a que la norma de cada eje coordenado es la unidad (se trata de vectores
+unitarios), el producto punto representa solamente el coseno del ángulo
+existente entre el respectivo par de ejes coordenados. Por ejemplo,
+$\hat \x_{\!_B} \cdot \hat \y_{\!_A}=\cos(\theta_{x_{_B},y{_A}})$, donde
+$\theta_{x_{_B},y{_A}}$ representa el ángulo entre los ejes $\hat \x_{\!_B}$ y
+$\hat \y_{\!_A}$. Así, la matriz de rotación en realidad expresa el coseno de
+los ángulos entre los ejes y está compuesta solamente por cosenos (o sus
+simplificaciones trigonométricas). Por este motivo, a las columnas de la matriz
+de rotación también se les denomina *cosenos directores*.
+
+![Sistemas $\frame A$ y $\frame B$ para el @exm-matriz-rotacion-1.](images/represent/ejemplo_sistref.png){#fig-sistemas-A-B-ejemplo width=40%}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-rotacion-1}
+
+## Determinación de una matriz de rotación
+Considerar los dos sistemas de referencia $\frame A$ y $\frame B$ mostrados en
+la @fig-sistemas-A-B-ejemplo, donde cada uno de los ejes de cada
+sistema es un vector unitario. Utilizando la geometría de ambos sistemas mostrados, determinar la
+matriz de rotación $\ssr{A}{B}$ que representa al sistema $\frame B$ con
+respecto al sistema $\frame A$.
+
+*Solución:*
+
+Para determinar la matriz de rotación $\ssr{A}{B}$ se debe utilizar la definición genérica dada en @eq-matriz-rotacion-generica, la cual consiste en una serie de
+productos escalares que pueden ser escritos en función del coseno del ángulo
+entre ambos ejes. Utilizando la geometría de la figura, se tiene por ejemplo
+que $\hat \x_{\!_B} \cdot \hat \x_{\!_A}=\cos(90\grad)$, ya que el vector $\hat \x_{\!_B}$ con el vector $\hat \x_{\!_A}$ forman un ángulo de
+$90\grad$. Siguiendo con este análisis de la figura se tiene que  $\ssr{A}{B}$
+se expresa en función de los cosenos de los ángulos como
+$$
+  \ssr{A}{B} = \bm{\cos(90^{\circ}) &  \cos(180^{\circ}) & \cos(90^{\circ}) \\
+    \cos(0^{\circ}) &  \cos(90^{\circ}) & \cos(90^{\circ}) \\
+    \cos(90^{\circ}) &  \cos(90^{\circ}) & \cos(0^{\circ}) },
+$$
+que simplificando da:
+$$
+  \ssr{A}{B} = \bm{ 0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1}.
+$$
+Esta matriz resultante se puede obtener con mayor facilidad expresando cada
+columna como un eje de $\frame B$ con respecto a $\frame A$ de la siguiente
+manera. El eje $\hat \x_{\!_B}$ se encuentra en la dirección de
+$\hat \y_{\!_A}$, por lo que sus coordenadas en el sistema $\frame A$ serán
+$(0,1,0)$. Estas coordenadas se observan en la primera columna de $\ssr{A}{B}$.
+De igual manera, el eje $\hat \y_{\!_B}$ se encuentra en la dirección de
+$-\hat \x_{\!_A}$, por lo que sus coordenadas en el sistema $\frame A$ serán
+$(-1,0,0)$, y se observan en la segunda columna de $\ssr{A}{B}$. Finalmente,
+$\hat \z_{\!_B}$ se encuentra en la misma dirección que $\hat \z_{\!_A}$, por
+lo que su representación en el sistema $\frame A$ será $(0,0,1)$ y se encuentra
+en la tercera columna de la matriz $\ssr{A}{B}$. En este ejemplo este análisis
+es relativamente sencillo dado que la rotación se realiza solo alrededor de un
+eje.
+
+:::
+:::
+
+![Sistemas $\frame A$ y $\frame B$ para el @exm-matriz-rotacion-2.](images/represent/ejemplo_rotz.png){#fig-ejemplo-rotz width=40%}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-rotacion-2}
+
+## Matriz de rotación alrededor del eje $\z$.
+El sistema $\frame{A}$ es rotado un ángulo $\theta$ alrededor del eje $z$, obteniéndose un nuevo sistema $\frame{B}$, como se muestra en la @fig-ejemplo-rotz. Encontrar la matriz de rotación $\Rot$ que describe esta rotación.
+
+*Solución:*
+
+Al igual que en el @exm-matriz-rotacion-1, la matriz de rotación $\ssr{A}{B}$, que
+representa una rotación genérica alrededor del eje $z$ se obtiene utilizando
+@eq-matriz-rotacion-generica. A partir de la observación de la geometría
+de la figura, en este caso existen dependencias del ángulo $\theta$ y la matriz
+estará dada por
+$$
+  \ssr{A}{B} = \bm{\cos(\theta) &  \cos(90^{\circ}+\theta) & \cos(90^{\circ}) \\
+    \cos(90^{\circ}-\theta) &  \cos(\theta) & \cos(90^{\circ}) \\
+    \cos(90^{\circ}) &  \cos(90^{\circ}) & \cos(0^{\circ}) }.
+$$
+Simplificando se obtiene:
+$$
+  \ssr{A}{B} = \bm{\cos\theta & -\sen\theta & 0\\ 
+    \sen\theta & \cos\theta & 0 \\
+    0 & 0 & 1}.
+$$
+Alternativamente, se puede llegar a este resultado por simple inspección de
+cada eje de $\frame B$ con respecto al sistema $\frame A$, como se realizó en
+la parte final del @exm-matriz-rotacion-1.
+
+:::
+:::
+
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-rotacion-3}
+
+## Vectores columna de una matriz de rotación
+
+Los ejes de un sistema de referencia $\frame B$ en términos de otro sistema de
+referencia $\frame A$ están dados por los vectores:
+$$
+  x = \bm{\frac{1}{\sqrt 2} \\ 0 \\ \frac{1}{\sqrt 2}}, \qquad
+  y = \bm{\frac{1}{\sqrt 2} \\ 0 \\ -\frac{1}{\sqrt 2}}, \qquad
+  z = \bm{0 \\ 1 \\ 0}.
+$$
+Encontrar la matriz de rotación que describe al sistema $\frame B$ en términos
+del sistema de referencia $\frame A$.
+
+*Solución:*
+
+Se desea obtener la matriz $\ssr{A}{B}$, cuyas
+columnas son los vectores componentes del sistema $\frame B$ expresados con
+respecto a $\frame A$. Debido a que ya se conoce dichos vectores, la matriz de
+rotación $\ssr{A}{B}$ que especifica la orientación del sistema $\frame B$ en
+términos del sistema $\frame A$ está dada por
+$$
+  \ssr{A}{B} = \bm{
+    \frac{1}{\sqrt 2} & \frac{1}{\sqrt 2} & 0 \\
+    0 & 0 & 1 \\
+    \frac{1}{\sqrt 2} & -\frac{1}{\sqrt 2} & 0
+  }.
+$$
+
+:::
+:::
+
+### Rotaciones Elementales
+
+Se denomina rotaciones *elementales* o rotaciones *canónicas* a
+aquellas rotaciones que se realizan alrededor de cada uno de los ejes canónicos
+$\hat\x$, $\hat\y$, $\hat\z$ de cualquier sistema de referencia. La expresión
+matricial de cada una de estas matrices se puede obtener utilizando 
+@eq-matriz-rotacion-generica como se realizó en el @exm-matriz-rotacion-2. A continuación se presenta las expresiones asociadas a cada una de estas rotaciones.
+
+::: {#fig-rotaciones-elementales layout-ncol=3}
+
+![Rotación alrededor de $x$](images/represent/rotx.png){#fig-rotacion-x width=30%}
+
+![Rotación alrededor de $y$](images/represent/roty.png){#fig-rotacion-y width=30%}
+
+![Rotación alrededor de $z$](images/represent/ejemplo_rotz.png){#fig-rotacion-z width=30%}
+
+Rotaciones elementales alrededor de los tres ejes canónicos.
+
+:::
+
+* La rotación de un ángulo $\theta$ alrededor del eje $x$, esquematizado en 
+  la @fig-rotacion-x, se representa como $\Rot_x(\theta)$ y está dada
+  por:
+$$
+  \Rot_x(\theta) = \bm{1 & 0 & 0 \\ 
+    0 & \cos\theta & -\sen\theta \\
+  0 & \sen\theta & \cos\theta}
+$${#eq-rotx}
+
+* La rotación de un ángulo $\theta$ alrededor del eje $y$, mostrado en la
+  @fig-rotacion-y, se representa como $\Rot_y(\theta)$ y está dada
+  por:
+$$
+  \Rot_y(\theta) = \bm{\cos\theta & 0 & \sen\theta \\ 
+    0 & 1 & 0 \\
+    -\sen\theta & 0 & \cos\theta}
+$$ {#eq-roty}
+
+* La rotación de un ángulo $\theta$ alrededor del eje $z$, como se ve en la
+  @fig-rotacion-z, se representa como $\Rot_z(\theta)$ y está dada por:
+$$
+  \Rot_z(\theta) = \bm{\cos\theta & -\sen\theta & 0\\ 
+    \sen\theta & \cos\theta & 0 \\
+    0 & 0 & 1}
+$$ {#eq-rotz}
+
+La importancia de las rotaciones canónicas radica en que, como se verá en la @sec-angulos-de-euler, es posible expresar cualquier rotación
+arbitraria en el espacio a partir de su adecuada combinación; es decir, a
+partir de multiplicaciones adecuadas.
+
+**Algunas propiedades**
+
+: Las matrices de rotación elementales (en $x$, $y$ y $z$) cumplen
+las siguientes propiedades, las cuales pueden ser verificadas de manera directa
+reemplazando valores:
+$$
+\begin{align*}
+  %\label{eq:rot-elemental-propiedad}
+  \Rot_k(0) & = I \\
+  \Rot_k(\theta_1)\Rot_k(\theta_2) & = \Rot_k(\theta_1+\theta_2) \\
+  \Rot_k(-\theta) & = \Rot_k^T(\theta)
+\end{align*}
+$$
+donde $k=x,y,z$. La primera propiedad indica que una rotación de cero grados es
+igual a la matriz identidad. La segunda propiedad indica que si se rota
+sucesivamente dos ángulos alrededor del mismo eje, el resultado es igual a una
+rotación de la suma de los ángulos. La tercera propiedad muestra que la
+rotación de un ángulo negativo es equivalente a la transpuesta del ángulo
+positivo. En general, estas propiedades no solo son válidas para los ejes
+canónicos sino para cualquier eje $\vect k$.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-canonica}
+
+## Eje y ángulo de una matriz elemental
+Considerar la matriz de rotación $A$ dada por
+$$
+A=\bm{\frac{1}{2} & 0 &
+  \frac{\sqrt 3}{2} \\ 0 & 1 & 0 \\ -\frac{\sqrt 3}{2} & 0 & \frac{1}{2}}.
+$$
+Determinar el eje alrededor del cual se realiza la rotación representada por
+$A$, así como el ángulo de giro.
+
+*Solución:*
+
+Por comparación con las matrices elementales, se puede ver que la forma de $A$
+es similar a la forma que tiene la matriz de la @eq-roty que describe una
+rotación alrededor del eje $\y$. Comparando términos, y aplicando funciones
+trigonométricas, se puede determinar que el ángulo es $60^{\circ}$. Es
+normalmente conveniente obtener este ángulo utilizando la función $\atan2$ para
+obtener el cuadrante correcto.
+<!-- TODO: añadir ejemplo donde use atan2 para no tener un resultado erróneo -->
+
+:::
+:::
+
+### Matriz de Rotación Inversa
+
+La matriz de rotación genérica dada en la @eq-matriz-rotacion-generica relaciona al sistema $\frame B$ con respecto al sistema $\frame A$. Un
+procedimiento similar al que se utilizó para su obtención puede ser usado para
+determinar la relación opuesta; es decir, la matriz de rotación $\ssr{B}{A}$
+que expresa al sistema $\frame A$ con respecto al sistema $\frame B$. Siguiendo
+este procedimiento se obtiene los componentes de $\ssr{B}{A}$ como:
+$$
+\begin{equation*}
+  \ssr{B}{A} = \bm{\ssv{B}{\hat \x}{A} & \ssv{B}{\hat \y}{A} & 
+    \ssv{B}{\hat \z}{A}} = 
+  \bm{ 
+  \hat \x_{\!_A} \cdot \hat \x_{\!_B} & \hat \y_{\!_A} \cdot \hat \x_{\!_B} &
+  \hat \z_{\!_A} \cdot \hat \x_{\!_B} \\
+  \hat \x_{\!_A} \cdot \hat \y_{\!_B} & \hat \y_{\!_A} \cdot \hat \y_{\!_B} &
+  \hat \z_{\!_A} \cdot \hat \y_{\!_B} \\
+  \hat \x_{\!_A} \cdot \hat \z_{\!_B} & \hat \y_{\!_A} \cdot \hat \z_{\!_B} &
+  \hat \z_{\!_A} \cdot \hat \z_{\!_B}
+}.
+\end{equation*}
+$$
+Debido a que el producto punto es conmutativo, se puede observar que las filas
+de $\ssr{B}{A}$ son las columnas de $\ssr{A}{B}$. Haciendo uso de esta
+observación se puede escribir la matriz $\ssr{B}{A}$ anterior como:
+$$
+\begin{equation*}
+  \ssr{B}{A} = 
+  \bm{\\[-0.9em]
+    \ssv{A}{\hat \x}{B}^T \\[0.5em]
+    \ssv{A}{\hat \y}{B}^T \\[0.5em] 
+    \ssv{A}{\hat \z}{B}^T},
+\end{equation*}
+$$
+donde cada vector $\ssv{A}{\hat \x}{B}$, $\ssv{A}{\hat \y}{B}$,
+$\ssv{A}{\hat \z}{B}$ es un vector columna. Comparando esta expresión de
+$\ssr{B}{A}$ con la expresión de $\ssr{A}{B}$
+en @eq-matriz-rotacion-generica, se observa que $\ssr{B}{A}$ es la
+transpuesta de $\ssr{A}{B}$, lo cual se representa como
+$$
+  \ssr{B}{A} = (\ssr{A}{B})^T.
+$$ {#eq-matriz-rot-transpuesta}
+A partir de @eq-matriz-rot-transpuesta se concluye que la matriz que
+representa la orientación del sistema $\frame A$ con respecto al sistema
+$\frame B$ es la transpuesta de la matriz que representa la orientación del
+sistema $\frame B$ con respecto al sistema $\frame A$. Esto indica que para
+obtener la representación opuesta de la orientación basta con tomar la
+transpuesta de la matriz de rotación respectiva.
+
+Por otro lado, utilizando las expresiones anteriores obtenidas para
+$\ssr{A}{B}$ y $\ssr{B}{A}$, el producto de ambas matrices se expresa como:
+$$
+\begin{equation*}
+  \ssr{B}{A}\ssr{A}{B} = 
+  \bm{\\[-0.9em]
+    \ssv{A}{\hat \x}{B}^T \\[0.5em]
+    \ssv{A}{\hat \y}{B}^T \\[0.5em] 
+    \ssv{A}{\hat \z}{B}^T} 
+  \bm{\ssv{B}{\hat \x}{A} & \ssv{B}{\hat \y}{A} & 
+    \ssv{B}{\hat \z}{A}} 
+  = 
+  \bm{
+    \ssv{A}{\hat \x}{B}^T \ssv{A}{\hat \x}{B} & \ssv{A}{\hat \x}{B}^T
+    \ssv{A}{\hat \y}{B} & \ssv{A}{\hat \x}{B}^T \ssv{A}{\hat \z}{B} \\[0.5em]
+    \ssv{A}{\hat \y}{B}^T \ssv{A}{\hat \x}{B} & \ssv{A}{\hat \y}{B}^T
+    \ssv{A}{\hat \y}{B} & \ssv{A}{\hat \y}{B}^T \ssv{A}{\hat \z}{B} \\[0.5em]
+    \ssv{A}{\hat \z}{B}^T \ssv{A}{\hat \x}{B} & \ssv{A}{\hat \z}{B}^T
+    \ssv{A}{\hat \y}{B} & \ssv{A}{\hat \z}{B}^T \ssv{A}{\hat \z}{B}
+}.
+\end{equation*}
+$$
+Dado que los vectores $\ssv{A}{\hat \x}{B}$, $\ssv{A}{\hat \y}{B}$,
+$\ssv{A}{\hat \z}{B}$ son unitarios, se tiene que su producto escalar consigo
+mismos es
+$\ssv{A}{\hat \x}{B}^T \ssv{A}{\hat \x}{B} = \ssv{A}{\hat \y}{B}^T \ssv{A}{\hat \y}{B} = \ssv{A}{\hat \z}{B}^T \ssv{A}{\hat \z}{B} = 1$. Estos vectores
+además representan los ejes coordenados de un sistema de referencia, y por
+tanto son mutuamente ortogonales, lo cual implica que el producto punto de un
+vector con cualquier otro es nulo
+($\ssv{A}{\hat \x}{B}^T \ssv{A}{\hat \y}{B} = \ssv{A}{\hat \x}{B}^T \ssv{A}{\hat \z}{B} = \ssv{A}{\hat \y}{B}^T \ssv{A}{\hat \z}{B} = 0$). Con
+estas dos observaciones, que implican que los vectores forman una base ortonormal, la matriz anterior se simplifica a
+$$bo
+  \ssr{B}{A}\ssr{A}{B} = \bm{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1} = I
+$$
+donde $I$ es la matriz identidad. Postmultiplicando ambos miembros de la
+igualdad por  $(\ssr{A}{B})^{-1}$ se tiene que
+$$
+  \ssr{B}{A} = (\ssr{A}{B})^{-1}.
+$$ {#eq-matriz-rot-inversa}
+Al comparar @eq-matriz-rot-transpuesta con @eq-matriz-rot-inversa se puede concluir que para una matriz de rotación su transpuesta es igual a su
+inversa:
+$$
+  \boxed{
+  (\ssr{A}{B})^T = (\ssr{A}{B})^{-1}}.
+$$ {#eq-rot-transpuesta-inversa}
+
+Este resultado muestra además que las matrices de rotación son *matrices
+  ortogonales* dado que @eq-rot-transpuesta-inversa se cumple para
+cualquier matriz ortogonal. Para simplificar la notación, y cuando esté claro o
+no sea esencial representar el sistema de referencia de manera explícita, en
+las secciones siguientes cuando se haga referencia a matrices de rotación se
+utilizará solamente $\Rot$ sin subíndices ni superíndices.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-inversa-x}
+
+## Inversa de la matriz de rotación elemental en $x$
+Encontrar la inversa de la matriz de rotación que representa un giro de un
+ángulo $\theta$ alrededor del eje $x$, verificando que es la inversa.
+
+*Solución:*
+
+Debido a que se trata de una matriz de rotación, a partir
+de @eq-rot-transpuesta-inversa se sabe que la inversa de la matriz es
+igual a su transpuesta. Por este motivo, y por facilidad, se calcula su
+transpuesta:
+$$
+  \Rot_x^{T}(\theta) = \Rot_x^{-1}(\theta) = \bm{1 & 0 & 0 \\ 
+    0 & \cos\theta & \sen\theta \\
+    0 & -\sen\theta & \cos\theta}.
+$$
+La verificación que la transpuesta obtenida es efectivamente la inversa se
+puede realizar multiplicando término a término:
+$$
+\begin{align*}
+  \Rot_x(\theta) \Rot_x^{-1}(\theta) & = 
+  \bm{1 & 0 & 0 \\ 
+    0 & \cos\theta & -\sen\theta \\
+    0 & \sen\theta & \cos\theta}
+  \bm{1 & 0 & 0 \\ 
+    0 & \cos\theta & \sen\theta \\
+    0 & -\sen\theta & \cos\theta} \\
+  & =   \bm{1 & 0 & 0 \\ 
+    0 & \cos^2\theta+\sen^2\theta & \cos\theta\sen\theta-\sen\theta\cos\theta \\
+    0 & \sen\theta\cos\theta-\cos\theta\sen\theta & \sen^2\theta+\cos^2\theta}
+  \\
+  & = \bm{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1}
+\end{align*}
+$$
+donde se utilizaron propiedades trigonométricas básicas. El mismo resultado
+(matriz identidad) se hubiese obtenido al realizar la multiplicación
+$ \Rot_x^{-1}(\theta) \Rot_x(\theta)$.
+
+:::
+:::
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-matriz-inversa-generica}
+
+## Inversa de la matriz de rotación numérica
+Se sabe que la siguiente matriz $A$ es una matriz de rotación.
+$$
+  A = \bm{
+    0 & 0.866 & -0.5 \\
+    -1 & 0 & 0 \\
+    0 & 0.5 & 0.866
+  }
+$$
+Calcular la inversa de esta matriz.
+
+*Solución:* 
+
+Debido a que $A$ es una matriz de rotación, su
+inversa es igual a su transpuesta. Así, por simple inspección se tendrá:
+$$
+  A^{-1} = A^T = \bm{
+    0 & -1 & 0 \\
+    0.866 & 0 & 0.5 \\
+    -0.5 & 0 & 0.866
+    }.
+$$
+Se puede fácilmente verificar que $AA^T = A^TA = I$.
+
+:::
+:::
+
+
+### Grupo de Rotación {#sec-grupo-rotacion}
+
+Como se vio en la sección anterior, las matrices de rotación cumplen con
+algunas propiedades que las distinguen del resto de matrices. En esta sección
+se presentará con más detalle estas propiedades y se definirá de manera formal
+a una matriz de rotación como un elemento del grupo de rotación llamado
+$SO(3)$. Este grupo es importante desde un punto de vista matemático, y su
+estudio, así como sus componentes relacionados, generaliza el concepto de
+rotación.
+
+**Propiedades Fundamentales de una Matriz de Rotación**
+
+: Considérese una matriz $\Rot \in \R^{3 \times 3}$. Si $\Rot$ es una matriz de
+rotación cualquiera, entonces cumple las siguientes dos propiedades.
+
+1. $\Rot$ es una matriz ortogonal:
+  $$
+    \Rot \Rot^T = \Rot^T\Rot = I.
+  $$ {#eq-matriz-rotacion-ortogonal}
+  *Prueba.* El hecho que para una matriz de rotación su transpuesta sea
+  su inversa ha sido demostrado de manera informal en la obtención
+  de @eq-rot-transpuesta-inversa. Aquí se seguirá un procedimiento
+  semejante pero utilizando componentes genéricos. Considérese que la matriz de
+  rotación $\Rot$ está compuesta por los vectores columna $\rr_1$, $\rr_2$ y
+  $\rr_3$, tal que se puede representar como
+  $$
+    \Rot = \bm{\rr_1 & \rr_2 & \rr_3}.
+  $$
+  Por definición, estos vectores $\rr_1$, $\rr_2$, $\rr_3$ son unitarios y
+  representan los ejes mutuamente ortogonales de algún sistema coordenado, lo
+  cual se puede representar matemáticamente como
+  $$
+    \rr_i^T\rr_j = 
+    \begin{cases} 
+      0,\quad \text{si } i \neq j \\
+      1,\quad \text{si } i = j
+    \end{cases}.
+  $$ {#eq-ortonormalidad-rot}
+  A los vectores cuyo producto escalar cumple con esta propiedad se les
+  denomina *vectores ortonormales*. Por tanto, se ve que las columnas de
+  la matriz $\Rot$ son ortonormales, y sus filas son también
+  ortonormales. Equivalentemente, las columnas (y las filas) de $\Rot$
+  constituyen una base ortonormal de $\R^3$. La
+  propiedad @eq-ortonormalidad-rot de cada $\rr_i$ se puede utilizar para
+  simplificar los componentes del producto $\Rot^T\Rot$, llegando a:
+  $$
+  \begin{align*}
+    \Rot^T\Rot & = 
+    \bm{- &  \rr_1^T & - \\
+      - & \rr_2^T & - \\
+      - & \rr_3^T & -}
+    \bm{| & | & | \\ 
+      \rr_1 & \rr_2 & \rr_3 \\
+      | & | & |} \\ 
+      & =  
+    \bm{ \rr_1^T \rr_1 & \rr_1^T \rr_2 & \rr_1^T \rr_3 \\ 
+      \rr_2^T \rr_1 & \rr_2^T \rr_2 & \rr_2^T \rr_3 \\
+      \rr_3^T \rr_1 & \rr_3^T \rr_2 & \rr_3^T \rr_3 }
+    = \bm{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1}
+    \end{align*}
+  $$
+  Esto muestra que el producto de la transpuesta de una matriz de rotación con
+  la misma matriz es la identidad. Dado que la transpuesta de una matriz de
+  rotación es también una matriz de rotación se tiene
+  $(\Rot^T)^T(\Rot^T)=\Rot\Rot^T=I$, lo cual verifica que el producto de $\Rot$
+  con su transpuesta por la derecha o por la izquierda da como resultado la
+  identidad: $\Rot^T\Rot = \Rot\Rot^T = I$. Esto, a su vez, permite concluir
+  que la transpuesta es igual a la inversa: $\Rot^T = \Rot^{-1}$.
+
+    La propiedad @eq-ortonormalidad-rot, que está siendo aplicada a tres
+  vectores en $\mathbb R^3$, en realidad implica seis ecuaciones (para
+  $\rr_1^T\rr_1$, $\rr_2^T\rr_2$, $\rr_3^T\rr_3$, $\rr_1^T\rr_2$,
+  $\rr_1^T\rr_3$, y $\rr_2^T\rr_3$). Estas seis ecuaciones implican seis
+  restricciones a los componentes de $\Rot$. Por este motivo, si bien la matriz
+  $\Rot$ tiene 9 elementos, existen 6 restricciones entre columnas (o
+  filas), y $\Rot$ solamente tiene $9-6=3$ grados de libertad. Así, la matriz de rotación es una representación redundante de la orientación, ya que tiene más parámetros que los estrictamente necesarios.
+
+2. El determinante de $\Rot$ es:
+  $$
+    \det \Rot = +1.
+  $$ {#eq-det-matriz-rotacion}
+  *Prueba.* La propiedad 1 establece que $\Rot \Rot^T=I$. Aplicando el
+  determinante a esta igualdad, y utilizando propiedades del determinante, se
+  tiene que $\det (\Rot) \det(\Rot^T)=\det{(I)}$. Para cualquier matriz se
+  cumple $\det (\Rot)= \det{(\Rot^T)}$, y además se tiene $\det(I) = 1$. Así,
+  se llega a $(\det \Rot)^2=1$, cuya solución es $\det \Rot=\pm
+  1$. Si se considera un sistema dextrógiro, se puede demostrar que solo se
+  mantiene el signo positivo. De manera concreta, considérese que la matriz $\Rot$ tiene columnas $\x, \y, \z$ (en ese orden), donde cada vector columna está dado por $\x=(x_1,x_2,x_3)$, $\y=(y_1,y_2,y_3)$, $\z=(z_1,z_2,z_3)$. Con esta notación, el determinante se puede escribir de forma explícita como 
+  $$
+  \det \Rot=x_{1}(y_{2}z_{3}-y_{3}z_{2})-x_{2}(y_{1}z_{3}-y_{3}z_{1})+x_{3}(y_{1}z_{2}-y_{2}z_{1}).
+  $$
+  Todo sistema dextrógiro con ejes $\x,\y,\z$ satisface las propiedades: $\x \times \y = \z$, $\y \times \z = \x$, $\z \times \x = \y$. Escribiendo término a término el segundo producto cruz se tiene $\y \times \z = (y_2z_3-y_3z_2, z_1y_3-y_1z_3,y_1z_2-z_1y_2)$, que a su vez es igual a $(x_1,x_2,x_3)$. Reemplazando estas equivalencias de $x_1,x_2,x_3$ en la expresión anterior del determinante, se llega a
+  $$
+  \det \Rot = x_1(x_1) - x_2(x_2) + x_3 (x_3) = 1,
+  $$
+  ya que el vector $\x$ es unitario. Así, se prueba que en un sistema dextrógiro el determinante de la matriz de rotación siempre es positivo e igual a 1.
+  <!-- TODO: demostrar el signo positivo   -->
+
+Como se mencionó en la primera propiedad, debido a que la matriz de
+rotación solo tiene 3 grados de libertad pero utiliza 9 elementos, la
+representación de la rotación u orientación a través de una matriz de rotación
+es redundante. Para contrarrestar este problema de redundancia, y expresar la
+rotación con menos parámetros, se recurre a las parametrizaciones de la
+rotación, las cuales se describen en el [capítulo -@sec-chapter-parametrizaciones-or].
+
+
+**Grupo Ortogonal Especial**
+
+: De manera matemáticamente formal, todas las matrices de rotación en el espacio
+tridimensional pertenecen al grupo matemático denominado *Grupo Ortogonal Especial* y representado por $SO(3)$. Se denomina *ortogonal* porque está compuesto por matrices ortogonales, y *especial* porque el determinante de sus elementos es estrictamente $+1$
+(y no $\pm 1$ como sucede en cualquier matriz ortogonal). A este grupo también
+se le conoce como el *grupo de rotación* en $\R^3$.
+
+::: {.border}
+*Definición*. El grupo ortogonal especial $SO(3)$, también llamado grupo
+de rotación en $\R^3$, se define como:
+$$
+  SO(3) = \{\Rot \in \R^{3 \times 3}: \Rot \Rot^T=I,~\det \Rot = +1\}.
+$$ {#eq-definicion-SO3}
+:::
+
+Utilizando esta definición, cualquier matriz de rotación en el espacio
+tridimensional $\Rot$ pertenece a este grupo matemático; es decir,
+$\Rot \in SO(3)$. Para el caso bidimensional, las matrices que describen las
+rotaciones en el plano pertenecen al grupo $SO(2)$ y la definición es semejante
+a la anterior reemplazando $3$ por $2$. En general, las matrices de rotación en
+$\R^n$ pertenecen al grupo $SO(n)$. La definición de $SO(3)$ utiliza las dos
+propiedades vistas anteriormente.
+
+El grupo de matrices de rotación $SO(3)$ es un grupo bajo la operación de
+multiplicación matricial y cumple con las cuatro propiedades que definen a un
+grupo matemático (las cuales se puede encontrar en el [Apéndice -@sec-ap-grupo]). En particular, el elemento identidad es la identidad
+matricial $I$, y la inversa es la transpuesta de la matriz. Más aún, $SO(3)$ es
+un *grupo de Lie* dado que las matrices $\Rot$ forman una variedad
+matemática continua, y además las funciones que representan la multiplicación y
+la inversa son continuas y diferenciables.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-grupo-so3}
+
+## Identificación de una matriz de rotación
+Considerar la siguiente matriz
+$$
+  M = \bm{
+    0.3536 & -0.6124 & 0.7071 \\
+    0.9268 & 0.1268 & -0.3536 \\
+    0.1268 & 0.7803 & 0.6124
+  }.
+$$
+Determinar si esta es una matriz de rotación.
+
+*Solución:*
+
+Para que $M$ sea una matriz de rotación, debe
+pertenecer a $SO(3)$, es decir, debe satisfacer $\Rot \Rot^T=I$ y
+$\det \Rot = +1$, según @eq-definicion-SO3. Mediante simple
+multiplicación matricial es posible verificar $MM^T=I$. Igualmente, mediante
+operaciones básicas de álgebra lineal se obtiene que el determinante es 1.0001,
+que para fines prácticos es 1. Así, la matriz $M$ sí es una matriz de rotación.
+
+:::
+:::
+
+### Matriz de Rotación como Transformación Rígida {#sec-matriz-rotacion-transformacion-rigida}
+
+Como se vio en la @sec-definicion-transformaciones-rigidas, una
+transformación de cuerpo rígido debe preservar tanto la distancia como la
+orientación relativa entre cada punto de un cuerpo rígido. Dada una matriz de
+rotación $\Rot \in SO(3)$, se puede probar que esta matriz satisface las
+siguientes propiedades:
+
+1. *Preserva la distancia*:
+
+    $\Vert \Rot \p - \Rot \q \Vert = \Vert \p - \q \Vert, ~\forall \p,\q \in \R^3$. Esta propiedad significa que la norma euclideana (distancia) entre cualquier par de puntos $\p$ y $\q$ permanece constante luego de aplicar la misma matriz de rotación $\Rot$ a ambos puntos.
+
+    Para demostrarlo, se probará que el cuadrado de la norma en ambos términos es el mismo. La norma al cuadrado del término al cual se le aplicó la matriz de rotación se puede expresar como $\Vert \Rot \p - \Rot \q \Vert^2 = (\Rot\p-\Rot\q)^T(\Rot\p-\Rot\q)$. Utilizando propiedades de la transpuesta, y luego factorización, esto es igual a
+    $$
+    (\p^T\Rot^T-\q^T\Rot^T)(\Rot\p-\Rot\q) = (\p^T-\q^T)\Rot^T\Rot(\p-\q)
+    $$
+    En esta expresión se usa $\Rot^T\Rot=I$ y la propiedad de la transpuesta, quedando:
+    $$
+    (\p-\q)^T(\p-\q)=\Vert \p-\q\Vert^2,
+    $$
+    lo cual demuestra que la matriz de rotación no alterna la norma euclideana.
+
+2. *Preserva la orientación*:
+
+    $\Rot (\vv \times \w) = \Rot \vv \times \Rot \w, ~\forall \vv,\w \in \R^3$. Esta propiedad significa que si se aplica la rotación $\Rot$ al vector   resultante de $\vv\times\w$, el resultado es el mismo que si se rota a ambos vectores $\vv$ y $\w$ y luego de rotados se aplica el producto cruz. La demostración de esta propiedad se puede obtener mediante un cálculo directo de cada uno de los términos de las expresiones.
+
+Debido a que la matriz de rotación $\Rot$ cumple con ambas condiciones que
+definen una transformación de cuerpo rígido, se verifica que describe siempre
+una transformación de cuerpo rígido. Sin embargo, debe tenerse en cuenta que
+solo describe la orientación, mas no la traslación.
+
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-R-transformacion-rigida}
+
+## Distancia entre dos puntos rotados
+Considerar los puntos $\p_{_1}=(3,2,5)$ y $\p_{_2}=(1,6,4)$, además de una
+matriz que rota 60 grados alrededor del eje z. Determinar la distancia
+Euclideana entre los puntos $\p_{_1}$ y $\p_{_2}$ antes de aplicar la rotación
+y después de aplicarla a ambos puntos.
+
+*Solución:*
+
+Antes de aplicar la rotación, la distancia
+euclideana entre ambos puntos es
+$$
+  \Vert \p_{_1} - \p_{_2} \Vert = \sqrt{(3-1)^2+(2-6)^2+(5-4)^2} = \sqrt{21}.
+$$
+A partir de @eq-rotz, la matriz de rotación indicada es
+$$
+  \Rot=\bm{\cos(60\grad) & -\sen(60\grad) & 0\\ 
+    \sen(60\grad) & \cos(60\grad) & 0 \\
+    0 & 0 & 1} =
+  \bm{\half & -\frac{\sqrt 3}{2} & 0\\ 
+    \frac{\sqrt 3}{2} & \half & 0 \\
+    0 & 0 & 1}.
+$$
+Los puntos rotados son $\Rot\p_{_1}=(-\sqrt 3+\frac{3}{2}, 1+\frac{3\sqrt   3}{2}, 5)$ y $\Rot\p_{_2}=(-3\sqrt 3+\half, \frac{\sqrt 3}{2}+3, 4)$, y la
+distancia euclideana en este caso es
+$$
+  \Vert \Rot\p_{_1} - \Rot\p_{_2} \Vert = \sqrt{(2\sqrt{3}+1)^2+(-2+\sqrt
+    3)^2+(1)^2} = \sqrt 21.
+$$ 
+Como se ve, tanto antes de rotar, como después de rotar ambos puntos, la
+distancia entre los mismos es la misma. Considerando a $\p_{_1}$ y $\p_{_2}$
+como vectores, también es posible verificar numéricamente en este ejemplo que
+la orientación se preserva, obteniéndose
+$\Rot(\p_{_1}\times\p_{_2})=\Rot\p_{_1}\times\Rot\p_{_2}=(-4.94, -22.55, 16)$. 
+
+:::
+:::
+
+
+## Interpretaciones de la Matriz de Rotación
+
+Dependiendo del contexto en el que se utilice, una matriz de rotación $\Rot$
+posee las siguientes tres interpretaciones geométricas.
+
+* *Representa la orientación*: sus vectores columna representan los ejes del
+  sistema rotado con respecto al sistema inicial. 
+
+* *Es un mapa de transformación de coordenadas*: mapea un punto de un sistema
+  de referencia a otro sistema de referencia.
+
+* *Es un operador de rotación*: rota un punto en un mismo sistema de
+  coordenadas.
+
+A pesar de que el significado geométrico es diferente en cada caso, la matriz
+de rotación es siempre la misma y, por tanto, siempre tiene la misma estructura
+y propiedades matemáticas. A continuación se describirá con mayor detalle cada
+una de estas interpretaciones.
+
+### Representación de la Orientación
+
+La matriz de rotación $\Rot$, tal como ha sido obtenida en la @sec-matriz-rotacion-generica, describe la orientación relativa
+entre dos sistemas de referencia. Para mayor claridad de la explicación, aquí consideraremos un sistema $\frame I$ (inicial) y un sistema
+$\frame F$ (final), rotado con respecto a $\frame I$. Los vectores columna de la matriz
+de rotación $\ssr{I}{F}$ representan cada uno de los ejes del sistema
+$\frame F$ expresados con respecto al sistema inicial u original $\frame I$; es decir:
+$$
+  \ssr{I}{F} = \bm{\ssv{I}{\hat \x}{F} & \ssv{I}{\hat \y}{F} & \ssv{I}{\hat \z}{F}}
+$$
+donde $\ssv{I}{\hat \x}{F}$, $\ssv{I}{\hat \y}{F}$, $\ssv{I}{\hat \z}{F}$ son
+vectores columna de $\frame F$ con respecto a $\frame I$. Esta expresión es la
+misma que la dada en @eq-matriz-rotacion-generica y se repite aquí solo
+por conveniencia y claridad con los sistemas aquí usados. De manera equivalente, se puede decir que para obtener la
+orientación representada por la matriz $\ssr{I}{F}$ es necesario tener un sistema coordenado inicial
+coincidente con $\frame I$, y luego es necesario realizar una rotación sobre
+este sistema hasta que sea coincidente con el nuevo sistema $\frame F$. Esta segunda
+interpretación es muy útil al analizar la cinemática directa de un robot
+manipulador. A manera de resumen, se tiene las dos siguientes interpretaciones
+equivalentes:
+
+* La matriz de rotación $\ssr{I}{F}$ representa la orientación del sistema
+  $\frame F$ (final) con respecto al sistema $\frame I$ (inicial).
+
+* La matriz de rotación $\ssr{I}{F}$ (notar que es la misma matriz anterior) lleva el sistema $\frame I$ hacia el
+  sistema $\frame F$; es decir, representa la rotación para que partiendo del
+  sistema inicial $\frame I$ se termine en el sistema final $\frame F$.
+
+La interpretación de una matriz de rotación como la orientación de un sistema
+de referencia permite representar la orientación o rotación de un cuerpo
+rígido. Para esto se necesita tener un sistema coordenado en algún lugar del
+espacio, y basta con establecer un sistema coordenado sobre algún punto del
+cuerpo rígido, para representar este sistema con respecto a la referencia
+establecida. 
+
+
+### Mapa de Transformación de Coordenadas
+
+La matriz de rotación $\Rot$ transforma las coordenadas de un vector posición
+$\p$ de un sistema de referencia a otro sistema de referencia, siempre que
+ambos sistemas tengan un origen común. Esto también se conoce como un mapa de
+cambio de sistema de referencia. Sea $\p \in \mathbb R^3$ un vector que
+representa al punto $P$ y que se expresa con respecto a los sistemas $\frame A$
+y $\frame B$, respectivamente, como
+$$
+\begin{equation*}
+  \sv{A}{\p} = \bm{\sv{A}{x} \\ \sv{A}{y} \\ \sv{A}{z}} \qquad \text{y} \qquad
+  \sv{B}{\p} = \bm{\sv{B}{x} \\ \sv{B}{y} \\ \sv{B}{z}},
+\end{equation*}
+$$
+donde
+$\sv{A}{x}, \sv{A}{y}, \sv{A}{z}, \sv{B}{x}, \sv{B}{y}, \sv{B}{z} \in \mathbb R$ son valores escalares. Considérese además que los ejes unitarios del sistema
+$\frame A$ son $\hat \x_{\!_A},\hat \y_{\!_A},\hat \z_{\!_A}$, y del sistema
+$\frame B$ son $\hat \x_{\!_B},\hat \y_{\!_B},\hat \z_{\!_B}$, como se muestra
+en la @fig-mapeo, teniendo en cuenta que el conjunto de ejes
+representa una base ortonormal para el sistema dado.
+
+![Punto $P$ en los sistemas $\frame A$ y $\frame B$.](images/represent/mapeo.png){#fig-mapeo width=40%}
+
+Usando estas bases canónicas, los vectores $\sv{A}{\p}$ y $\sv{B}{\p}$ se
+pueden representar como:
+$$
+\begin{align*}
+  \sv{A}{\p} &= \sv{A}{x} ~\!\hat \x_{\!_A} + \sv{A}{y} ~\! \hat\y_{\!_A} +
+               \sv{A}{z} ~\! \hat \z_{\!_A} \\
+  \sv{B}{\p} &= \sv{B}{x} ~\! \hat \x_{\!_B} + \sv{B}{y} ~\! \hat\y_{\!_B} +
+               ~\! \sv{B}{z} \hat \z_{\!_B}
+\end{align*}
+$$
+Bajo la restricción que los orígenes del sistema $\frame A$ y del sistema
+$\frame B$ son coincidentes, se desea expresar el punto $P$ con respecto al
+sistema $\frame A$ partiendo de su expresión en el sistema $\frame B$. Para
+calcular $\sv{A}{\p}$ se utiliza el hecho que los componentes de cualquier
+vector son las proyecciones de dicho vector en las direcciones unitarias del
+sistema de referencia. Estas proyecciones se obtendrán usando el producto
+escalar considerando que los vectores eje son unitarios. Así, los componentes
+de $\sv{A}{\p}$ son las proyecciones de $\sv{B}{\p}$ en el sistema $\frame A$:
+$$
+\begin{align*}
+  \sv{A}{x} & = \sv{B}{\p} \cdot \hat \x_{\!_A} =
+                \sv{B}{x} ~\!(\hat \x_{\!_B} \cdot \hat \x_{\!_A}) + 
+                \sv{B}{y} ~\!(\hat \y_{\!_B} \cdot \hat \x_{\!_A}) + 
+                \sv{B}{z} ~\!(\hat \z_{\!_B} \cdot \hat \x_{\!_A}) \\
+  \sv{A}{y} & = \sv{B}{\p} \cdot \hat \y_{\!_A} =
+                \sv{B}{x} ~\!(\hat \x_{\!_B} \cdot \hat \y_{\!_A}) + 
+                \sv{B}{y} ~\!(\hat \y_{\!_B} \cdot \hat \y_{\!_A}) + 
+                \sv{B}{z} ~\!(\hat \z_{\!_B} \cdot \hat \y_{\!_A}) \\
+  \sv{A}{z} & = \sv{B}{\p} \cdot \hat \z_{\!_A} =
+                \sv{B}{x} ~\!(\hat \x_{\!_B} \cdot \hat \z_{\!_A}) + 
+                \sv{B}{y} ~\!(\hat \y_{\!_B} \cdot \hat \z_{\!_A}) + 
+                \sv{B}{z} ~\!(\hat \z_{\!_B} \cdot \hat \z_{\!_A}).
+\end{align*}
+$$
+Estas tres expresiones se pueden representar en forma matricial como
+$$
+\begin{equation*}
+  \bm{\sv{A}{x} \\ \sv{A}{y} \\ \sv{A}{z}} =
+  \bm{ 
+    \hat \x_{\!_B} \cdot \hat \x_{\!_A} & \hat \y_{\!_B} \cdot \hat \x_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \x_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \y_{\!_A} & \hat \y_{\!_B} \cdot \hat \y_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \y_{\!_A} \\
+    \hat \x_{\!_B} \cdot \hat \z_{\!_A} & \hat \y_{\!_B} \cdot \hat \z_{\!_A} &
+    \hat \z_{\!_B} \cdot \hat \z_{\!_A}
+  }
+  \bm{\sv{B}{x} \\ \sv{B}{y} \\ \sv{B}{z}}
+\end{equation*}
+$$
+donde la matriz mostrada es la misma matriz $\ssr{A}{B}$ obtenida en @eq-matriz-rotacion-generica. Usando $\ssr{A}{B}$ para representar esta
+matriz, se tiene
+$$
+  \sv{A}{\p} = \ssr{A}{B} \sv{B}{\p}.
+$$ {#eq-punto-a-en-b}
+En @eq-punto-a-en-b se ve claramente que la matriz $\ssr{A}{B}$ mapea el
+vector posición $\sv{B}{\p}$, que se encuentra en el sistema $\frame B$, al
+vector posición $\sv{A}{\p}$ en el sistema $\frame A$. La relación inversa se
+puede obtener paso a paso realizando un procedimiento similar al descrito
+anteriormente. Sin embargo, también se puede multiplicar ambos términos de
+@eq-punto-a-en-b con $\ssr{A}{B}^{-1}$ a la izquierda, obteniendo
+$$
+  \sv{B}{\p} = \ssr{B}{A} \sv{A}{\p}
+$$
+donde $\ssr{B}{A} = (\ssr{A}{B})^T = \ssr{A}{B}^{-1}$. Al igual que en el caso
+anterior, la matriz de rotación $\ssr{B}{A}$ mapea un punto representado en el
+sistema $\frame A$ a su representación con respecto al sistema $\frame B$.
+
+![Ejemplo: punto $P$ y dos sistemas rotados entre sí.](images/represent/ejemplo_mapeo.png){#fig-ejemplo_mapeo width=40%}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-mapeo-sistema-referencia}
+
+## Transformación de coordenadas
+Se tiene un sistema $\frame B$ rotado un ángulo de $90\grad$ en el eje $z$ con
+respecto a un sistema $\frame A$, y además se tiene un punto $P$ ubicado como
+se muestra en la @fig-ejemplo_mapeo. Las coordenadas del punto $P$ en el sistema $\frame B$ están dadas por $\ssv{B}{\p}{}=(d_2, d_1, 0)$. Determinar las coordenadas del punto $P$
+expresadas con respecto al sistema $\frame A$.
+
+*Solución:*
+
+La orientación entre ambos sistemas se puede calcular como la rotación
+elemental en $z$ dada por @eq-rotz. Sin embargo, en este caso se puede
+fácilmente deducir por inspección tomando en cuenta los ejes del sistema
+$\frame B$ en el sistema $\frame A$. Así, esta matriz de rotación es
+$$
+  \ssr{A}{B}=\bm{0 & -1 & 0 \\1 & 0 & 0 \\ 0 & 0 & 1}.
+$$
+Utilizando esta matriz, las coordenadas del punto $P$ en el sistema $\frame A$
+serán:
+$$
+  \ssv{A}{\p}{} = \ssr{A}{B} \ssv{B}{\p}{}=\bm{0 & -1 & 0 \\1 & 0 & 0 \\ 0 & 0
+    & 1} \bm{d_2 \\ d_1 \\ 0} = \bm{-d_1 \\ d_2 \\ 0}.
+$$
+Este resultado se pueden verificar gráficamente, por inspección, en la @fig-ejemplo_mapeo
+
+:::
+:::
+
+### Operador de Rotación
+
+La matriz de rotación $\Rot$ puede ser interpretada como un operador que rota
+vectores un ángulo determinado alrededor de un eje arbitrario. El vector en
+cuestión se expresa en el mismo sistema de referencia antes y después de la
+rotación.  Debido a esto, cuando la matriz de rotación se usa como operador, no
+se suele utilizar subíndices o superíndices, pues involucra siempre un mismo
+sistema de referencia.
+
+Considérese un vector $\p_1$ que es rotado por la matriz $\Rot$ un ángulo
+$\theta$ alrededor de un eje $\hat{\vect k}$ obteniendo el vector resultante
+$\p_2$. Esta rotación se representa convencionalmente como:
+$$
+  \p_2 = \Rot(\theta,\vect k) ~\! \p_1.
+$$ {#eq-operador}
+Cuando los ejes canónicos ($x,y,z$) son utilizados como los ejes de rotación,
+es común simplificar la notación a $\Rot_x(\theta)$, $\Rot_y(\theta)$,
+$\Rot_z(\theta)$. Se debe notar que la matriz $\Rot$ que rota un vector es
+exactamente la misma matriz de rotación que describe al sistema rotado por
+$\Rot$ con respecto al sistema de referencia.
+
+Una característica importante del operador de rotación es que no altera la
+norma Euclideana de un vector, como se mostró en la @sec-matriz-rotacion-transformacion-rigida. En @eq-operador, el vector resultante
+$\p_2$, luego de la rotación, tiene la misma norma Euclideana que el vector
+inicial $\p_1$. De manera matemática esto se representa como
+$$
+  \Vert \p_2 \Vert^2 = \p_2^T \p_2 = (\p_1^T\Rot^T)(\Rot p_1) = \p_1^T\p_1 =
+  \Vert \p_1 \Vert^2,
+$$
+lo cual verifica que la rotación es una operación de cuerpo rígido ya que la norma
+Euclideana, que representa la distancia entre dos puntos, se mantiene constante
+después de su aplicación.
+
+![Esquema de la rotación de un punto $\p_1$ un ángulo $\theta$ alrededor del eje $\x$.](images/represent/operador_x.png){#fig-operador_x width=40%}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-operador-rotacion}
+
+## Rotación de un punto
+Un punto con coordenadas $\p_{_1}=(0,\sqrt{3},1)$ es rotado un ángulo
+$\theta = 30^{\circ}$ alrededor del eje $\hat\x$ obteniéndose $\p_{_2}$ como se
+esquematiza en la @fig-operador_x. Determinar las coordenadas del punto $\p_{_2}$.
+
+*Solución:* 
+
+La matriz que describe la rotación de $30 \grad$ alrededor del eje $\x$ se puede obtener utilizando @eq-rotx y es igual a
+$$
+  \Rot(30^{\circ},\hat\x) = \bm{1 & 0 & 0 \\ 0 & \cos(30^{\circ}) &
+    -\sen(30^{\circ}) \\ 0 & 
+    \sen(30^{\circ}) & \cos(30^{\circ})}=\bm{1 & 0 & 0 \\[0.3em]
+    0 & \frac{\sqrt{3}}{2} & -\frac{1}{2} \\[0.3em]
+    0 & \frac{1}{2} & \frac{\sqrt{3}}{2}}.
+$$
+A partir de la interpretación representada en~\eqref{eq:operador}, el punto
+luego de la rotación estará dado por
+$$
+  \p_{_2} = \Rot(30^{\circ},\hat\x) \p_{_1} = 
+  \bm{1 & 0 & 0 \\[0.3em]
+    0 & \frac{\sqrt{3}}{2} & -\frac{1}{2} \\[0.3em]
+    0 & \frac{1}{2} & \frac{\sqrt{3}}{2}}
+  \bm{0 \\ \sqrt{3} \\ 1} = 
+  \bm{0 \\ 1 \\ \sqrt{3}}.
+$$
+Este resultado puede ser gráficamente verificado dibujando ambos puntos a
+escala sobre un eje coordenado.
+
+:::
+:::
+
+<!-- 
+TODO: Autovalores y autovectores de R (referenciar Jazar 2007, pag 121)
+ -->
+
+
+## Composición de Matrices de Rotación
+
+Cuando se realiza una rotación seguida de otra, ambas pueden ser representadas
+utilizando una matriz de rotación. La rotación resultante será el producto de
+ambas matrices de rotación. Sin embargo, en general el producto de
+matrices no es conmutativo, y en este
+caso el orden de la multiplicación tiene una interpretación física importante. Esta sección presentará esta
+interpretación del producto de matrices de rotación, justificando la
+importancia del orden de la multiplicación.
+
+### Rotación con Respecto al Sistema Actual
+
+Considérese tres sistemas de referencia $\frame A$, $\frame B$ y $\frame C$,
+con origen común, pero rotados y ninguno coincidente con el otro. La matriz de
+rotación $\ssr{A}{B}$ representa la orientación del sistema $\frame B$ con
+respecto al sistema $\frame A$, y la matriz de rotación $\ssr{B}{C}$ representa
+la orientación de $\frame C$ con respecto al sistema $\frame B$.
+Un punto $P$ puede ser representado con respecto a cualquiera de estos tres
+sistemas como $\sv{A}{\p}$, $\sv{B}{\p}$, o $\sv{C}{\p}$, siendo la relación
+entre estas representaciones la siguiente:
+$$
+\begin{align*}
+  \ssv{A}{\p}{} & = \ssr{A}{B}\sv{B}{\p} \\
+  \ssv{B}{\p}{} & = \ssr{B}{C}\sv{C}{\p}
+\end{align*}
+$$
+Nótese que las únicas matrices de rotación que se conoce son las que relacionan
+$\frame B$ con $\frame A$, y $\frame C$ con $\frame B$, pero no se conoce la
+relación entre $\frame C$ y $\frame A$. Sin embargo, reemplazando la expresión
+de la segunda fila en la expresión de la primera fila (es decir,
+$\ssv{B}{\p}{}$ en $\ssv{A}{\p}{}$) se llega a
+$$
+  \sv{A}{\p} = \ssr{A}{B} \left(\ssr{B}{C}\sv{C}{\p} \right) = \left(
+    \ssr{A}{B} \ssr{B}{C} \right) \sv{C}{\p}. 
+$$
+Esta expresión muestra de manera explícita la relación existente entre
+$\sv{A}{\p}$ y $\sv{C}{\p}$, llevando a la conclusión que el producto de
+matrices mostrado en el paréntesis relaciona al sistema $\frame A$ con el
+sistema $\frame C$. Esta relación se puede escribir como
+$$
+  \boxed{
+  \ssr{A}{C} = \ssr{A}{B} \ssr{B}{C}}
+$$ {#eq-composicion-rotacion}
+y se conoce como la composición de rotaciones sucesivas. Así, para obtener la
+orientación entre dos sistemas de referencia cuya matriz de rotación se
+desconoce, es necesario encontrar la orientación de estos sistemas con respecto
+a algún sistema común, en este caso el sistema $\frame B$. De manera
+nemotécnica, @eq-composicion-rotacion muestra que al realizar el
+producto de dos matrices de rotación $\ssr{A}{B} \ssr{B}{C}$, el sistema que
+aparece en el centro (en este caso $\frame B$) se cancela, y solo permanecen
+los sistemas externos (en este caso, $\frame A$ y $\frame C$).
+
+El producto de matrices de rotación, mostrado
+en @eq-composicion-rotacion, se puede interpretar de las siguientes dos
+maneras.
+
+**a. Transformación de un punto.** 
+La matriz $\ssr{A}{C}=\ssr{A}{B} \ssr{B}{C}$ transforma las coordenadas
+  del punto $P$ de su representación en el sistema $\frame C$ a su
+  representación en el sistema $\frame A$. En este caso, se transforma primero
+  las coordenadas del sistema $\frame C$ al sistema $\frame B$ usando
+  $\ssr{B}{C}$, y luego del sistema $\frame B$ al sistema $\frame A$ usando
+  $\ssr{A}{B}$.
+
+**b. Rotaciones con respecto a los sistemas actuales.**
+  La matriz $\ssr{A}{C}$ rota el sistema $\frame A$ hasta alinearlo con el
+  sistema $\frame C$. Suponiendo que inicialmente se tiene un sistema alineado
+  con $\frame A$, la rotación $\ssr{A}{C}=\ssr{A}{B} \ssr{B}{C}$ describe los
+  dos siguientes pasos:
+
+  * Partiendo de $\frame A$, considerado como el sistema actual, primero se
+    realiza una rotación utilizando $\ssr{A}{B}$ hasta quedar alineado con el
+    sistema $\frame B$. Nótese que $\ssr{A}{B}$ es una rotación
+    representada con respecto al sistema actual $\frame A$.
+  * El sistema resultante, que ahora es considerado como el sistema actual,
+    se encuentra alineado con $\frame B$ y es rotado de acuerdo con
+    $\ssr{B}{C}$ hasta quedar alineado con el sistema $\frame C$. Se debe notar
+    que $\ssr{B}{C}$ es una rotación representada con respecto al sistema
+    $\frame B$, el cual es considerado en este caso como el sistema actual.
+ 
+ Como se describe en estos dos pasos, una rotación resultante se puede
+  expresar como composiciones de rotaciones parciales, definiendo cada rotación
+  con respecto a la rotación precedente. El sistema con respecto al cual se
+  realiza cada rotación se denomina el *sistema actual*, o el
+  *sistema móvil*. Así, la composición de rotaciones sucesivas con
+  respecto al sistema actual se obtiene *post-multiplicando*
+  (multiplicando a la derecha) las matrices de rotación.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-rotaciones-orden}
+
+## Rotaciones con respecto al sistema actual o móvil
+Considérese un sistema de referencia inicial denominado $\framen 0$. A este
+sistema se le aplica una rotación de un ángulo $\theta_1$ alrededor de su eje
+$\y$ obteniéndose el sistema rotado $\framen 1$, como se muestra en la @fig-ej-composicion-movil. Luego, al sistema resultante se le aplica
+una rotación de un ángulo $\theta_2$ alrededor de su eje $\z$ actual, llegando
+al sistema denominado $\framen 2$. Determinar la matriz de rotación que
+describe al sistema $\framen 2$ con respecto al sistema inicial $\framen 0$.
+<!-- Tal vez cambiar de A, B, C en lugar de 0, 1, 2 -->
+
+*Solución:* 
+
+Debido a que ambas rotaciones se realizan alrededor
+de los ejes canónicos, la primera rotación se puede escribir como
+$\Rot_y(\theta_1)$, y la segunda rotación como $\Rot_z(\theta_2)$. Para el
+orden del producto se debe considerar que una vez que se llega al sistema
+$\framen 1$, la segunda rotación se realiza con respecto al eje de este sistema
+actual (y no con respecto al sistema inicial). Por este motivo, la segunda
+rotación post-multiplica a la primera. Así, la rotación resultante es
+$$
+\ssrnocal{0}{2} = \Rot_y(\theta_1)\Rot_z(\theta_2).
+$$
+Si se desea obtener de manera explícita todos los componentes de la matriz de
+rotación $\ssrnocal{0}{2}$, se puede fácilmente obtener cada matriz de rotación
+elemental (en $\y$ y en $\z$) y multiplicarlas.
+
+:::
+:::
+
+![Rotaciones sucesivas que llevan el sistema $\framen 0$ a $\framen 1$ y luego a $\framen 2$.](images/represent/composicion-movil.png){#fig-ej-composicion-movil}
+
+Es importante notar que el orden en que se realizan las rotaciones no es
+conmutativo; por tanto, se debe considerar con cuidado el orden en que se
+realizan los productos de las matrices de rotación. En el @exm-rotaciones-orden, si se tuviese
+orden inverso de multiplicación; es decir, $\Rot_z(\theta_2)\Rot_y(\theta_1)$,
+el resultado sería diferente (y se puede verificar término a término), así como
+la interpretación.
+
+
+### Rotación con Respecto al Sistema Fijo
+
+Para poder describir adecuadamente las rotaciones sucesivas con respecto a un
+eje fijo, es necesario primero repasar el concepto de transformaciones de
+similaridad, ya que constituye su base matemática.
+
+**Transformaciones de Similaridad**
+
+: Considerando que existe una matriz invertible $P$, la transformación de una
+matriz $M$ a una matriz $P^{-1}MP$ se denomina una transformación de
+similaridad. Se dice que la matriz $M'$ resultante de la transformación de
+similaridad
+$$
+M' = P^{-1}MP  
+$$
+es *similar* a la matriz $M$. Matemáticamente dos matrices similares
+poseen el mismo espectro (los mismos autovalores) y el mismo polinomio
+característico, implicando el mismo determinante. La interpretación de esta
+transformación es que tanto la matriz inicial $M$, como la matriz $M'$ obtenida
+luego de la transformación de similaridad, representan la misma transformación
+lineal, pero con respecto a sistemas de referencia diferentes, siendo $P$ la
+matriz que determina el cambio de sistemas, también denominado cambio de bases.
+
+Para la representación de cuerpos rígidos se utiliza el hecho que una
+transformación de similaridad expresa una misma transformación lineal con
+respecto a un sistema de referencia diferente.
+Considérese dos puntos representados en el sistema de referencia $\frame A$
+como $\ssv{A}{\p}{_1}$ y $\ssv{A}{\p}{_2}$, y sea $\ssv{A}{M}{}$ la
+representación matricial de una transformación lineal genérica en el sistema
+$\frame A$ que convierte el punto $\ssv{A}{\p}{_1}$ en el punto
+$\ssv{A}{\p}{_2}$ como:
+$$
+  \ssv{A}{\p}{_2}=\ssv{A}{M}{} ~\ssv{A}{\p}{_1}.
+$$
+Considérese además que existe un sistema de referencia $\frame B$, y que la
+matriz $\ssr{A}{B}$ transforma el sistema $\frame B$ en el sistema $\frame A$. 
+Como se vio anteriormente, los puntos en el sistema $\frame B$ pueden ser
+fácilmente representados con respecto al sistema $\frame A$ como
+$\ssv{A}{\p}{_1}=\ssr{A}{B} \ssv{B}{\p}{_1}$, y
+$\ssv{A}{\p}{_2}= \ssr{A}{B} \ssv{B}{\p}{_2}$. Utilizando estas igualdades, la
+expresión anterior puede ser escrita como:
+$$
+  (\ssr{A}{B} \ssv{B}{\p}{_2})=\ssv{A}{M}{} ~(\ssr{A}{B} \ssv{B}{\p}{_1}),
+$$
+de donde, despejando $\ssv{B}{\p}{_2}$ ya que las matrices de rotación son
+invertibles, se obtiene
+$$
+  \ssv{B}{\p}{_2}= \ssr{A}{B}^{-1} ~\! \ssv{A}{M}{} ~\!\ssr{A}{B} \ssv{B}{\p}{_1}.
+$$
+Esta expresión muestra claramente que el término
+$\ssr{A}{B}^{-1} ~\!  \ssv{A}{M}{} ~\!\ssr{A}{B}$ transforma el punto $\p_1$ en
+el punto $\p_2$, cuando ambos puntos se encuentran representados con respecto
+al sistema $\frame B$. Debido a que la transformación $\ssv{A}{M}{}$ por
+definición transforma el punto $\p_1$ al punto $\p_2$ pero con respecto al
+sistema $\frame A$, se puede escribir la misma transformación con respecto al
+sistema $\frame B$ como
+$$
+  \ssv{B}{M}{}= \ssr{A}{B}^{-1} ~\!\ssv{A}{M}{} ~\!\ssr{A}{B} 
+$$
+donde queda claro que $\ssv{B}{M}{}$ se obtiene como una *transformación
+  de similaridad* de $\ssv{A}{M}{}$, y ambas matrices representan la misma
+transformación pero con respecto a diferentes sistemas de referencia. Más aún,
+dado que $\ssr{A}{B}$ es una matriz de rotación, esta transformación de similaridad
+puede ser simplificada a
+$$
+  \ssv{B}{M}{}= \ssr{B}{A} ~ \ssv{A}{M}{} ~\ssr{A}{B}.
+$$ {#eq-transf-similaridad-rot}
+Finalmente, si $\ssv{A}{M}{}$ es una matriz de rotación, que se comporta como
+un operador de rotación, el uso de la transformación de similaridad
+@eq-transf-similaridad-rot permite expresar la misma rotación con
+respecto a un sistema de referencia diferente.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-transformaciones-similaridad}
+
+## Transformación de similaridad
+Considérese un sistema de referencia $\frame B$ que se encuentra rotado
+$90\grad$ alrededor del eje $z$ con respecto a un sistema $\frame A$. Considérese además que $^{A}\!\Rot_1$ representa una matriz de rotación de
+$\theta$ grados alrededor del eje $x$ del sistema $\frame A$. Encontrar la
+rotación $^{B}\!\Rot_1$ equivalente en el sistema $\frame B$.
+
+*Solución:* 
+
+La matriz de rotación $^{A}\!\Rot_1$ en el sistema
+$\frame A$ está dada por la rotación elemental
+$$
+  ^{A}\!\Rot_1 = \bm{1 & 0 & 0 \\ 0 & \cos\theta & -\sen\theta \\ 0 & \sen\theta
+    & \cos\theta}.
+$$
+Por otro lado, debido a que el sistema $\frame B$ se encuentra rotado alrededor
+del eje $z$ de $\frame A$, la rotación que representa la relación entre ambos
+sistemas es
+% al sistema $\frame B$ con respecto al sistema $\frame A$ es
+$$
+  \ssr{A}{B} = \bm{
+    \cos(90^{\circ}) & -\sen(90^{\circ}) & 0 \\ \sen(90^{\circ}) &
+    \cos(90^{\circ}) & 0 \\ 0&0&1 } = 
+  \bm{0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1}.
+$$
+Usando la transformación de similaridad dada
+por @eq-transf-similaridad-rot, la rotación $\Rot_1$ en el sistema
+$\frame B$ está dada por
+$$
+\begin{align*}
+  ^{B}\!\Rot_1 & = \ssr{B}{A} ~ {}^{A}\!\Rot_1 \ssr{A}{B} \\
+   & = \bm{0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1}
+    \bm{1 & 0 & 0 \\ 0 & \cos\theta & -\sen\theta \\ 0 & \sen\theta
+    & \cos\theta}   \bm{0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1} \\
+  & = \bm{\cos\theta & 0 & -\sen\theta \\ 0 & 1 & 0 \\
+      \sen\theta & 0 & \cos\theta}
+    = \bm{\cos(-\theta) & 0 & \sen(-\theta) \\ 0 & 1 & 0 \\
+      -\sen(-\theta) & 0 & \cos(-\theta)}.
+\end{align*}
+$$
+Este resultado muestra que la rotación expresada en el sistema $\frame B$ es
+una rotación de $-\theta$ grados alrededor del eje $y$ (de $\frame B$). En
+otras palabras, una rotación de $\theta$ alrededor del eje $x$ de $\frame A$ es
+equivalente a una rotación de $-\theta$ alrededor del eje $y$ de $\frame
+B$. Esta conclusión puede ser verificada gráficamente si se dibujan ambos
+sistemas de referencia.
+<!-- TODO: Tal vez añadir gráfico de esto. -->
+
+:::
+:::
+
+**Rotación con Respecto al Sistema Fijo**
+
+: Considérese dos sistemas de referencia $\frame A$ y $\frame B$, con origen
+común, donde la orientación del sistema $\frame B$ con respecto al sistema
+$\frame A$ está representada por la matriz de rotación $\ssr{A}{B}$. De manera
+equivalente, se puede decir que partiendo del sistema $\frame A$ se aplica una
+rotación $\ssrnocal{\mathcal A}{1}=\ssr{A}{B}$ para obtener el sistema
+$\frame B$. La notación $\ssrnocal{\mathcal A}{1}$ se utilizará solamente para
+enfatizar que es la primera rotación que se está aplicando, y que esta rotación
+se realiza con respecto a los ejes del sistema $\frame A$. Luego al sistema
+$\frame B$ se le aplica otra rotación $\ssrnocal{\mathcal A}{2}$ hasta llegar
+al sistema $\frame C$. Sin embargo, a pesar de que esta segunda rotación se
+aplica al sistema $\frame B$, es especificada con respecto a los ejes del
+sistema de referencia $\frame A$, que se considera el sistema fijo ya que no ha
+presentado ninguna modificación, y por ello la notación
+$\ssrnocal{\mathcal A}{2}$.
+
+La orientación final del sistema $\frame C$ con respecto al sistema inicial
+$\frame A$ se puede obtener a partir de @eq-composicion-rotacion, pero
+esta expresión requiere que las rotaciones se expresen con respecto al sistema
+actual. Si bien la primera rotación $\ssrnocal{\mathcal A}{1}$ se encuentra con
+respecto al sistema actual, la segunda rotación $\ssrnocal{\mathcal A}{2}$ no
+se encuentra con respecto al sistema actual, que en ese caso era el sistema
+$\frame B$. Para expresar esta segunda rotación con respecto al sistema
+$\frame B$ es necesario utilizar la transformación de similaridad dada
+en @eq-transf-similaridad-rot, obteniéndose
+$$
+\begin{align*}
+  \ssrnocal{\mathcal B}{2} &= \ssr{B}{A} \ssrnocal{\mathcal A}{2} \ssr{A}{B} \\
+  & = \ssrnocal{\mathcal A}{1}^T \ssrnocal{\mathcal A}{2} \ssrnocal{\mathcal A}{1}
+\end{align*}
+$$
+donde se usó la equivalencia $\ssrnocal{\mathcal A}{1}=\ssr{A}{B}$ y
+$\ssrnocal{\mathcal A}{1}^T=\ssr{B}{A}$. Finalmente,
+aplicando @eq-composicion-rotacion para la composición de rotaciones con
+respecto al sistema actual se tendrá que la rotación resultante $\Rot$ que
+describe al sistema $\frame C$ con respecto al sistema $\frame A$ está dada por
+$$
+  \Rot = \ssrnocal{\mathcal A}{1} \ssrnocal{\mathcal B}{2} =
+  \ssrnocal{\mathcal A}{1} (\ssrnocal{\mathcal A}{1}^T \ssrnocal{\mathcal A}{2}
+  \ssrnocal{\mathcal A}{1})
+$$
+llegando luego de la simplificación a
+$$
+  \Rot = \ssrnocal{\mathcal A}{2} \ssrnocal{\mathcal A}{1}.
+$$ {#eq-rotacion-fijo}
+
+De este modo se puede ver que cuando una rotación $\ssrnocal{\mathcal A}{2}$ se
+realiza con respecto a un sistema fijo, en este caso $\frame A$, la matriz de
+rotación se *pre-multiplica* (multiplicación por la izquierda) con la
+anterior rotación.
+
+![Rotaciones sucesivas con respecto al sistema $\framen 0$ que llevan $\framen 0$ a $\framen 1$ y luego a $\framen 2$.](images/represent/composicion-fija.png){#fig-ej-composicion-fija}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-rotacion-sistema-fijo}
+
+## Rotaciones alrededor de un sistema fijo
+Considerar un sistema de referencia inicial denominado $\framen 0$. Primero se
+realiza una rotación de un ángulo $\theta_1$ alrededor del eje $\y$ llegando a
+un sistema denominado $\framen 1$, como se esquematiza en la @fig-ej-composicion-fija. Luego, al sistema $\framen 1$ se le aplica
+una rotación de un ángulo $\theta_2$ alrededor del eje $\z$ del sistema fijo
+($\framen 0$), obteniéndose el sistema $\framen 2$. Determinar la matriz de
+rotación que describe la orientación del sistema resultante $\framen 2$ con
+respecto al sistema fijo $\framen 0$.
+
+*Solución:*
+
+La primera rotación se puede describir como
+$\Rot_y(\theta_1)$ y la segunda rotación como $\Rot_z(\theta_2)$. Debido a que
+la segunda rotación se realiza con respecto al eje fijo, debe pre-multiplicar a
+la primera rotación según~\eqref{ej:rotacion-sistema-fijo} (se debe multiplicar
+a la izquierda de la primera rotación), obteniéndose la rotación resultante
+$$
+  \ssrnocal{0}{2} = \Rot_z(\theta_2)\Rot_y(\theta_1)  
+$$
+la cual describe al sistema $\framen 2$ con respecto al sistema inicial
+$\framen 0$. Debe quedar claro que el orden es importante y si se hubiese
+multiplicado de otra manera, el resultado sería evidentemente incorrecto.
+
+:::
+:::
+
+### Resumen: Composición de Rotaciones
+
+Con el fin de recalcar la importancia del orden de la multiplicación al momento
+de realizar una composición de rotaciones, en esta sección se resumirá los
+posibles casos. Considérese un sistema de referencia $\frame A$ al cual se
+aplica una rotación $\ssr{A}{B}$ para llegar al sistema $\frame B$. Luego al
+sistema de referencia $\frame B$ se le aplica una segunda rotación $\Rot$ para
+llegar al sistema $\frame C$. Dependiendo de si la rotación $\Rot$ se realiza
+con respecto a los ejes del sistema actual o con respecto a los ejes del
+sistema fijo, se tiene los dos siguientes casos.
+
+* Si la rotación $\Rot$ se aplica con respecto al sistema actual
+  $\frame B$, esta rotación se *post-multiplica* (multiplica por la derecha) con $\ssr{A}{B}$
+  obteniéndose
+$$
+  \ssr{A}{C} = \ssr{A}{B}~ \Rot.
+$$
+
+* Si la rotación $\Rot$ se aplica con respecto al sistema fijo $\frame A$,
+  esta rotación se *pre-multiplica* (multiplica por la izquierda) con $\ssr{A}{B}$, obteniéndose
+  $$
+  \ssr{A}{C} = \Rot ~ \ssr{A}{B}.
+  $$
+
+En cada caso, la matriz resultante $\ssr{A}{C}$ representa al sistema
+$\frame C$ con respecto al sistema $\frame A$. Sin embargo, es importante notar
+que en ambos casos las matrices resultantes son diferentes.
+
+![Cuerpo rígido con un sistema de coordenadas asociado.](images/represent/cuerpo-rigido-caja.png){#fig-ej-cuerpo-rigido-caja}
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-composicion-rotaciones-0}
+
+## Orden en la composición de rotaciones
+Considérese un cuerpo rígido como el mostrado en la @fig-ej-cuerpo-rigido-caja, el cual tiene asociado el sistema de coordenadas mostrado.
+Determinar la orientación final del cuerpo rígido, y la matriz de
+rotación resultante, luego de realizar las siguientes rotaciones. a) Partiendo
+del sistema inicial se aplica una rotación de $90\grad$ alrededor del eje $\z$,
+seguida de una rotación de $90\grad$ alrededor del eje $\y$ actual. b)
+Partiendo del sistema inicial, se aplica una rotación de $90\grad$ alrededor
+del eje $\y$ seguida de una rotación de $90\grad$ alrededor del eje $\z$
+actual. c) Partiendo del sistema inicial, se aplica una rotación de $90\grad$
+alrededor del eje $\z$ seguida de una rotación de $90\grad$ alrededor del eje
+$\y$ fijo (inicial).
+
+*Solución:*
+
+a) En este caso, debido al orden de aplicación de las rotaciones, la
+segunda rotación $\Rot_y(90\grad)$ post-multiplica a la primera rotación
+$\Rot_z(90\grad)$, obteniéndose que la rotación resultante es
+$$
+  \Rot = \Rot_z(90\grad) \Rot_y(90\grad).
+$$
+La orientación final del cuerpo rígido se muestra en la @fig-ej-cuerpo-rigido-composiciona.
+
+b) En este caso, la segunda rotación $\Rot_z(90\grad)$ pre-multiplica
+a la primera rotación $\Rot_y(90\grad)$, siendo la rotación resultante $\Rot$
+similar a la mostrada en el caso a. Así, se puede observar que el producto de
+dos rotaciones tiene dos interpretaciones diferentes, según si se considera una
+multiplicación a la derecha o a la izquierda.
+
+
+c) En este caso, la segunda rotación pre-multiplica a la primera, y
+la matriz de rotación resultante será
+$$
+  \Rot =  \Rot_y(90\grad) \Rot_z(90\grad).
+$$
+A pesar de que cada rotación es similar a las del caso a, el sistema con
+respecto al cual se aplican es diferente, llevando a resultados diferentes y
+enfatizándose la importancia del orden de la multiplicación. La orientación
+obtenida se muestra en la @fig-ej-cuerpo-rigido-composicionb.
+
+:::
+:::
+
+::: {#fig-ej-cuerpo-rigido-composicion layout-ncol=2}
+
+![Casos a y b](images/represent/ej-cuerpo-rigido-composicion1.png){#fig-ej-cuerpo-rigido-composiciona width=90%}
+
+![Caso c](images/represent/ej-cuerpo-rigido-composicion2.png){#fig-ej-cuerpo-rigido-composicionb width=90%}
+
+Orientaciones finales luego de cada uno de los casos del @exm-composicion-rotaciones-0.
+
+:::
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-composicion-rotaciones}
+
+## Composición de varias rotaciones
+
+A un sistema de referencia se le aplica una rotación inicial de un ángulo
+$\theta_1$ alrededor del eje $x$. Al sistema resultante se le aplica una
+rotación de $\theta_2$ alrededor del eje $z$ actual. Luego, a este nuevo
+sistema se le aplica una nueva rotación de $\theta_3$ alrededor del eje $z$
+fijo. Al sistema resultante se le aplica una nueva rotación de un ángulo
+$\theta_4$ alrededor del eje $y$ actual. Finalmente a este nuevo sistema se le
+aplica una rotación de un ángulo $\theta_5$ alrededor del eje $x$ fijo.
+Determinar la expresión de la matriz de rotación $\Rot$ que describe la
+orientación del sistema resultante final con respecto al sistema inicial.
+
+*Solución:*
+
+Para determinar la rotación final se debe
+describir cada una de las rotaciones en el orden que aparecen, las cuales deben
+pre-multiplicar o post-multiplicar según si son aplicadas con respecto al
+sistema fijo o al sistema móvil. Realizando estos pasos se llega a 
+$$
+  \Rot = \Rot_x(\theta_5) \Rot_z(\theta_3) \Rot_x(\theta_1)
+  \Rot_z(\theta_2)\Rot_y(\theta_4).
+$$
+La matriz resultante $\Rot$ es la composición de todas las rotaciones
+mencionadas, y el orden de la multiplicación determina si la rotación fue
+aplicada con respecto al sistema fijo o al sistema actual.
+
+:::
+:::
+
+### Complejidad Computacional
+
+Como se ha visto anteriormente, al aplicar varias rotaciones a un punto dado
+$\p$, estas rotaciones se componen mediante el producto de matrices de
+rotación. A pesar de que estos productos pueden ser asociados de cualquier
+manera, debido a la propiedad de asociatividad ligada al producto, desde el
+punto de vista computacional resulta importante considerar la forma en la que
+se realiza esta asociación. No existe una regla general para la asociación
+eficiente, pero en general resulta recomendable realizar productos de matriz
+con vector antes de realizar producto de matriz con matriz, como se ejemplifica
+a continuación.
+
+::: {.callout-note appearance="minimal"}
+::: {#exm-complejidad-computacional}
+
+## Complejidad computacional
+En un conjunto de sistemas de referencia, para expresar el punto $\p$,
+inicialmente representado con respecto a un sistema $\frame D$, con respecto al
+sistema de referencia $\frame A$, es necesario realizar la siguiente operación:
+$\ssv{A}{\p}{} = \ssr{A}{B} \ssr{B}{C} \ssr{C}{D} \ssv{D}{\p}{}$.
+
+Una forma de realizar las asociaciones es primero generar la matriz de rotación
+equivalente y luego multiplicar por el punto deseado, de la siguiente manera:
+$$
+  \ssv{A}{\p}{} = (\ssr{A}{B} \ssr{B}{C} \ssr{C}{D}) \ssv{D}{\p}{} = \ssr{A}{D} 
+  \ssv{D}{\p}{}.
+$$
+Si se realiza esta asociación, el cálculo de la matriz de rotación equivalente
+$\ssr{A}{D}$ implica 54 multiplicaciones y 36 sumas (el producto de dos
+matrices de $3\times 3$ implica 27 productos y 18 sumas), y el producto de esta
+matriz equivalente con el punto requiere 9 multiplicaciones y 6 sumas. En total
+para esta asociación se requeriría 63 multiplicaciones y 42
+sumas.
+
+La otra manera de realizar la asociación consiste en asociar cada matriz con el
+vector resultante a la derecha, como se muestra a continuación:
+$$
+  \ssv{A}{\p}{} = \ssr{A}{B} (\ssr{B}{C} (\ssr{C}{D} \ssv{D}{\p}{})).
+$$
+Con esta asociación, primero se obtiene $\ssv{C}{\p}{}$, luego $\ssv{B}{\p}{}$
+y finalmente $\ssv{A}{\p}{}$. Cada una de estas operaciones implica 9
+multiplicaciones y 6 sumas, así que en total se requeriría 27 multiplicaciones
+y 18 sumas. A partir de este análisis, se puede observar que resulta
+computacionalmente más eficiente realizar esta segunda asociación que la
+primera ya que implica mejor cantidad de operaciones.
+
+:::
+:::
+
+El ejemplo anterior muestra que es computacionalmente más eficiente realizar
+productos sucesivos de matrices con vectores antes que realizar productos de
+matrices con matrices. Sin embargo, se debe tener en cuenta que si la matriz
+$\ssr{A}{D}$ apareciese varias veces y fuese constante, podría resultar más
+eficiente primero calcularla y luego, multiplicarla con los puntos deseados.
+
+## Representación de la Posición y Orientación 
+
+### Transformaciones homogéneas {#sec-transformaciones-homogeneas}
+
+**Propiedades**
+
+**Transformaciones Puras**
+
+
+### Interpretaciones de las Transformaciones homogéneas {#sec-interpretacion-transf-homogeneas}
+
+
+### Composición de Transformaciones homogéneas {#sec-composicion-transf-homogeneas} 
+
+
+### Movimientos Rígidos en 3D
+
+<!-- 
+% TODO: esta sección
+
+% transformaciones rígidas
+
+% Ahora se puede ver cómo representar tanto posiciones como
+% orientaciones. Combinamos estos dos conceptos en esta sección para definir un
+% movimiento rígido y derivamos una representación matricial eficiente para
+% movimientos rígidos usando la noción de transformación homogénea
+
+Un movimiento rígido preserva la distancia entre puntos y el ángulo entre
+vectores. La representación de un movimiento rígido general implica tanto
+traslación como rotación. Formalmente se define de la siguiente manera
+\begin{definition*}
+  Un movimiento rígido es un par ordenado $(\vect d,\Rot)$ donde $\vect d \in
+  \R^3$ y $\Rot 
+  \in SO(3)$. El grupo de todos los movimientos rígidos se conoce como el
+  *grupo Euclideano especial* y se denota como $SE(3)$. Luego, se ve que
+  $SE(3)=\R^3 \times SO(3)$.
+\end{definition*}
+
+% Considérese un sistema de referencia $\frame B$ fijo a
+% un cuerpo relativo a un sistema inercial $\frame A$ (añadir figura).
+% % Fig. eg. Murray Fig 2.5
+
+Considérese la matriz de rotación $\ssr{A}{B}$ que especifica la orientación
+del sistema $\frame B$ con respecto al sistema $\frame A$, y sea $\vect d$ un vector
+que va del origen del sistema $\frame A$ al origen del sistema $\frame B$ (tal
+como se muestra en la figura TODO). Supongamos que un punto $\p$ está
+rígidamente unido al sistema coordenado $\frame B$ con coordenadas
+$\sv{B}{\p}$. Se puede expresar las coordenadas de este punto con respecto al
+sistema $\frame A$ usando la siguiente expresión:
+$$
+  \sv{A}{\p} = \ssr{A}{B} \sv{B}{\p} + \sv{A}{\vect d}.
+$$
+donde se muestra explícitamente que el vector $\vect d$ también debe estar
+representado con respecto al sistema $\frame A$. Dado que esta configuración es
+un ejemplo de descripción de posición y orientación se tiene que
+$\ssv{A}{g}{_B}=(\sv{A}{\vect d}, \ssr{A}{B}) \in SE(3)$.
+
+% Considerar tres sistemas de coordenadas 0, 1 y 2. Sea $\d_1$ el vector del
+% origen de 0 al origen de 1 y $d_2$ el vector del origen de 1 al origen de 2. Si
+% el punto $p$ se une al sistema $2$ con coordenadas locales $p_2$, podemos
+% calcular sus coordenadas relativas al sistema 0 usando
+% $$
+%   p_1 = \ssr{1}{2} p_2 + \ss{1}{\d}{2}
+% $$
+% y 
+% $$
+%   p_0 = \ssr{0}{1} p_1 + \ss{0}{\d}{1}.
+% $$
+% La composición de estas dos ecuaciones define un tercer movimiento rígido, el
+% cual puede ser descrito substituyendo la expresión de $p_1$ como
+% $$
+%   p_0 = \ssr{0}{1} \ssr{1}{2} p_2 + \ssr{0}{1} \ss{1}{\d}{2} + \ss{0}{\d}{1}.
+% $$
+% Dado que la relación entre $p_0$ y $p_2$ es también un movimiento rígido, y se
+% puede igualmente describir como
+% $$
+%   p_0 = \ssr{0}{2} \ss{2}{\p}{} + \ss{0}{\d}{2}.
+% $$
+% Comparando las ecuaciones se obtiene las relaciones
+% \begin{align*}
+%   \ssr{0}{2} & = \ssr{0}{1} \ssr{1}{2} \\
+%   \ss{0}{\d}{2} & = \ss{0}{\d}{1} + \ssr{0}{1} \ss{1}{\d}{2}.
+% \end{align*}
+% Esta ecuación muestra que la transformación de orientación puede simplemente
+% ser multiplicada, y el vector del origen 0 al origen 2 tiene coordenadas dadas
+% por la suma de $d_{01}$ (el vector de 0 a 1 expresado en 0), y
+% $\ssr{0}{1} \ss{1}{\d}{2}$ (el vector de 1 a 2 expresado en la orientación del
+% sistema 0).
+
+
+
+-->
+
