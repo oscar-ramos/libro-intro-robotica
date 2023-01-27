@@ -869,7 +869,7 @@ su componente vectorial, de tal modo que el cuaternión $Q$ puede también repre
 $$
 Q = (w,\bepsilon), \qquad \text{o} \qquad Q = w+\bepsilon,
 $$
-con $w \in \R$ y $\bepsilon \in \R^3$. Debido a que $\bepsilon$ es el componente vectorial, al representar el cuaternión como una suma de componentes, sus elementos $\epsilon_x,\epsilon_y,\epsilon_z$ utilizan la base $\vi,\vj,\vk$ para ser claramente distinguidos del término escalar, que tiene base $1$. Es usual representar como $\mathbb Q$ al espacio de todos los cuaterniones. Más detalles sobre cuaterniones y sus operaciones se puede encontrar en el [apéndice -@sec-ap-cuaterniones]apéndice~\ref{ap:cuaterniones}.
+con $w \in \R$ y $\bepsilon \in \R^3$. Debido a que $\bepsilon$ es el componente vectorial, al representar el cuaternión como una suma de componentes, sus elementos $\epsilon_x,\epsilon_y,\epsilon_z$ utilizan la base $\vi,\vj,\vk$ para ser claramente distinguidos del término escalar, que tiene base $1$. Es usual representar como $\mathbb Q$ al espacio de todos los cuaterniones. Más detalles sobre cuaterniones y sus operaciones se puede encontrar en el [apéndice -@sec-ap-cuaterniones].
 
 Al representar un cuaternión como una tupla de cuatro elementos, es importante conocer el orden de estos elementos, ya que no existe una convención establecida. En este libro se utiliza la convención mostrada; es decir, primero el término escalar y luego los términos vectoriales. Sin embargo, algunas convenciones y paquetes de software, sin pérdida de generalidad, hacen lo contrario, y el no tener claro este orden es una fuente frecuente de errores, principalmente al utilizar bibliotecas para la implementación. 
 

@@ -1513,7 +1513,7 @@ $$
     0 & \frac{\sqrt{3}}{2} & -\frac{1}{2} \\[0.3em]
     0 & \frac{1}{2} & \frac{\sqrt{3}}{2}}.
 $$
-A partir de la interpretación representada en~\eqref{eq:operador}, el punto
+A partir de la interpretación representada en @eq-operador, el punto
 luego de la rotación estará dado por
 $$
   \p_{_2} = \Rot(30^{\circ},\hat\x) \p_{_1} = 
@@ -1859,7 +1859,7 @@ respecto al sistema fijo $\framen 0$.
 La primera rotación se puede describir como
 $\Rot_y(\theta_1)$ y la segunda rotación como $\Rot_z(\theta_2)$. Debido a que
 la segunda rotación se realiza con respecto al eje fijo, debe pre-multiplicar a
-la primera rotación según~\eqref{ej:rotacion-sistema-fijo} (se debe multiplicar
+la primera rotación según @eq-eq-rotacion-fijo (se debe multiplicar
 a la izquierda de la primera rotación), obteniéndose la rotación resultante
 $$
   \ssrnocal{0}{2} = \Rot_z(\theta_2)\Rot_y(\theta_1)  
