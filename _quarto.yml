@@ -25,7 +25,12 @@ book:
   chapters:
     - index.qmd
     - conceptos_introductorios.qmd
+    - cr_posicion_orientacion.qmd
+    - cr_parametrizaciones_orientacion.qmd
     - referencias.qmd
+  appendices:
+    - ap_elementos_matematicos.qmd
+    - ap_cuaterniones.qmd
 
 bibliography: referencias.bib
 

@@ -1,0 +1,136 @@
+{{< include _commands.qmd >}}
+
+# Cuaterniones {#sec-ap-cuaterniones}
+
+Los cuaterniones, introducidos por Hamilton, 
+<!-- % \footnote{Se dice que Gauss ya había inventado los cuaterniones con
+% anterioridad pero que nunca lo publicó%\cite{Altmann1989hamilton}
+% }, -->
+generalizan la idea de los números complejos y
+pueden ser utilizados para representar rotaciones en cuatro dimensiones (siendo tres dimensiones un caso especial), al igual que los números
+complejos pueden ser utilizados para representar rotaciones planas en un círculo unitario. Así como los
+números complejos permiten operaciones con vectores bidimensionales, los cuaterniones 
+permiten multiplicar y dividir vectores en cuatro dimensiones; y así como una
+multiplicación compleja implementa una rotación en el plano, la multiplicación
+de cuaterniones implementa una rotación en el espacio de cuatro dimensiones. 
+A diferencia de los ángulos de Euler, los
+cuaterniones dan una parameterización global de $SO(3)$ al precio de usar
+cuatro números para representar la rotación.
+
+## Definición de un Cuaternión
+
+Un cuaternión es una tupla que contiene 4 elementos reales $(w,\epsilon_x,\epsilon_y,\epsilon_z)$ con operaciones de adición y multiplicación, y se representa como
+$$
+	Q = w+\epsilon_x \vi + \epsilon_y \vj + \epsilon_z\vk
+$$
+con $\epsilon_x,\epsilon_y,\epsilon_z,w \in \R$. El elemento $w$ es el
+componente escalar de $Q$ y $\bepsilon=(\epsilon_x,\epsilon_y,\epsilon_z)$ es
+el componente vectorial. Equivalentemente, se puede representar como
+$$
+	Q = (w,\bepsilon)
+$$
+con $w \in \R$ y $\bepsilon \in \R^3$. 
+
+Notar que la notación dada en la definición para representar cuaterniones no es estándar: también se puede
+representar el cuaternión en el sentido inverso $Q=(\bepsilon,w)$ siempre que
+esté claro cuál es la parte vectorial y cuál la parte escalar. A veces la parte
+escalar es también denominada $\eta$ y la parte vectorial simplemente
+$(x,y,z)$. 
+<!-- %De hecho, un cuaternión fue originalmente descrito por
+%Hamilton %\cite{Hamilton1844ii}
+%como $Q=w+ix+jy+kz$. -->
+
+<!-- %Algebraicamente, los cuaterniones son sub-álgebras (casos especiales) del
+%álgebra de Clifford que es una generalización.  -->
+
+El conjunto de cuaterniones $\mathbb Q$ es un espacio vectorial de cuatro
+dimensiones sobre el campo de los reales y forma un grupo con respecto a la
+multiplicación de cuaterniones que se denota por $\circ$. La multiplicación de cuaterniones es
+distributiva y asociativa pero no conmutativa, y satisface las siguientes
+relaciones, que son conocidas como las *ecuaciones fundamentales de los cuaterniones*:
+
+* $\vi \circ \vi = \vj \circ \vj = \vk \circ \vk = \vi \circ \vj \circ \vk = -1$.
+* $\vi \circ \vj =\vk$, $~~\vj \circ \vk = \vi$, $~~\vk \circ \vi = \vj$.
+* $\vj \circ \vi =-\vk$, $~~\vk \circ \vj = -\vi$, $~~\vi \circ \vk = -\vj$.
+
+## Operaciones con cuaterniones
+
+Para describir las operaciones con cuaterniones se consierará los siguientes cuaterniones: $Q=(w,\bepsilon), Q_1=(w_1,\bepsilon_1), Q_2=(w_2,\bepsilon_2) \in \mathbb Q$. 
+
+* *Suma*. La suma de dos cuaterniones $Q_1$ y $Q_2$ es semejante a una suma vectorial:
+$$
+	Q_1 + Q_2 = (w_1+w_2,~\bepsilon_1+\bepsilon_2).
+$$
+
+* *Producto escalar*. El producto de un escalar $\lambda \in \R$ y un cuaternión $Q$ es:
+$$
+	\lambda Q = (\lambda w,~\lambda \bepsilon).
+$$
+
+* *Producto*. El producto de un cuaternión $Q_1$ con un cuaternión $Q_2$ está dado por:
+$$
+	Q_1 \circ Q_2 =
+	(w_1w_2-\bepsilon_1^T\bepsilon_2,~w_1\bepsilon_2+w_2\bepsilon_1+\bepsilon_1
+	\times \bepsilon_2),
+$$
+que se puede demostrar algebraicamente realizando el producto término a término, utilizando las relaciones de $\vi,\vj,\vk$ y simplificando. En la mayoría de casos esta expresión elimina el uso directo de las relaciones de multiplicación de $\vi,\vj,\vk$. 
+En forma matricial, dado el cuaternión $Q$ se puede definir la matriz $\hat Q$ siguiente:
+$$
+	\hat Q = \bm{
+		w & -\epsilon_x & -\epsilon_y & -\epsilon_z \\
+		\epsilon_x & w & -\epsilon_z & \epsilon_y \\
+		\epsilon_y & \epsilon_z & w & -\epsilon_x \\
+		\epsilon_z & -\epsilon_y & \epsilon_x & w
+	} =
+	\bm{
+		w & -\bepsilon^T \\
+		\bepsilon & wI+\hat\bepsilon
+	}
+$$
+donde $\hat \bepsilon$ es la matriz antisimétrica obtenida a partir de $\bepsilon$. Notar que $\hat Q$ es una matriz ortonormal y define una rotación en el espacio Euclideano de dimensión 4. Así la multiplicación de cuaterniones es equivalente al producto matricial: 
+$$
+	Q \circ Q_1 = \hat Q Q_1.
+$$
+Notar que es posible también definir matrices para multiplicación por la derecha.
+ <!-- citear Quaternions-Ken Shoemake -->
+
+* *Conjugada*. La conjugada de un cuaternión $Q$ se define de manera análoga a la conjugada de un número complejo y está dada por:
+$$
+	Q^* = (w,-\bepsilon).
+$$
+Usando la definición del producto, se puede demostrar que: $(Q_1 \circ Q_2)^*=Q_2^* \circ Q_1^*$. Además, se tiene que $(Q_1+Q_2)^*=Q_1^*+Q_2^*$, y $(Q^*)^*=Q$.
+
+* *Norma*. La norma o magnitud de un cuaternión $Q$ es un mapa $\Vert . \Vert: \mathbb Q \rightarrow \R$ y se define como:
+$$
+	\Vert Q \Vert ^2 = Q \circ Q^* = w^2 + \epsilon_x^2 + \epsilon_y^2 +
+	\epsilon_z^2. 
+$$
+Algunas propiedades de la norma son: $\Vert Q_1 \circ Q_2\Vert = \Vert Q_1 \Vert \Vert Q_2 \Vert$, y $\Vert Q \Vert = \Vert Q^* \Vert$. 
+
+* *Inversa*. Dividiendo la definición de norma o magnitud por $\Vert Q \Vert^2$ se tiene $\frac{Q \circ Q^*}{\Vert Q \Vert^2}=Q \circ \frac{Q^*}{\Vert Q \Vert^2}=1$ de donde se observa que la inversa de un cuaternión $Q$ es:
+$$
+	Q^{-1} = \frac{Q^*}{\Vert Q \Vert^2}
+$$
+siempre que $Q \neq \boldsymbol 0$ ($\boldsymbol 0$ es el cuaternión con todos los elementos cero). Además, se puede mostrar que $(Q_1\circ Q_2)^{-1}=Q_2^{-1} \circ Q_1^{-1}$.
+
+* *Producto interno*. El producto interno entre cuaterniones $\cdot: \mathbb Q \times \mathbb Q \rightarrow \R$ se define como 
+$$
+	Q_1 \cdot Q_2 = (w_1 w_2,~ \bepsilon_1^T \bepsilon_2).
+$$
+Usando esta definición se puede expresar la norma como $\Vert Q \Vert^2 = Q \cdot Q$. Así, la norma de cuaterniones es una norma $L_2$ en el usual sentido vectorial.
+
+Adicionalmente, se tiene que el elemento identidad para la multiplicación de
+cuaterniones es $Q=(1,\boldsymbol 0)$. Se puede demostrar fácilmente que la
+suma es asociativa y conmutativa, y que la multiplicación es asociativa pero no
+conmutativa.
+
+Resulta natural ver a los escalares, vectores tridimensionales y números
+complejos como una especialización de los cuaterniones, dado que las
+operaciones de adición y multiplicación resultan ser las operaciones familiares
+para estos casos. Por ejemplo, el producto de dos vectores $\bepsilon_1$,
+$\bepsilon_2$ daría como resultado el producto escalar
+$-\bepsilon_1^T\bepsilon_2$ y el producto vectorial
+$\bepsilon_1 \times \bepsilon_2$. Con las operaciones vistas anteriormente,
+incluyendo la inversa, se puede observar que los cuaterniones forman un álgebra
+lineal y un campo. Así, son la única extensión de los números complejos que son
+a la vez un algebra lineal y un campo.

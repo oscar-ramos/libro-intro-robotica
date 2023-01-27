@@ -1,0 +1,862 @@
+{{< include _commands.qmd >}}
+
+# Elementos matemáticos {#sec-elementos-matematicos}
+
+## Vectores {#sec-ap-vectores}
+
+Un vector $\x \in \R^n$ es un arreglo unidimensional de $n$ elementos dado por
+$$
+  \x = \bm{x_1 \\ x_2 \\ \vdots \\ x_n},
+$$
+con $x_i \in \R$. Es común representar a los vectores como vectores columna,
+por lo que en notación bidimensional se tendría $\x \in \R^n$ =
+$\x \in \R^{n \times 1}$; es decir, $n$ filas y $1$ sola columna. De manera
+alternativa, un vector se puede representar como la tupla ordenada
+$\x=(x_1,x_2,\cdots,x_n)$.
+
+**Transpuesta de un Vector**. La transpuesta del vector columna
+$\x \in \R^{n \times 1}$ es el vector fila $\x^T \in \R^{1 \times n}$ y se
+representa como
+$$
+  \x^T = \bm{x_1 & x_2 & \cdots & x_n}.
+$$
+Usando la transpuesta, a veces se denota al vector $\x$ como
+$\x=\bm{x_1 & x_2 & \cdots & x_n}^T$.
+
+**Vector Unitario**. Un vector unitario, usualmente representado como
+$\hat\x$, es aquel vector cuya norma Euclideana es unitaria:
+$\Vert \x \Vert = 1$. Así, cumple la propiedad $\hat\x ^T \hat \x = 1$. Dado un
+vector $\x$ cualquiera, el vector unitario que indica la misma dirección se
+obtiene como
+$$
+  \hat \x = \frac{\x}{\Vert \x \Vert}.
+$$
+
+**Vector libre**. Dados dos puntos $\p_i, \p_j \in \R^3$, el
+vector libre $\vv \in \R^3$ que conecta $\p_i$  con $\p_j$ se define como el
+segmento de línea dirigido que va de $\p_i$ a $\p_j$; es decir
+$$
+\vv = \p_i - \p_j.
+$$
+A pesar de que puntos y vectores están representados por 3 elementos, son
+conceptualmente diferentes. Un vector tiene una dirección y una magnitud
+(norma). Además, un vector (libre) no se encuentra unido a ningún cuerpo rígido dado que pueden 
+existir otros pares de puntos en este cuerpo, por ejemplo $\p_k,\p_l$, que podrían ser conectados por el mismo vector $\vv$; es decir, $\p_k-\p_l = \p_i-\p_j$. 
+
+
+### Operaciones con Vectores
+
+**Producto Escalar**
+
+: El producto escalar o producto punto de $\x,\y \in \R^n$, denotado como
+$\x \cdot \y$ o $\langle \x, \y \rangle$, es un número real definido como
+$$
+  \x \cdot \y = \sum_{i=1}^n x_iy_i = x_1y_1 +x_2y_2 + \cdots + x_n y_n.
+$$
+A partir de esta definición, el producto escalar es equivalente a $\x^T\y$. Una
+propiedad importante del producto escalar es que es conmutativo:
+$$
+  \x \cdot \y = \y \cdot \x.
+$$
+Igualmente se tiene $\x^T\y = \y^T\x$. De manera alternativa, utilizando la
+norma Euclideana, se puede definir producto escalar entre dos vectores como
+$$
+  \x \cdot \y = \Vert \x \Vert \Vert \y \Vert \cos \theta
+$$
+donde $\theta$ es el ángulo entre el vector $\x$ y el vector $\y$. Se dice que
+dos vectores $\x,\y$ son ortogonales si se encuentran a $90^{\circ}$; es decir,
+si se cumple que $\x \cdot \y = 0$.
+
+**Norma**
+
+: La norma Euclideana, longitud o magnitud de un vector
+$\x \in \R^n$ se representa como $\Vert \x \Vert$ y se define como
+$$
+  \Vert \x \Vert = \sqrt{\x \cdot \x} = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+$$
+Notar que el cuadrado de la norma Euclideana es
+$\Vert \x \Vert^2=\x \cdot \x = \x^T\x$.  La norma Euclideana
+cumple con las siguientes desigualdades
+
+* Desigualdad de Cauchy-Schwarz: $\vert \x \cdot \y \vert \leq \Vert \x
+  \Vert \Vert \y \Vert$.
+
+* Desigualdad del triángulo: $\Vert \x + \y \Vert \leq \Vert \x \Vert +
+  \Vert \y \Vert$.
+
+De manera general, se define la norma $L_p$ de un vector $\x \in \R^n$ como
+$$
+  \Vert \x \Vert_p = \left( \sum_{i=1}^n \vert x_i \vert^p  \right)^{\frac{1}{p}}.
+$$
+La norma Euclideana es el caso particular cuando $p=2$, y también se denomina
+norma $L_2$. Por este motivo, cuando es necesario distinguir la norma
+Euclideana de otras normas se le representa como $\Vert \x \Vert_2$. Otras
+normas usuales son la norma $L_1$ y la norma $L_{\infty}$ dadas,
+respectivamente, por
+$$
+  \Vert \x \Vert_1 = \sum_{i=1}^n\vert x_i \vert, \qquad \Vert \x
+  \Vert_{\infty}= \max_i \vert x_i \vert
+$$
+
+**Producto Vectorial**
+
+: El producto vectorial de dos vectores $\x,\y\in\R^3$, también llamado
+*producto cruz*, se representa como $\x \times \y$ o como
+$\x \wedge \y$, y se define como
+$$
+  \x \times \y = \bm{x_2y_3-x_3y_2 \\ x_3y_1-x_1y_3 \\ x_1y_2-x_2y_1}.
+$$
+El vector resultante del producto vectorial siempre es perpendicular a los dos
+vectores $\x$ y a $\y$. La norma Euclideana del producto vectorial es
+$$
+  \Vert \x \times \y \Vert = \Vert \x \Vert \Vert \y \Vert \vert \sin\theta \vert,
+$$
+donde $\theta$ es el ángulo entre $\x,\y$. Algunas propiedades del producto
+vectorial son las siguientes.
+
+* $\x \times \x = \vect 0$, donde $\vect 0$ es un vector de ceros.
+
+* $\x \times \y = -\y \times \x$
+
+* $\x \times (\y + \z) = \x \times \y + \x \times \z$
+
+* $\alpha(\x \times \y) = (\alpha \x)\times \y = \x \times (\alpha \y)$,
+  donde $\alpha \in \R$.
+
+**Producto Exterior**
+
+: El producto exterior de dos vectores $\x,\y\in\R^n$, denotado como $\x\y^T$, es una matriz de tamaño $n\times n$ definida por
+$$
+  \x \y^T = \bm{x_1 y_1 & x_1 y_2 & \cdots & x_1 y_n \\
+    x_2 y_1 & x_2 y_2 & \cdots & x_2 y_n \\
+    \vdots & \vdots & \ddots & \vdots \\
+    x_n y_1 & x_n y_2 & \cdots & x_n y_n}.
+$$
+A partir de la expansión anterior, notar que si el vector $\y$ es un vector con
+todos sus elementos iguales a $1$, el producto exterior $\x\y^T$ es equivalente
+a una matriz donde el vector $\x$ se repite en cada columna. El producto
+escalar se puede obtener a partir del producto exterior como
+$$
+  \x \cdot \y = \tr(\x \y^T),
+$$
+donde $\tr$ representa la traza de la matriz.
+
+**Triple Producto Escalar**
+
+: El triple producto escalar entre 3
+vectores $\x,\y,\z \in \R^n$, también llamado producto mixto, se define como $\x \cdot (\y \times \z)$ y cumple las siguientes igualdades
+$$
+  \x \cdot (\y \times \z) = \y \cdot (\z \times \x) = \z \cdot (\x \times \y).
+$$
+Notar que, alternativamente, el triple producto escalar se puede representar
+como $\x^T(\y \times \z)$. Si cualesquiera dos vectores se repiten, entonces el
+triple producto escalar es nulo. Por ejemplo, se tiene
+$\x \cdot (\x \times \y) = 0$.
+
+
+### Diferenciación de Vectores
+
+Considérese que el vector $\x(t)=\bm{x_1(t)&x_2(t) & \cdots & x_n(t)}^T$ es una
+función del tiempo. La diferenciación se aplica término a término. De esta
+manera, la derivada $\dot\x$ del vector $\x$ es el vector
+$$
+  \dx(t)=\bm{\dot x_1(t) & \dot x_2(t) & \cdots & \dot x_n(t)}^T.
+$$
+De manera similar, la integral $\int \x(t) dt$ está dada por el vector
+$$
+  \int \x(t) dt = \bm{\int x_1(t) dt & \int x_2(t) dt & \cdots & \int x_n(t) dt}^T.
+$$
+
+**Derivada del Producto Escalar y Vectorial**
+
+: Para derivar tanto el producto escalar como el producto vectorial, se debe
+utilizar la regla del producto. Así, la derivada del producto escalar es
+$$
+  \frac{d}{dt}\x\cdot \y = \frac{d\x}{dt} \cdot \y + \x \cdot \frac{d\y}{dt},
+$$
+y la derivada del producto vectorial es
+$$
+  \frac{d}{dt}\x \times \y = \frac{d\x}{dt} \times \y + \x \times \frac{d\y}{dt}.  
+$$
+
+**Gradiente**
+
+: Dada una función escalar $f(\x)$, cuyas derivadas
+parciales con respecto a los elementos $x_i$ existen, la gradiente de la
+función $f$ con respecto al vector $\x$ es el vector columna $\nabla_{\x}f(\x)
+\in \R^{n \times 1}$ dado por
+$$
+  \nabla_{\x}f(\x) = \bm{\frac{\partial f(\x)}{\partial x_1} & \frac{\partial
+      f(\x)}{\partial x_2} & \cdots & \frac{\partial f(\x)}{\partial x_n}}^T.
+$$
+Si $\x(t)$ es una función diferenciable con respecto a $t$, entonces la
+derivada temporal de $f$ es
+$$
+  \dot f(\x) = \nabla_x^T f(\x) \dot \x
+$$
+
+### Proyección de un vector {#sec-ap-proyeccion-vector-2d}
+
+Conceptualmente, la proyección de un vector en dos ejes (un plano), en tres ejes (el espacio), o en más ejes  sigue los mismos principios matemáticos y queda completamente descrita utilizando el producto punto.
+
+**Proyección en dos dimensiones**
+
+: Considérese un vector bidimensional $\vv \in \R^2$ y un sistema bidimensional de coordenadas con ejes unitarios
+$\hat \x, \hat \y \in \R^2$, tales que
+$\Vert \hat \x \Vert = \Vert \hat \y \Vert = 1$.  Supóngase, además, que el
+ángulo entre el vector $\vv$ y el eje $\hat \x$ está dado por $\alpha$, quedando el ángulo entre $\vv$ y el eje $\hat \y$ definido como $1-\alpha$. 
+<!-- tal como se muestra en la figura TODO  -->
+La componente del vector
+$\vv$ en el eje $\hat \x$, representada como $v_x$, y su componente en el eje $\hat \y$, representada como $v_y$, están dadas por las proyecciones de $\vv$ en los mencionados ejes, y son
+$$
+	v_x=\vv \cdot \hat \x = \Vert \vv \Vert \cos (\alpha) \qquad \text{y} \qquad
+	v_y=\vv \cdot \hat \y = \Vert \vv \Vert \cos (90^{\circ}-\alpha).
+$$
+Usando estas componentes, el vector $\vv$ puede ser expresado en el sistema de
+coordenadas dado por $\hat \x$, $\hat \y$ como 
+$$
+	\vv = (\vv \cdot \hat \x)\hat \x + (\vv \cdot \hat \y)\hat \y, \qquad \text{o} \qquad
+	\vv = \bm{\vv \cdot \hat \x \\ \vv \cdot \hat \y}.
+$$
+Así, para representar un vector en un sistema de
+coordenadas, basta con realizar el producto punto de este vector con cada uno
+de los ejes coordenados unitarios.
+
+**Proyección en tres dimensiones**
+
+: Si ahora se considera un vector tridimensional $\vv \in \R^3$ y se tiene un sistema tridimensional con ejes unitarios $\x,\y,\z$, la proyección de $\vv$ en cada eje coordenado estará dada por el producto punto como
+$$
+	v_x=\vv \cdot \hat \x, \qquad v_y=\vv \cdot \hat\y, \qquad \text{y} \qquad
+	v_z=\vv \cdot \hat \z.
+$$
+Al igual que en el caso anterior, las componentes permitirán que el vector se exprese en el sistema $\hat\x, \hat\y, \hat\z$ de la siguiente manera:
+$$
+	\vv = (\vv \cdot \hat \x)\hat \x + (\vv \cdot \hat \y)\hat \y + (\vv \cdot \hat\z)\hat \z, \qquad \text{o} \qquad
+	\vv = \bm{\vv \cdot \hat \x \\ \vv \cdot \hat \y \\ \vv \cdot \hat \z}.
+$$
+Esta forma de determinar las coordenadas asumen que los ejes son unitarios, ya que de otro modo habría que también tomar en cuenta sus módulos. La extensión a más dimensiones sigue la misma idea, ya que el producto punto se encuentra bien definido para más dimensiones (en $\R^n$).
+
+
+## Matrices
+
+Una matriz $A\in\R^{m \times n}$, de $m$ filas y $n$ columnas $(m \times n)$,
+es un arreglo rectangular que agrupa los coeficientes de una aplicación
+lineal. Una matriz $A$ se representa como
+$$
+  A = \bm{a_{ij}} = \bm{
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+  },
+$$
+donde $a_{ij} \in \R$ representa el elemento de la fila $i$ y de la columna
+$j$. Si $n=m$, se dice que la matriz es cuadrada; de otro modo, es una matriz
+rectangular.
+
+**Representaciones Alternativas de una Matriz**. Si se denota la
+columna $j$ de la matriz $A \in\R^{m \times n}$ como $\a_j \in \R^m$, la
+matriz $A$ se representa como
+$$
+  A = \bm{\a_1 & \a_2 & \cdots & \a_n}.
+$$
+Por otro lado, si se denota la fila $i$ de esta matriz $A$ como $\a_i^T$, tal
+que $\a_i \in \R^n$, la matriz $A$ se representa como
+$$
+  A = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T}.
+$$
+En esta última representación, es necesario el uso de la transpuesta dado que
+se asume que los vectores son vectores columna. El ver una matriz como una
+colección de columnas y de filas es muy importante ya que usualmente es
+matemáticamente y conceptualmente más conveniente operar a nivel de vectores
+que a nivel de escalares.
+
+**Transpuesta de una Matriz**. La transpuesta de una matriz $A \in \R^{m \times n}$ es una matriz $A^T \in \R^{n \times m}$ tal que
+$$
+  A^T = \bm{
+    a_{11} & a_{21} & \cdots & a_{m1} \\
+    a_{12} & a_{22} & \cdots & a_{m2} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{1n} & a_{2n} & \cdots & a_{mn}
+  };
+$$
+es decir, la matriz $A^T$ se obtiene intercambiando las filas por las columnas
+de la matriz $A$.  Algunas de las propiedades principales de la matriz
+transpuesta son las siguientes:
+
+* $(A^T)^T=A$
+* $(A+B)^T=A^T+B^T$
+* $(AB)^T=B^TA^T$, donde $A$ y $B$ tienen dimensiones adecuadas
+
+### Algunos Tipos de Matrices
+
+A continuación se muestra algunos tipos especiales de matrices cuadradas
+comúnmente utilizadas en robótica.
+
+* *Matriz triangular superior e inferior*. Una matriz $A \in \R^{n \times n}$
+  es triangular superior si $a_{ij}=0$ para $i>j$. Si $a_{ij}=0$ para $i<j$ se
+  dice que es triangular inferior.
+
+* *Matriz diagonal*. Una matriz $A \in \R^{n \times n}$ tal que
+  $a_{ij}=0$ cuando $i \neq j$ es una matriz diagonal. Tal matriz se denota
+  como
+  $$
+    A = \text{diag}(a_{11},a_{22},\cdots,a_{nn}).
+  $$
+  La matriz *identidad* $I \in \R^{n \times n}$ (a veces denominada
+  $I_n$) es una matriz diagonal con todos sus $n$ elementos no nulos iguales a
+  la unidad. 
+  
+* *Matriz simétrica*. Una matriz $A \in \R^{n \times n}$ es
+  simétrica si es igual a su transpuesta:
+  $$
+    A = A^T
+  $$
+  o, equivalentemente, si $a_{ij}=a_{ji},~\forall i,j$. Dada cualquier matriz
+  $A$, la matriz $A+A^T$ es simétrica.
+
+* *Matriz antisimétrica*. Una matriz $A \in \R^{n \times n}$ es
+  antisimétrica (en inglés llamada *skew-symmetric*) si es igual al
+  negativo de su transpuesta:
+  $$
+    A = -A^T
+  $$
+  o, equivalentemente, si $a_{ij}=-a_{ji},~\forall i,j$ con $a_{ii}=0$. Dada
+  cualquier matriz $A$, la matriz $A-A^T$ es antisimétrica.
+  
+* *Matriz ortogonal*. Una matriz $A \in \R^{n \times n}$ es
+  ortogonal si:
+  $$
+    AA^T = A^T A = I,
+  $$
+  donde $I$ representa la matriz identidad. Usando esta definición se tiene que
+  $A^T = A^T(AA^{-1}) = (A^TA)A^{-1} = I A^{-1} = A^{-1}$, y por tanto la
+  transpuesta de una matriz ortogonal es su inversa: $A^{T}=A^{-1}$.
+
+  Algunas propiedades importantes de una matriz ortogonal $A$ son que su
+  determinante es $\det(A)=\pm 1$, y que sus columnas forman vectores
+  ortonormales (son unitarios y mutuamente ortogonales). Además, si
+  $A \in \R^{3 \times 3}$, sus valores propios son $\lambda_1=1$,
+  $\lambda_{2,3}=e^{\pm i \theta}$, y el vector propio asociado con $\lambda_1$
+  se interpreta como un eje de rotación.
+
+Es posible expresar cualquier matriz cuadrada $A \in \R^{n \times n}$ como la
+suma de una matriz simétrica y una antisimétrica:
+$$
+  A = \half (A+A^T) + \half(A-A^T),
+$$
+donde el primer sumando es simétrico y el segundo es antisimétrico.
+
+### Multiplicación de Matrices
+
+El producto de dos matrices $A \in \R^{m \times n}$ y $B \in \R^{n \times p}$
+es la matriz $C=AB \in \R^{m \times p}$ cuyos términos $c_{ij}$ están definidos
+como
+$$
+  c_{ij}=\sum_{k=1}^n a_{ik} b_{kj}.
+$$
+Para que el producto de matrices exista, el número de columnas de $A$ debe ser
+igual al número de filas de $B$. A continuación se muestra una visión más
+compacta de este producto, que puede ser útil en algunos casos.
+
+**Producto Matriz-Vector**
+
+: Considerar la matriz $A \in \R^{m \times n}$ y el vector $\x \in \R^n$. Su
+producto es un vector tal que $\y = A\x \in \R^m$. Si se escribe la matriz $A$
+usando sus filas, el producto será
+$$
+  A \x = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T}\x = \bm{\a_1^T \x \\ \a_2^T
+    \x \\ \vdots \\ \a_m^T \x};
+$$
+es decir, el elemento $i$ del producto $A\x$ es el producto interno de la fila
+$i$ de la matriz $A$ con el vector $\x$. Por otro lado, si se escribe $A$
+usando sus columnas, se tiene
+$$
+  A\x = \bm{\a_1 & \a_2 & \cdots & \a_n} \bm{x_1 \\ \vdots \\ x_n} = \a_1 x_1 +
+  \a_2 x_2 + \cdots + \a_n x_n;
+$$
+es decir, el resultado es la combinación lineal de las columnas de $A$, siendo
+los elementos $x_i$ de $\x$ los coeficientes de la combinación.
+
+**Producto Matriz-Matriz**
+
+: Si se representa la matriz
+$A \in \R^{m \times n}$ usando sus filas $a_i^T$, y la matriz
+$B \in \R^{n \times p}$ usando sus columnas $b_j$, el producto $AB$ es
+$$
+  AB = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T} \bm{\vect b_1 & \vect b_2 &
+    \cdots & \vect b_p} =
+  \bm{\a_1^T\vect b_1 & \a_1^T\vect b_2 & \cdots & \a_1^T\vect b_p \\
+    \a_2^T\vect b_1 & \a_2^T\vect b_2 & \cdots & \a_2^T\vect b_p \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \a_m^T\vect b_1 & \a_m^T\vect b_2 & \cdots & \a_m^T\vect b_p
+  }.
+$$
+De manera alternativa, si se representa $A$ usando sus columnas, y $B$ usando
+sus filas, el producto será
+$$
+  AB = \bm{\a_1 & \a_2 & \cdots & \a_n} \bm{\vect b_1^T \\ \vect b_2^T \\
+    \vdots \\ \vect b_n^T} = \sum_{i=1}^n \a_i\vect b_i^T.
+$$
+Este resultado indica que $AB$ es la suma de los productos externos de cada
+columna $i$ de $A$ con la respectiva fila $i$ de $B$.
+
+Por otro lado, si solo se representa la matriz $B$ usando sus columnas, el
+resultado del producto es
+$$
+  AB = A \bm{\vect b_1 & \vect b_2 & \cdots & \vect b_p} = \bm{A \vect b_1 & A
+    \vect b_2 & \cdots & A \vect b_p},
+$$
+donde se observa que la columna $i$ del producto es el producto $A\vect
+b_i$. Si ahora se representa la matriz $A$ usando sus filas, se tiene 
+$$
+  AB = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T} B = \bm{\a_1^T B\\
+    \a_2^TB \\ \vdots \\ \a_m^TB}, 
+$$
+donde la fila $i$ del producto está dado por $\a_i^TB$. Se puede verificar en
+todos los casos que los productos indicados tienen las dimensiones adecuadas.
+
+**Propiedades del Producto Matricial**
+
+: Las siguientes son propiedades de la multiplicación de matrices:
+
+* Asociatividad: $(AB)C = A(BC)$
+* Distributividad: $A(B+C) = AB+AC$, y $(A+B)C=AC+BC$
+* No conmutatividad: $AB \neq BA$ (en general)
+
+Es importante notar que, en general, $AB=0$ no implica que $A=0$ o que
+$B=0$. De igual manera, $AC=BC$, o $CA=CB$, no implican, en general, que
+$A=B$. Existen casos especiales; por ejemplo, si $C$ es una matriz cuadrada e
+invertible, entonces la implicancia sí es válida.
+
+### Matrices Antisimétricas {#sec-ap-matrices-antisimetricas}
+
+Considérese el vector $\a=[a_1 \ a_2 \ a_3]^T \in \mathbb{R}^3$. La matriz
+antisimétrica (*skew-symmetric*) asociada con este vector se denota como
+$\hat\a$, $\a^{\wedge}$, $S(\a)$ o $[\a \times]$, cumple con la propiedad
+$\hat\a^T=-\hat\a$, y se define término a término a partir de los elementos de
+$\a$ como
+$$
+	\hat\a = \a^{\wedge} = 
+	\begin{bmatrix}
+		0 & -a_3 & a_2 \\ a_3 & 0 & -a_1 \\ -a_2 & a_1 & 0
+	\end{bmatrix}.
+$$ {eq-matriz-antisimetrica}
+Debido a su constitución, esta matriz se utiliza para representar el producto
+cruz de dos vectores como una multiplicación de una matriz por un
+vector, es decir:
+$$
+	\a \times \vect b = \hat\a \vect b
+$$ {#eq-matriz-antisimetrica-propiedad}
+donde $\vect b=[b_1 \ b_2 \ b_3]^T \in \mathbb{R}^3$. Esta equivalencia se puede demostrar realizando las
+operaciones término a término, obteniéndose:
+$$
+	\bm{a_1 \\ a_2 \\ a_3} \times \bm{b_1 \\ b_2 \\ b_3} = \bm{0
+		& -a_3 & a_2 \\ a_3 & 0 & -a_1 \\ 
+		-a_2 & a_1 & 0}\bm{b_1\\b_2\\b_3} = \bm{a_2b_3 - a_3b_2 \\ a_3b_1-a_1b_3 \\
+		a_1b_2-a_2b_1}. 
+$$
+La principal ventaja de expresar el producto vectorial como el producto de una
+matriz antisimétrica con un vector consiste en que al tener un producto
+matricial se puede aplicar el álgebra lineal de matrices, dejando de lado el
+álgebra del producto vectorial.  Por ejemplo, la velocidad lineal $\vv$ se
+puede expresar en función de la velocidad angular $\bomega$ y la posición de un
+punto $\p$ a través de $\vv = \bomega \times \p$, lo cual es igual a
+$\vv = \hat\bomega \p$ utilizando la matriz antisimétrica que acaba de ser
+definida.
+
+**Propiedades de Matrices Antisimétricas**
+
+: Las siguientes son algunas propiedades útiles de la matriz antisimétrica.
+
+* Dada la matriz de rotación $\Rot$ y el vector $\a$, se tiene la siguiente
+	propiedad importante:
+	$$
+		\Rot \hat\a \Rot^T = (\Rot \a)^{\wedge}.
+	$$ {#eq-propiedad-antisimetrica-tres-elementos}
+	Esta propiedad se puede probar por desarrollo directo de cada término.
+
+* Potencias de una matriz antisimétrica: Dada la matriz antisimétrica
+	$\hat{\a}$, su segunda y tercera potencia son:
+	$$
+  \begin{align*}
+		\hat{\a}^2 &=\a \a^T - \Vert \a \Vert^2 I\\
+		\hat{\a}^3 &=-\Vert \a \Vert^2 \hat{\a}
+	\end{align*}
+  $$
+  las cuales pueden ser verificadas por expansión de términos. Utilizando estas
+	dos potencias, y reemplazando, las potencias de mayor orden pueden ser
+	expresadas en función de $\hat{\a}$ y $\hat{\a}^2$ como:
+	$$
+  \begin{align*}
+		\hat{\a}^4 &= -\Vert \a \Vert^2 \hat{\a}^2, \qquad \qquad
+		\hat{\a}^7=-\Vert \a \Vert^6 \hat{\a} \\ 
+		\hat{\a}^5&=\Vert \a \Vert^4 \hat{\a}, \qquad \qquad \quad ~
+		\hat{\a}^8=-\Vert \a \Vert^6 \hat{\a}^2 \\ 
+		\hat{\a}^6&=\Vert \a \Vert^4 \hat{\a}^2, \qquad \qquad \quad
+		\hat{\a}^9=\Vert \a \Vert^8 \hat{\a}.
+	\end{align*}
+	$$
+  Siguiendo la misma idea, y reemplazando, es posible obtener expresiones para
+	términos de aún mayor orden.
+
+### Operaciones con Matrices
+
+**Traza de una matriz**
+
+: La traza de una matriz cuadrada $A \in \R^{n \times n}$, representada como
+$\tr(A)$, es la suma de los coeficientes de la diagonal de $A$:
+$$
+  \tr(A) = \sum_{i=1}^na_{ii}
+$$
+Las propiedades más importantes de la traza son:
+
+* $\tr(A)=\tr(A^T)$
+* $\tr(A+B)=\tr(A)+\tr(B)$
+* $\tr(\lambda A) = \lambda~ \tr(A)$, $\forall \lambda \in \R$
+* $\tr(AB) = \tr(BA)$
+* $\tr(ABC) = \tr(CAB) = \tr(BCA)$
+
+**Determinante de una matriz**
+
+: El determinante de una matriz $A \in \R^{n \times n}$, denotado como $|A|$ o
+como $\det(A)$, es el escalar definido (recursivamente) por
+$$
+  \det(A) = \sum_{j=1}^n a_{ij}(-1)^{i+j}\det(A_{i^-j^-}),
+$$
+para cualquier fila $i \in \{1,\cdots,n\}$, donde
+$A_{i^-j^-} \in \R^{(n-1) \times (n-1)}$ es la matriz que resulta de eliminar
+la fila $i$ y la columna $j$ de la matriz $A$. Equivalentemente, se puede
+definir el determinante como
+$$
+  \det(A) = \sum_{i=1}^n a_{ij}(-1)^{i+j}\det(A_{i^-j^-}),
+$$
+para cualquier columna $j \in \{1,\cdots,n\}$ de $A$. El caso inicial se define
+como $\det(A)=a_{11}$ para $A\in \R^{1 \times 1}$.
+
+Considerando una matriz $A \in \R^{n \times n}$, algunas propiedades
+importantes del determinante son:
+
+* $\det(A) = \det(A^T)$
+* $\det(\alpha A) = \alpha^n \det(A)$, con $\alpha \in \R$
+* $\det(AB) = \det(A)\det(B)$, si $A,B \in \R^{n \times n}$
+* $\det(A)=0$ si y solo si $A$ es singular (no invertible).
+* Si $A$ es no singular (invertible), entonces $\det(A^{-1})=1/\det(A)$
+* Si $A$ es triangular (o diagonal), entonces $\det(A) = \prod_{i=1}^n a_{ii}$.
+
+
+**Norma de una Matriz**
+
+: La norma más utilizada para las matrices es la norma de Frobenius, definida como
+$$
+  \Vert A \Vert = \sqrt{\sum_{i=1}^m\sum_{j=1}^n a_{ij}^2} = \sqrt{\tr(A^TA)}.
+$$
+
+**Inversa de una Matriz**
+
+: La inversa de una matriz cuadrada $A \in \R^{n \times n}$, denotada $A^{-1}$,
+se define como la única matriz que satisface
+$$
+  AA^{-1} = A^{-1}A = I.
+$$
+La inversa $A^{-1}$ se puede calcular como
+$$
+  A^{-1} = \frac{1}{\det(A)}\text{Adj}(A),
+$$
+donde $\text{Adj}(A)$ representa la adjunta de la matriz $A$ (la transpuesta de
+la matriz de cofactores) y, a su vez, se define como
+$$
+  \text{Adj}(A) = [((-1)^{i+j} \det(A_{i^-j^-})]^T.
+$$
+Numéricamente, esta forma de cálculo, via la adjunta y el determinante, es poco
+eficaz y no es utilizada en la práctica. Se dice que la matriz $A$ es
+*invertible* o *no singular* si existe su inversa; de otro modo,
+se dice que es *no invertible* o *singular*. Una matriz cuadrada
+$A$ es invertible cuando es de rango completo, lo cual implica que su
+determinante es diferente de cero.
+
+Las propiedades de la inversa son:
+
+* $(A^{-1})^{-1} = A$
+* $(A^{-1})^T=(A^T)^{-1}$, y es usualmente denotada como $A^{-T}$
+* $(AB)^{-1}=B^{-1}A^{-1}$
+* Si $A$ y $C$ son invertibles:
+  $(A+BCD)^{-1}=A^{-1}-A^{-1}B(DA^{-1}B+C^{-1})^{-1}DA^{-1}$, donde se requiere
+  que $DA^{-1}B+C^{-1}$ sea invertible.
+
+<!-- **Métodos iterativos de inversión**
+
+: Cuando un problema está mal condicionado, las soluciones iterativas sucesivas
+limitan la propagación de los errores, y para problemas con una cantidad
+importante de variables, se substituyen de manera ventajosa a otras. Por el
+contrario, la rapidez de convergencia constituye un problema central. Los
+métodos más usados son:
+
+* Método de Jacobi que puede aplicarse si los elementos diagonales de la
+  matriz $A$ son no nulos.
+* El método alternativo de Gauss-Siedel, cuya convergencia es más rápida
+* Los métodos de sobre-relajación
+* Residuales mínimos generalizados (GMRES) para matrices no simétricas de
+  muy grande dimensión
+ -->
+
+
+**Exponencial de una matriz**
+
+: La exponencial de una matriz cuadrada $A^{n \times n}$ está definida como
+$$
+  e^A = \sum_{n=0}^{n = \infty} \frac{A^n}{n!} = 1 + A + \frac{A^2}{2!} +
+  \cdots + \frac{A^n}{n!}
+$$
+La exponencial siempre es una matriz inversible, y se tiene la relación $e^A e^{-A} = e^0 = I$.
+
+
+<!-- 
+** Diagonalización de una matriz**
+
+: La diagonalización de una matriz regular $A \in \R^{n \times n}$ está dada por
+$D$, tal que
+$$
+  A = SDS^{-1}
+$$
+o, equivalentemente, $AS=SD$ o $S^{-1}AS=D$. Por ejemplo, si $A=\bm{2 &1 \\ 1 & 2}$, $\lambda_1=1$, $\lambda_2=3$,
+con 
+$$
+  A = \bm{1 & 1 \\ -1 & 1}\bm{1 &0 \\ 0 & 3}\bm{1/2 & -1/2 \\ 1/2 & 1/2}.
+$$
+Si se divide $S$ entre $\sqrt{2}$ (y se multiplica $S^{-1}$ por $\sqrt 2$):
+$$
+  A = \bm{1/\sqrt{2} & 1/\sqrt{2} \\ -1/\sqrt{2} & 1/\sqrt{2}}\bm{1 &0 \\ 0 &
+    3}\bm{\sqrt{2}/2 & -\sqrt{2}/2 \\ \sqrt{2}/2 & \sqrt{2}/2}. 
+$$
+Si $A$ es simétrica, $S^{-1}=S^T$.
+-->
+
+
+### Independencia Lineal y Rango
+
+**Combinación Lineal**
+
+: Una combinación lineal de $n$ vectores $\x_1, \x_2, \cdots, \x_n\ \in \R^m$ se
+define como el vector $\vect v \in \R^m$ tal que
+$$
+  \vect v = \alpha_1 \x_1 + \alpha_2 \x_2 + \cdots + \alpha_n \x_n = \sum_{i=1}^n
+  \alpha_i \x_i,
+$$
+con $\alpha_i \in \R$ para $i=1,\cdots,n$.
+
+**Dependencia Lineal**
+
+: Un conjunto de vectores $\{ \x_1, \x_2, \cdots, \x_n\} \in \R^m$ son
+linealmente dependientes si un vector del conjunto puede ser representado como
+una combinación lineal de los vectores restantes. Es decir, si
+$$
+  \x_n = \sum_{i=1}^{n-1} \alpha_i \x_i
+$$
+para algún conjunto de escalares $\alpha_1,\cdots,\alpha_{n-1}\in \R$.
+
+**Independencia Lineal**
+
+: Un conjunto de vectores $\{ \x_1, \x_2, \cdots, \x_n\} \in \R^m$ se dice
+linealmente independiente si ninguno de estos vectores $\x_i$ puede ser
+representado como una combinación lineal de los vectores restantes. Dicho de
+otro modo, el conjunto de vectores es linealmente independiente si se cumple
+que
+$$
+  \sum_{i=1}^n \alpha_i \x_i =0
+$$
+implica $\alpha_i=0$, para todo $i$.
+
+
+**Base**
+
+: Una base de un espacio vectorial $\mathcal X$ es un conjunto
+de vectores $\e_i$ linealmente independientes, de tal modo que cada vector $\x \in \mathcal X$ puede ser escrito como una combinación lineal
+$$
+  \x = x_1 \e_1 + x_2 \e_2 + \cdots + x_n \e_n.
+$$
+La representación $\x=(x_1,x_2,\cdots,x_n)$ se encuentra determinada de manera
+única por la base $(\e_1,\cdots\e_n)$. La dimensión del espacio vectorial
+$\mathcal X$ es el número de vectores base.
+
+
+**Rango**
+
+: El *rango columna* de una matriz $A \in \R^{m \times n}$ es el tamaño
+del más grande subconjunto de columnas de $A$ que constituye un conjunto
+linealmente independiente. De manera simplificada se dice que es el número de
+columnas linealmente independientes de $A$. Igualmente, el *rango fila*
+de una matriz $A$ es el número más grande de rilas de $A$ que constituye un
+conjunto linealmente independiente.
+
+Para cualquier matriz $A$, el rango columna de $A$ es igual al rango fila de
+$A$, y ambas cantidades son colectivamente llamadas simplemente el
+*rango* de $A$ y se representa como $\text{rang}(A)$ o $\rho(A)$. Así,
+el rango de una matriz $A$ es el número más grande de filas (o columnas)
+linealmente independientes de $A$.
+
+Considerando la matriz $A \in \R^{m \times n}$, se tiene las siguientes
+propiedades básicas del rango:
+
+* $\rho(A) \leq \min\{m,n\}$. Si $\rho(A)=\min\{m,n\}$, se dice que $A$ es de
+  rango completo.
+* $\rho(A) = \rho(A^T)$
+* $\rho(A^TA) = \rho(A)$
+* Si $B \in \R^{n \times p}$, entonces $\rho(AB) \leq \min\{\rho(A),
+  \rho(B)\}$
+* Si $B \in \R^{m \times n}$, entonces $\rho(A+B) \leq \rho(A) + \rho(B)$
+
+Una condición necesaria y suficiente para que el conjunto de $n$ vectores
+$\x_i \in \R^m$ descritos anteriormente sea linealmente independiente es que la
+matriz $A$ que contiene a estos vectores como columnas:
+$$
+  A = \bm{\x_1 & \x_2 & \cdots & \x_n}
+$$
+tenga rango $n$; es decir, $\rho(A)=n$. Esto implica que una condición
+necesaria para la independencia lineal es que $n \leq m$. Si, por el contrario,
+$\rho(A)=r$, y $r<n$, entonces solo $r$ vectores son linealmente independientes,
+y los $n-r$ vectores restantes pueden ser expresados como combinación lineal de
+estos vectores independientes.
+
+### Diferenciación de Matrices
+
+**Derivada Temporal**
+
+: La derivada de una matriz $A(t) \in \R^{m \times n}$  variante con tel tiempo está dada por la derivada de cada uno de sus términos; es decir,
+$$
+  \dot A(t) = \bm{
+    \dot a_{11}(t) & \dot a_{12}(t) & \cdots & \dot a_{1n}(t) \\
+    \dot a_{21}(t) & \dot a_{22}(t) & \cdots & \dot a_{2n}(t) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \dot a_{m1}(t) & \dot a_{m2}(t) & \cdots & \dot a_{mn}(t)
+  }.
+$$
+Si $A$ es una matriz cuyas componentes son funciones de
+$\q(t)=(q_1(t),\cdots,q_k(t))$, la derivada temporal de $A$, usando la regla de
+la cadena, es
+$$
+  \dot A = \frac{\partial A}{\partial \q}\frac{d\q}{dt} = \sum_{i=1}^k
+  \frac{\partial A}{\partial q_i}\frac{dq_i}{dt} = \frac{\partial A}{\partial q_1}\frac{dq_1}{dt} +
+  \cdots +  \frac{\partial A}{\partial q_k}\frac{dq_k}{dt},
+$$
+donde $\dot A \in \R^{m \times n \times k}$.
+
+**Derivada de la Inversa**
+
+: Si $A(t) \in \R^{n \times n}$ es invertible,
+con $\rho(A)=n$ para todo $t$, y $a_{ij}(t)$ son funciones diferenciales, la
+derivada de la inversa de $A(t)$ es
+$$
+  \dot A^{-1}(t) = -A^{-1}(t) \dot A (t) A^{-1}(t).
+$$
+
+**Jacobiano**
+
+: Dada una función vectorial $\g(\x) \in \R^{m \times 1}$
+cuyos elementos $g_i$ son diferenciables con respecto al vector $\x \in \R^{n \times 1}$, la matriz Jacobiana, también llamada simplemente el Jacobiano, de
+la función se define como $J(\x) \in \R^{m \times n}$ tal que
+$$
+  J(\x) = \frac{\partial \g(\x)}{\partial \x} = \bm{\frac{\partial g_1(\x)}{\partial
+      \x} \\ \frac{\partial g_2(\x)}{\partial \x} \\ \vdots \\ \frac{\partial
+      g_m(\x)}{\partial \x}}.
+$$
+Si $\x(t)$ es una función diferenciable con respecto a $t$, se utiliza la regla
+de la cadena para obtener
+$$
+  \dot \g(\x) = \frac{\partial \g}{\partial \x}\dot\x = J(\x) \dot \x.
+$$
+
+### Pseudoinversa de Moore-Penrose {#sec-ap-pseudo-inversa-MP}
+
+La pseudoinversa, también llamada *inversa generalizada*, generaliza la
+noción de inversa de una 
+matriz para casos en los que la matriz no es inversible. En general, existen
+diversas inversas generalizadas, y no hay unicidad de esta inversa
+generalizada. 
+
+Para una matriz con coeficientes reales o complejos no
+necesariamente cuadrada, existe una única pseudoinversa que satisface ciertas
+condiciones suplementales denominada pseudoinversa de Moore-Penrose. Puede ser
+calculada de diferentes maneras.
+
+* Si $A \in \R^{m \times n}$ con $n>m$ y si $\rho(A)=m$ (el rango es el número de filas; es decir, es una matriz de rango completo por filas):
+  $$
+    A^{\#}=A^T (AA^T)^{-1}
+  $$
+  tal que $A^{\#}A = I \in \R^{n \times n}$.
+
+* Si $A \in \R^{m \times n}$ con $m>n$ y si $\rho(A)=n$ (el rango es el número de columnas; es decir, es una matriz de rango completo por columnas):
+  $$
+    A^{\#}= (A^TA)^{-1}A^T
+  $$
+  tal que $AA^{\#} = I \in \R^{m \times m}$.
+
+La pseudoinversa brinda una solución aproximada a un sistema lineal en el sentido de mínimos cuadrados. Así, las soluciones a un sistema de ecuaciones lineales
+$$
+  Ax=b
+$$
+obtenidos por la pseudoinversa son tales que:
+
+* Si $m>n$, la solución aproximada $x=A^{\#}b$ es tal que minimiza $\Vert x - A^{\#}b \Vert^2$
+* Si $n>m$, la solución $x=A^{\#}b$ es tal que minimiza $\Vert x \Vert^2$
+
+La pseudoinversa tiene la propiedad que para un vector arbitrario $z$ se tiene
+$$
+  A (I-A^{\#}A)z = 0
+$$
+y $(I-A^{\#}A)$ proyecta el vector arbitrario $z\in\R^{n}$ al espacio nulo de
+$A$, representado como $N(A)$.
+
+<!-- 
+
+### Descomposiciones {#sec-ap-descomposiciones}
+Ver pdf
+
+**Descomposición LU**
+
+**Factorización de Cholesky**
+
+**Descomposición en valores singulares (SVD)**
+
+## Sistemas de ecuaciones lineales {#sec-ap-sist-de-ecuac} 
+-->
+
+ 
+
+## Otros Conceptos Matemáticos
+
+### Función atan2 {#sec-ap-funcion-atan2}
+
+La función $\atan2$ es una función arcotangente ($\arctan$), también llamada tangente inverso  ($\tan^{-1}$), pero a diferencia de la función tradicional que solamente retorna ángulos en el primer y tercer cuadrante (correspondientes a $[-\frac{\pi}{2},\frac{\pi}{2}]$), la función $\atan2$ brinda ángulos
+en los cuatro cuadrantes. Para determinar el cuadrante de salida, la función toma dos argumentos de entrada y utiliza sus signos. De manera concreta, esta función se define como
+$$
+	\atan2(y,x) =
+	\begin{cases}
+		\arctan\left(\frac{y}{x}\right), \qquad \quad ~x > 0\\
+		\phi + \arctan\left(\frac{y}{x}\right), \quad ~~y \geq 0, x <0 \\
+		-\phi + \arctan\left(\frac{y}{x}\right), \quad y <0, x<0\\
+		\frac{\pi}{2}, \qquad \qquad \qquad \quad ~~y>0,x=0 \\
+		-\frac{\pi}{2},  \qquad \qquad \qquad ~~~y<0,x=0  \\
+		\text{indefinido}, \qquad \qquad ~y=0,x=0 
+	\end{cases}
+$$
+El rango de la función es el intervalo $[-\pi,\pi]$, cubriendo así los cuatro cuadrantes, y como se observa, se encuentra indefinida solamente para el valor $(0,0)$. Esta función se encuentra disponible en la mayoría de lenguajes de
+programación, así que usualmente codificarla a mano no es necesario.
+
+Nótese que, si se tiene $\theta=\atan2(y,x)$, los argumentos a esta función son $y=\sen(\theta)$ y $x=\cos(\theta)$, ya que $\tan(\theta)=\frac{\sen(\theta)}{\cos(\theta)}$. Esta interpretación resulta útil en robótica al momento de obtener expresiones para su cálculo, por ejemplo al obtener ángulos de Euler a partir de matrices de rotación, o al determinar expresiones para la cinemática inversa de un robot manipulador.
+
+
+### Grupo Matemático {#sec-ap-grupo}
+
+En matemática, un grupo es un conjunto $G$ junto a una operación binaria
+$\circ$ definida para los elementos de $G$ de tal modo que se satisfacen las
+siguientes cuatro propiedades:
+
+* Clausura: Si $g_1,g_2 \in G ~ \Rightarrow ~ g_1 \circ g_2 \in G$. 
+* Elemento identidad $e$: dado cualquier $g \in G$, existe $e$ tal que $g \circ e = e \circ g = g$.
+* Inversa: para cada $g \in G$, existe un único elemento inverso $g^{-1} \in G$ tal que $g \circ g^{-1} = g^{-1} \circ g = e$.
+* Asociatividad: Si $g_1,g_2,g_3 \in G ~ \Rightarrow ~ (g_1 \circ g_2) \circ g_3 = g_1 \circ (g_2 \circ g_3)$.
+
+<!-- TODO 
+Añadir Definición de grupos, Algebra de grupos, etc. (A.5 de pdf)
+-->
