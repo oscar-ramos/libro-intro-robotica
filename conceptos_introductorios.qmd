@@ -1,6 +1,6 @@
-# Conceptos Introductorios {#chap-conceptos-introductorios}
-
 {{< include _commands.qmd >}}
+
+# Conceptos Introductorios {#sec-chapter-conceptos-introductorios}
 
 Un robot es un sistema complejo formado por diversos componentes mecánicos y
 electrónicos, así como por componentes computacionales, y su modelamiento
@@ -74,8 +74,7 @@ $$
 Resulta común denominar $\overline{\g}$ al mapa que actúa sobre vectores y $\g$
 al mapa correspondiente que actúa sobre puntos.
 En general, un desplazamiento rígido está compuesto por rotaciones y
-traslaciones de un objeto rígido, como se verá más adelante, en el
-capítulo~\ref{ch:representaciones-cuerpos-rigidos}.
+traslaciones de un objeto rígido, como se verá más adelante, en el [capítulo -@sec-chapter-pos-or-cuerpos-rigidos].
 
 **Cuerpo Rígido Espacial y Planar**
 : Según el entorno donde se realiza el movimiento, es conveniente distinguir
@@ -599,8 +598,7 @@ articulaciones prismáticas y de revolución.
 de un robot, de tal modo que la configuración de un robot se representa por un
 punto en este espacio. Se debe notar que el espacio de configuración varía de
 robot a robot, según la cantidad y el tipo de articulaciones que posea. Las
-características de este espacio se presentarán con más detalle en la
-sección~\ref{sec-espacio-configuracion}.
+características de este espacio se presentarán con más detalle en la @sec-espacio-configuracion.
 
 ::: {.callout-note appearance="minimal"}
 ::: {#exm-configuracion-rr}
@@ -690,7 +688,7 @@ los eslabones a los cuales unen.
 A partir de las sumatorias anteriores se puede obtener una expresión más
 concreta para el cálculo del número de grados de libertad. Considérese un
 mecanismo con $N_{_L}$ eslabones, donde el componente rígido que permanece
-inamovible, llamado \textit{tierra}, también se considera como un eslabón. Cada
+inamovible, llamado *tierra*, también se considera como un eslabón. Cada
 uno de estos eslabones tendría $m$ grados de libertad si se encontrase libre en
 el espacio. Si este mecanismo tiene además $N_{_J}$ articulaciones y cada
 articulación $k$ impone $c_k$ restricciones al movimiento de los dos eslabones
@@ -714,7 +712,7 @@ $$
 $$
 Debido a las propiedades de la sumatoria se cumple la igualdad
 $\sum_{k=1}^{N_{_J}}m=mN_{_J}$. Reemplazando esta igualdad en la expresión
-anterior, y agrupando términos, se obtiene la \textit{fórmula de Grübler} como:
+anterior, y agrupando términos, se obtiene la *fórmula de Grübler* como:
 $$
   n_g = m (N_{_L}-1- N_{_J}) + \sum_{k=1}^{N_{J}}f_k.
 $$ {#eq-grubler}
@@ -1012,8 +1010,7 @@ la orientación se encuentran en el plano y son tres valores que representan los
 tres grados de libertad planares. En el caso de robots móviles aéreos o
 submarinos, la posición y orientación deben describir los seis grados de
 libertad espaciales. La posición no suele ser un problema, pero sí lo es la
-representación de la orientación, la cual será descrita con mayor detalle en el
-capítulo~\ref{ch:representaciones-cuerpos-rigidos}. Si un robot posee partes
+representación de la orientación, la cual será descrita con mayor detalle en el [capítulo -@sec-chapter-pos-or-cuerpos-rigidos] y en el [capítulo -@sec-chapter-parametrizaciones-or]. Si un robot posee partes
 articuladas y una base móvil, como un robot cuadrúpedo o humanoide, su espacio
 articular consiste en la representación de la posición y orientación de algún
 punto del cuerpo llamado la base, y en la configuración articular. A veces esto

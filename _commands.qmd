@@ -99,10 +99,24 @@ $$
 -->
 $$
 \renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+\newcommand{\framen}[1]{\{{#1}\}}
+\newcommand{\supFrame}[1]{~\!{^{\mathcal{^{_{#1}}\!}}}}
+\newcommand{\ssr}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Rot}_{_{\mathcal{#2}}}} 
+\newcommand{\ssrnocal}[2]{{{~\!}^{^{_{#1}}\!\!}}{\Rot}_{_{#2}}} 
+\newcommand{\ssomega}[2]{{^{#1}}{\bomega}_{#2}} 
+\newcommand{\ssv}[3]{{^{^{_{#1}}\!}}{#2}_{_{\!#3}}} 
+\newcommand{\sv}[2]{{^{^{_{#1}}\!}}{#2}} 
+\newcommand{\ssdr}[2]{{^{^{_{#1}}\!\!}}{\dot \Rot}_{_{#2}}} 
+\newcommand{\sst}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Tran}_{_{\mathcal{#2}}}} 
+\newcommand{\sstnocal}[2]{{^{^{_{#1}}}}{\Tran}_{_{#2}}} 
 $$
 
-
-
-
+$$
+\newcommand{\atan}{\text{atan}}
+\newcommand{\sen}{\text{sen}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\fpartial}[2]{\frac{\partial {#1}}{\partial {#2}}}
+\newcommand{\grad}{^{\circ}}
+$$
 
 :::
