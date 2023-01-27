@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Oscar E. Ramos Ponce">
+
+<title>Introducción a la Robótica - Appendix A — Elementos matemáticos</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ap_cuaterniones.html" rel="next">
+<link href="./referencias.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Appendix A — Elementos matemáticos</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a la Robótica</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conceptos_introductorios.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cr_posicion_orientacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Posición y Orientación de Cuerpos Rígidos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cr_parametrizaciones_orientacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parametrizaciones de la Orientación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Apéndices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_elementos_matematicos.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Elementos matemáticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_cuaterniones.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Cuaterniones</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#sec-ap-vectores" id="toc-sec-ap-vectores" class="nav-link active" data-scroll-target="#sec-ap-vectores"><span class="toc-section-number">A.1</span>  Vectores</a>
+  <ul class="collapse">
+  <li><a href="#operaciones-con-vectores" id="toc-operaciones-con-vectores" class="nav-link" data-scroll-target="#operaciones-con-vectores"><span class="toc-section-number">A.1.1</span>  Operaciones con Vectores</a></li>
+  <li><a href="#diferenciación-de-vectores" id="toc-diferenciación-de-vectores" class="nav-link" data-scroll-target="#diferenciación-de-vectores"><span class="toc-section-number">A.1.2</span>  Diferenciación de Vectores</a></li>
+  <li><a href="#sec-ap-proyeccion-vector-2d" id="toc-sec-ap-proyeccion-vector-2d" class="nav-link" data-scroll-target="#sec-ap-proyeccion-vector-2d"><span class="toc-section-number">A.1.3</span>  Proyección de un vector</a></li>
+  </ul></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="toc-section-number">A.2</span>  Matrices</a>
+  <ul class="collapse">
+  <li><a href="#algunos-tipos-de-matrices" id="toc-algunos-tipos-de-matrices" class="nav-link" data-scroll-target="#algunos-tipos-de-matrices"><span class="toc-section-number">A.2.1</span>  Algunos Tipos de Matrices</a></li>
+  <li><a href="#multiplicación-de-matrices" id="toc-multiplicación-de-matrices" class="nav-link" data-scroll-target="#multiplicación-de-matrices"><span class="toc-section-number">A.2.2</span>  Multiplicación de Matrices</a></li>
+  <li><a href="#sec-ap-matrices-antisimetricas" id="toc-sec-ap-matrices-antisimetricas" class="nav-link" data-scroll-target="#sec-ap-matrices-antisimetricas"><span class="toc-section-number">A.2.3</span>  Matrices Antisimétricas</a></li>
+  <li><a href="#operaciones-con-matrices" id="toc-operaciones-con-matrices" class="nav-link" data-scroll-target="#operaciones-con-matrices"><span class="toc-section-number">A.2.4</span>  Operaciones con Matrices</a></li>
+  <li><a href="#independencia-lineal-y-rango" id="toc-independencia-lineal-y-rango" class="nav-link" data-scroll-target="#independencia-lineal-y-rango"><span class="toc-section-number">A.2.5</span>  Independencia Lineal y Rango</a></li>
+  <li><a href="#diferenciación-de-matrices" id="toc-diferenciación-de-matrices" class="nav-link" data-scroll-target="#diferenciación-de-matrices"><span class="toc-section-number">A.2.6</span>  Diferenciación de Matrices</a></li>
+  <li><a href="#sec-ap-pseudo-inversa-MP" id="toc-sec-ap-pseudo-inversa-MP" class="nav-link" data-scroll-target="#sec-ap-pseudo-inversa-MP"><span class="toc-section-number">A.2.7</span>  Pseudoinversa de Moore-Penrose</a></li>
+  </ul></li>
+  <li><a href="#otros-conceptos-matemáticos" id="toc-otros-conceptos-matemáticos" class="nav-link" data-scroll-target="#otros-conceptos-matemáticos"><span class="toc-section-number">A.3</span>  Otros Conceptos Matemáticos</a>
+  <ul class="collapse">
+  <li><a href="#sec-ap-funcion-atan2" id="toc-sec-ap-funcion-atan2" class="nav-link" data-scroll-target="#sec-ap-funcion-atan2"><span class="toc-section-number">A.3.1</span>  Función atan2</a></li>
+  <li><a href="#sec-ap-grupo" id="toc-sec-ap-grupo" class="nav-link" data-scroll-target="#sec-ap-grupo"><span class="toc-section-number">A.3.2</span>  Grupo Matemático</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-elementos-matematicos" class="quarto-section-identifier d-none d-lg-block">Appendix A — Elementos matemáticos</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="hidden">
+<!-- ====================================
+     Vectors (bolds)
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\x}{\vect{x}}
+\newcommand{\y}{\vect{y}}
+\newcommand{\z}{\vect{z}}
+\newcommand{\e}{\vect{e}}
+\newcommand{\f}{\vect{f}}
+\newcommand{\g}{\vect{g}}
+\newcommand{\G}{\vect{G}}
+\newcommand{\h}{\vect{h}}
+\newcommand{\J}{\vect{J}}
+\newcommand{\n}{\vect{n}}
+\newcommand{\p}{\vect{p}}
+\newcommand{\q}{\vect{q}}
+\newcommand{\s}{\vect{s}}
+\newcommand{\w}{\vect{w}}
+\newcommand{\m}{\vect{m}}
+\renewcommand{\a}{\vect{a}}
+\renewcommand{\b}{\vect{b}}
+\renewcommand{\c}{\vect{c}}
+\renewcommand{\d}{\vect{d}}
+\renewcommand{\r}{\vect{r}}
+\renewcommand{\u}{\vect{u}}
+\renewcommand{\v}{\vect{v}} % Problems?
+\newcommand{\vv}{\vect{v}}
+\newcommand{\rr}{\vect{r}}
+\newcommand{\bv}{\vect{v}}
+\]</span> <!-- Special for i, j, k --> <span class="math display">\[
+\newcommand{\vi}{\vect{i}}
+\newcommand{\vj}{\vect{j}}
+\newcommand{\vk}{\vect{k}}
+\]</span> <!-- Bold for greek letters --> <span class="math display">\[
+\newcommand{\bomega}{\vect{\omega}}
+\newcommand{\bphi}{\vect{\phi}}
+\newcommand{\bepsilon}{\vect{\epsilon}}
+\newcommand{\btheta}{\vect{\theta}}
+\newcommand{\btau}{\vect{\tau}}
+\newcommand{\bmu}{\vect{\mu}}
+\newcommand{\bvarphi}{\vect{\varphi}}
+\newcommand{\bxi}{\vect{\xi}}
+\]</span> <!-- Bold for numbers --> <span class="math display">\[
+\newcommand{\zeros}{\vect{0}}
+\]</span> <!-- Bold with derivatives --> <span class="math display">\[
+\newcommand{\dq}{\dot {\vect{q}}}
+\newcommand{\ddq}{\ddot {\vect{q}}}
+\newcommand{\dx}{\dot {\vect{x}}}
+\newcommand{\ddx}{\ddot {\vect{x}}}
+\]</span> <!-- Jacobians --> <span class="math display">\[
+\newcommand{\Ja}{{J_{_{\!A}}}}
+\]</span></p>
+<!-- ====================================
+     Fractions
+     ==================================== 
+-->
+<p><span class="math display">\[
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\quarter}{\frac{1}{4}}
+\]</span></p>
+<!-- ====================================
+     Matrices
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\Rot}{\mat{R}}
+\newcommand{\Tran}{\mat{T}}
+\newcommand{\tr}{\text{tr}}  % For trace
+\]</span></p>
+<!-- ====================================
+     Other special rules
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dt}{\Delta t}
+\]</span> <!-- ===================================
+     Reference frames (systems)
+     ====================================
+--> <span class="math display">\[
+\renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+\newcommand{\framen}[1]{\{{#1}\}}
+\newcommand{\supFrame}[1]{~\!{^{\mathcal{^{_{#1}}\!}}}}
+\newcommand{\ssr}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Rot}_{_{\mathcal{#2}}}}
+\newcommand{\ssrnocal}[2]{{{~\!}^{^{_{#1}}\!\!}}{\Rot}_{_{#2}}}
+\newcommand{\ssomega}[2]{{^{#1}}{\bomega}_{#2}}
+\newcommand{\ssv}[3]{{^{^{_{#1}}\!}}{#2}_{_{\!#3}}}
+\newcommand{\sv}[2]{{^{^{_{#1}}\!}}{#2}}
+\newcommand{\ssdr}[2]{{^{^{_{#1}}\!\!}}{\dot \Rot}_{_{#2}}}
+\newcommand{\sst}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Tran}_{_{\mathcal{#2}}}}
+\newcommand{\sstnocal}[2]{{^{^{_{#1}}}}{\Tran}_{_{#2}}}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\atan}{\text{atan}}
+\newcommand{\sen}{\text{sen}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\fpartial}[2]{\frac{\partial {#1}}{\partial {#2}}}
+\newcommand{\grad}{^{\circ}}
+\]</span></p>
+</div>
+<section id="sec-ap-vectores" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="sec-ap-vectores"><span class="header-section-number">A.1</span> Vectores</h2>
+<p>Un vector <span class="math inline">\(\x \in \R^n\)</span> es un arreglo unidimensional de <span class="math inline">\(n\)</span> elementos dado por <span class="math display">\[
+  \x = \bm{x_1 \\ x_2 \\ \vdots \\ x_n},
+\]</span> con <span class="math inline">\(x_i \in \R\)</span>. Es común representar a los vectores como vectores columna, por lo que en notación bidimensional se tendría <span class="math inline">\(\x \in \R^n\)</span> = <span class="math inline">\(\x \in \R^{n \times 1}\)</span>; es decir, <span class="math inline">\(n\)</span> filas y <span class="math inline">\(1\)</span> sola columna. De manera alternativa, un vector se puede representar como la tupla ordenada <span class="math inline">\(\x=(x_1,x_2,\cdots,x_n)\)</span>.</p>
+<p><strong>Transpuesta de un Vector</strong>. La transpuesta del vector columna <span class="math inline">\(\x \in \R^{n \times 1}\)</span> es el vector fila <span class="math inline">\(\x^T \in \R^{1 \times n}\)</span> y se representa como <span class="math display">\[
+  \x^T = \bm{x_1 &amp; x_2 &amp; \cdots &amp; x_n}.
+\]</span> Usando la transpuesta, a veces se denota al vector <span class="math inline">\(\x\)</span> como <span class="math inline">\(\x=\bm{x_1 &amp; x_2 &amp; \cdots &amp; x_n}^T\)</span>.</p>
+<p><strong>Vector Unitario</strong>. Un vector unitario, usualmente representado como <span class="math inline">\(\hat\x\)</span>, es aquel vector cuya norma Euclideana es unitaria: <span class="math inline">\(\Vert \x \Vert = 1\)</span>. Así, cumple la propiedad <span class="math inline">\(\hat\x ^T \hat \x = 1\)</span>. Dado un vector <span class="math inline">\(\x\)</span> cualquiera, el vector unitario que indica la misma dirección se obtiene como <span class="math display">\[
+  \hat \x = \frac{\x}{\Vert \x \Vert}.
+\]</span></p>
+<p><strong>Vector libre</strong>. Dados dos puntos <span class="math inline">\(\p_i, \p_j \in \R^3\)</span>, el vector libre <span class="math inline">\(\vv \in \R^3\)</span> que conecta <span class="math inline">\(\p_i\)</span> con <span class="math inline">\(\p_j\)</span> se define como el segmento de línea dirigido que va de <span class="math inline">\(\p_i\)</span> a <span class="math inline">\(\p_j\)</span>; es decir <span class="math display">\[
+\vv = \p_i - \p_j.
+\]</span> A pesar de que puntos y vectores están representados por 3 elementos, son conceptualmente diferentes. Un vector tiene una dirección y una magnitud (norma). Además, un vector (libre) no se encuentra unido a ningún cuerpo rígido dado que pueden existir otros pares de puntos en este cuerpo, por ejemplo <span class="math inline">\(\p_k,\p_l\)</span>, que podrían ser conectados por el mismo vector <span class="math inline">\(\vv\)</span>; es decir, <span class="math inline">\(\p_k-\p_l = \p_i-\p_j\)</span>.</p>
+<section id="operaciones-con-vectores" class="level3" data-number="A.1.1">
+<h3 data-number="A.1.1" class="anchored" data-anchor-id="operaciones-con-vectores"><span class="header-section-number">A.1.1</span> Operaciones con Vectores</h3>
+<dl>
+<dt><strong>Producto Escalar</strong></dt>
+<dd>
+<p>El producto escalar o producto punto de <span class="math inline">\(\x,\y \in \R^n\)</span>, denotado como <span class="math inline">\(\x \cdot \y\)</span> o <span class="math inline">\(\langle \x, \y \rangle\)</span>, es un número real definido como <span class="math display">\[
+  \x \cdot \y = \sum_{i=1}^n x_iy_i = x_1y_1 +x_2y_2 + \cdots + x_n y_n.
+\]</span> A partir de esta definición, el producto escalar es equivalente a <span class="math inline">\(\x^T\y\)</span>. Una propiedad importante del producto escalar es que es conmutativo: <span class="math display">\[
+  \x \cdot \y = \y \cdot \x.
+\]</span> Igualmente se tiene <span class="math inline">\(\x^T\y = \y^T\x\)</span>. De manera alternativa, utilizando la norma Euclideana, se puede definir producto escalar entre dos vectores como <span class="math display">\[
+  \x \cdot \y = \Vert \x \Vert \Vert \y \Vert \cos \theta
+\]</span> donde <span class="math inline">\(\theta\)</span> es el ángulo entre el vector <span class="math inline">\(\x\)</span> y el vector <span class="math inline">\(\y\)</span>. Se dice que dos vectores <span class="math inline">\(\x,\y\)</span> son ortogonales si se encuentran a <span class="math inline">\(90^{\circ}\)</span>; es decir, si se cumple que <span class="math inline">\(\x \cdot \y = 0\)</span>.</p>
+</dd>
+<dt><strong>Norma</strong></dt>
+<dd>
+<p>La norma Euclideana, longitud o magnitud de un vector <span class="math inline">\(\x \in \R^n\)</span> se representa como <span class="math inline">\(\Vert \x \Vert\)</span> y se define como <span class="math display">\[
+  \Vert \x \Vert = \sqrt{\x \cdot \x} = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+\]</span> Notar que el cuadrado de la norma Euclideana es <span class="math inline">\(\Vert \x \Vert^2=\x \cdot \x = \x^T\x\)</span>. La norma Euclideana cumple con las siguientes desigualdades</p>
+</dd>
+</dl>
+<ul>
+<li><p>Desigualdad de Cauchy-Schwarz: <span class="math inline">\(\vert \x \cdot \y \vert \leq \Vert \x \Vert \Vert \y \Vert\)</span>.</p></li>
+<li><p>Desigualdad del triángulo: <span class="math inline">\(\Vert \x + \y \Vert \leq \Vert \x \Vert + \Vert \y \Vert\)</span>.</p></li>
+</ul>
+<p>De manera general, se define la norma <span class="math inline">\(L_p\)</span> de un vector <span class="math inline">\(\x \in \R^n\)</span> como <span class="math display">\[
+  \Vert \x \Vert_p = \left( \sum_{i=1}^n \vert x_i \vert^p  \right)^{\frac{1}{p}}.
+\]</span> La norma Euclideana es el caso particular cuando <span class="math inline">\(p=2\)</span>, y también se denomina norma <span class="math inline">\(L_2\)</span>. Por este motivo, cuando es necesario distinguir la norma Euclideana de otras normas se le representa como <span class="math inline">\(\Vert \x \Vert_2\)</span>. Otras normas usuales son la norma <span class="math inline">\(L_1\)</span> y la norma <span class="math inline">\(L_{\infty}\)</span> dadas, respectivamente, por <span class="math display">\[
+  \Vert \x \Vert_1 = \sum_{i=1}^n\vert x_i \vert, \qquad \Vert \x
+  \Vert_{\infty}= \max_i \vert x_i \vert
+\]</span></p>
+<dl>
+<dt><strong>Producto Vectorial</strong></dt>
+<dd>
+<p>El producto vectorial de dos vectores <span class="math inline">\(\x,\y\in\R^3\)</span>, también llamado <em>producto cruz</em>, se representa como <span class="math inline">\(\x \times \y\)</span> o como <span class="math inline">\(\x \wedge \y\)</span>, y se define como <span class="math display">\[
+  \x \times \y = \bm{x_2y_3-x_3y_2 \\ x_3y_1-x_1y_3 \\ x_1y_2-x_2y_1}.
+\]</span> El vector resultante del producto vectorial siempre es perpendicular a los dos vectores <span class="math inline">\(\x\)</span> y a <span class="math inline">\(\y\)</span>. La norma Euclideana del producto vectorial es <span class="math display">\[
+  \Vert \x \times \y \Vert = \Vert \x \Vert \Vert \y \Vert \vert \sin\theta \vert,
+\]</span> donde <span class="math inline">\(\theta\)</span> es el ángulo entre <span class="math inline">\(\x,\y\)</span>. Algunas propiedades del producto vectorial son las siguientes.</p>
+</dd>
+</dl>
+<ul>
+<li><p><span class="math inline">\(\x \times \x = \vect 0\)</span>, donde <span class="math inline">\(\vect 0\)</span> es un vector de ceros.</p></li>
+<li><p><span class="math inline">\(\x \times \y = -\y \times \x\)</span></p></li>
+<li><p><span class="math inline">\(\x \times (\y + \z) = \x \times \y + \x \times \z\)</span></p></li>
+<li><p><span class="math inline">\(\alpha(\x \times \y) = (\alpha \x)\times \y = \x \times (\alpha \y)\)</span>, donde <span class="math inline">\(\alpha \in \R\)</span>.</p></li>
+</ul>
+<dl>
+<dt><strong>Producto Exterior</strong></dt>
+<dd>
+<p>El producto exterior de dos vectores <span class="math inline">\(\x,\y\in\R^n\)</span>, denotado como <span class="math inline">\(\x\y^T\)</span>, es una matriz de tamaño <span class="math inline">\(n\times n\)</span> definida por <span class="math display">\[
+  \x \y^T = \bm{x_1 y_1 &amp; x_1 y_2 &amp; \cdots &amp; x_1 y_n \\
+x_2 y_1 &amp; x_2 y_2 &amp; \cdots &amp; x_2 y_n \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_n y_1 &amp; x_n y_2 &amp; \cdots &amp; x_n y_n}.
+\]</span> A partir de la expansión anterior, notar que si el vector <span class="math inline">\(\y\)</span> es un vector con todos sus elementos iguales a <span class="math inline">\(1\)</span>, el producto exterior <span class="math inline">\(\x\y^T\)</span> es equivalente a una matriz donde el vector <span class="math inline">\(\x\)</span> se repite en cada columna. El producto escalar se puede obtener a partir del producto exterior como <span class="math display">\[
+  \x \cdot \y = \tr(\x \y^T),
+\]</span> donde <span class="math inline">\(\tr\)</span> representa la traza de la matriz.</p>
+</dd>
+<dt><strong>Triple Producto Escalar</strong></dt>
+<dd>
+<p>El triple producto escalar entre 3 vectores <span class="math inline">\(\x,\y,\z \in \R^n\)</span>, también llamado producto mixto, se define como <span class="math inline">\(\x \cdot (\y \times \z)\)</span> y cumple las siguientes igualdades <span class="math display">\[
+  \x \cdot (\y \times \z) = \y \cdot (\z \times \x) = \z \cdot (\x \times \y).
+\]</span> Notar que, alternativamente, el triple producto escalar se puede representar como <span class="math inline">\(\x^T(\y \times \z)\)</span>. Si cualesquiera dos vectores se repiten, entonces el triple producto escalar es nulo. Por ejemplo, se tiene <span class="math inline">\(\x \cdot (\x \times \y) = 0\)</span>.</p>
+</dd>
+</dl>
+</section>
+<section id="diferenciación-de-vectores" class="level3" data-number="A.1.2">
+<h3 data-number="A.1.2" class="anchored" data-anchor-id="diferenciación-de-vectores"><span class="header-section-number">A.1.2</span> Diferenciación de Vectores</h3>
+<p>Considérese que el vector <span class="math inline">\(\x(t)=\bm{x_1(t)&amp;x_2(t) &amp; \cdots &amp; x_n(t)}^T\)</span> es una función del tiempo. La diferenciación se aplica término a término. De esta manera, la derivada <span class="math inline">\(\dot\x\)</span> del vector <span class="math inline">\(\x\)</span> es el vector <span class="math display">\[
+  \dx(t)=\bm{\dot x_1(t) &amp; \dot x_2(t) &amp; \cdots &amp; \dot x_n(t)}^T.
+\]</span> De manera similar, la integral <span class="math inline">\(\int \x(t) dt\)</span> está dada por el vector <span class="math display">\[
+  \int \x(t) dt = \bm{\int x_1(t) dt &amp; \int x_2(t) dt &amp; \cdots &amp; \int x_n(t) dt}^T.
+\]</span></p>
+<dl>
+<dt><strong>Derivada del Producto Escalar y Vectorial</strong></dt>
+<dd>
+<p>Para derivar tanto el producto escalar como el producto vectorial, se debe utilizar la regla del producto. Así, la derivada del producto escalar es <span class="math display">\[
+  \frac{d}{dt}\x\cdot \y = \frac{d\x}{dt} \cdot \y + \x \cdot \frac{d\y}{dt},
+\]</span> y la derivada del producto vectorial es <span class="math display">\[
+  \frac{d}{dt}\x \times \y = \frac{d\x}{dt} \times \y + \x \times \frac{d\y}{dt}.  
+\]</span></p>
+</dd>
+<dt><strong>Gradiente</strong></dt>
+<dd>
+<p>Dada una función escalar <span class="math inline">\(f(\x)\)</span>, cuyas derivadas parciales con respecto a los elementos <span class="math inline">\(x_i\)</span> existen, la gradiente de la función <span class="math inline">\(f\)</span> con respecto al vector <span class="math inline">\(\x\)</span> es el vector columna <span class="math inline">\(\nabla_{\x}f(\x) \in \R^{n \times 1}\)</span> dado por <span class="math display">\[
+  \nabla_{\x}f(\x) = \bm{\frac{\partial f(\x)}{\partial x_1} &amp; \frac{\partial
+  f(\x)}{\partial x_2} &amp; \cdots &amp; \frac{\partial f(\x)}{\partial x_n}}^T.
+\]</span> Si <span class="math inline">\(\x(t)\)</span> es una función diferenciable con respecto a <span class="math inline">\(t\)</span>, entonces la derivada temporal de <span class="math inline">\(f\)</span> es <span class="math display">\[
+  \dot f(\x) = \nabla_x^T f(\x) \dot \x
+\]</span></p>
+</dd>
+</dl>
+</section>
+<section id="sec-ap-proyeccion-vector-2d" class="level3" data-number="A.1.3">
+<h3 data-number="A.1.3" class="anchored" data-anchor-id="sec-ap-proyeccion-vector-2d"><span class="header-section-number">A.1.3</span> Proyección de un vector</h3>
+<p>Conceptualmente, la proyección de un vector en dos ejes (un plano), en tres ejes (el espacio), o en más ejes sigue los mismos principios matemáticos y queda completamente descrita utilizando el producto punto.</p>
+<dl>
+<dt><strong>Proyección en dos dimensiones</strong></dt>
+<dd>
+<p>Considérese un vector bidimensional <span class="math inline">\(\vv \in \R^2\)</span> y un sistema bidimensional de coordenadas con ejes unitarios <span class="math inline">\(\hat \x, \hat \y \in \R^2\)</span>, tales que <span class="math inline">\(\Vert \hat \x \Vert = \Vert \hat \y \Vert = 1\)</span>. Supóngase, además, que el ángulo entre el vector <span class="math inline">\(\vv\)</span> y el eje <span class="math inline">\(\hat \x\)</span> está dado por <span class="math inline">\(\alpha\)</span>, quedando el ángulo entre <span class="math inline">\(\vv\)</span> y el eje <span class="math inline">\(\hat \y\)</span> definido como <span class="math inline">\(1-\alpha\)</span>. <!-- tal como se muestra en la figura TODO  --> La componente del vector <span class="math inline">\(\vv\)</span> en el eje <span class="math inline">\(\hat \x\)</span>, representada como <span class="math inline">\(v_x\)</span>, y su componente en el eje <span class="math inline">\(\hat \y\)</span>, representada como <span class="math inline">\(v_y\)</span>, están dadas por las proyecciones de <span class="math inline">\(\vv\)</span> en los mencionados ejes, y son <span class="math display">\[
+v_x=\vv \cdot \hat \x = \Vert \vv \Vert \cos (\alpha) \qquad \text{y} \qquad
+v_y=\vv \cdot \hat \y = \Vert \vv \Vert \cos (90^{\circ}-\alpha).
+\]</span> Usando estas componentes, el vector <span class="math inline">\(\vv\)</span> puede ser expresado en el sistema de coordenadas dado por <span class="math inline">\(\hat \x\)</span>, <span class="math inline">\(\hat \y\)</span> como <span class="math display">\[
+\vv = (\vv \cdot \hat \x)\hat \x + (\vv \cdot \hat \y)\hat \y, \qquad \text{o} \qquad
+\vv = \bm{\vv \cdot \hat \x \\ \vv \cdot \hat \y}.
+\]</span> Así, para representar un vector en un sistema de coordenadas, basta con realizar el producto punto de este vector con cada uno de los ejes coordenados unitarios.</p>
+</dd>
+<dt><strong>Proyección en tres dimensiones</strong></dt>
+<dd>
+<p>Si ahora se considera un vector tridimensional <span class="math inline">\(\vv \in \R^3\)</span> y se tiene un sistema tridimensional con ejes unitarios <span class="math inline">\(\x,\y,\z\)</span>, la proyección de <span class="math inline">\(\vv\)</span> en cada eje coordenado estará dada por el producto punto como <span class="math display">\[
+v_x=\vv \cdot \hat \x, \qquad v_y=\vv \cdot \hat\y, \qquad \text{y} \qquad
+v_z=\vv \cdot \hat \z.
+\]</span> Al igual que en el caso anterior, las componentes permitirán que el vector se exprese en el sistema <span class="math inline">\(\hat\x, \hat\y, \hat\z\)</span> de la siguiente manera: <span class="math display">\[
+\vv = (\vv \cdot \hat \x)\hat \x + (\vv \cdot \hat \y)\hat \y + (\vv \cdot \hat\z)\hat \z, \qquad \text{o} \qquad
+\vv = \bm{\vv \cdot \hat \x \\ \vv \cdot \hat \y \\ \vv \cdot \hat \z}.
+\]</span> Esta forma de determinar las coordenadas asumen que los ejes son unitarios, ya que de otro modo habría que también tomar en cuenta sus módulos. La extensión a más dimensiones sigue la misma idea, ya que el producto punto se encuentra bien definido para más dimensiones (en <span class="math inline">\(\R^n\)</span>).</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="matrices" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="matrices"><span class="header-section-number">A.2</span> Matrices</h2>
+<p>Una matriz <span class="math inline">\(A\in\R^{m \times n}\)</span>, de <span class="math inline">\(m\)</span> filas y <span class="math inline">\(n\)</span> columnas <span class="math inline">\((m \times n)\)</span>, es un arreglo rectangular que agrupa los coeficientes de una aplicación lineal. Una matriz <span class="math inline">\(A\)</span> se representa como <span class="math display">\[
+  A = \bm{a_{ij}} = \bm{
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
+  },
+\]</span> donde <span class="math inline">\(a_{ij} \in \R\)</span> representa el elemento de la fila <span class="math inline">\(i\)</span> y de la columna <span class="math inline">\(j\)</span>. Si <span class="math inline">\(n=m\)</span>, se dice que la matriz es cuadrada; de otro modo, es una matriz rectangular.</p>
+<p><strong>Representaciones Alternativas de una Matriz</strong>. Si se denota la columna <span class="math inline">\(j\)</span> de la matriz <span class="math inline">\(A \in\R^{m \times n}\)</span> como <span class="math inline">\(\a_j \in \R^m\)</span>, la matriz <span class="math inline">\(A\)</span> se representa como <span class="math display">\[
+  A = \bm{\a_1 &amp; \a_2 &amp; \cdots &amp; \a_n}.
+\]</span> Por otro lado, si se denota la fila <span class="math inline">\(i\)</span> de esta matriz <span class="math inline">\(A\)</span> como <span class="math inline">\(\a_i^T\)</span>, tal que <span class="math inline">\(\a_i \in \R^n\)</span>, la matriz <span class="math inline">\(A\)</span> se representa como <span class="math display">\[
+  A = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T}.
+\]</span> En esta última representación, es necesario el uso de la transpuesta dado que se asume que los vectores son vectores columna. El ver una matriz como una colección de columnas y de filas es muy importante ya que usualmente es matemáticamente y conceptualmente más conveniente operar a nivel de vectores que a nivel de escalares.</p>
+<p><strong>Transpuesta de una Matriz</strong>. La transpuesta de una matriz <span class="math inline">\(A \in \R^{m \times n}\)</span> es una matriz <span class="math inline">\(A^T \in \R^{n \times m}\)</span> tal que <span class="math display">\[
+  A^T = \bm{
+    a_{11} &amp; a_{21} &amp; \cdots &amp; a_{m1} \\
+    a_{12} &amp; a_{22} &amp; \cdots &amp; a_{m2} \\
+    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+    a_{1n} &amp; a_{2n} &amp; \cdots &amp; a_{mn}
+  };
+\]</span> es decir, la matriz <span class="math inline">\(A^T\)</span> se obtiene intercambiando las filas por las columnas de la matriz <span class="math inline">\(A\)</span>. Algunas de las propiedades principales de la matriz transpuesta son las siguientes:</p>
+<ul>
+<li><span class="math inline">\((A^T)^T=A\)</span></li>
+<li><span class="math inline">\((A+B)^T=A^T+B^T\)</span></li>
+<li><span class="math inline">\((AB)^T=B^TA^T\)</span>, donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen dimensiones adecuadas</li>
+</ul>
+<section id="algunos-tipos-de-matrices" class="level3" data-number="A.2.1">
+<h3 data-number="A.2.1" class="anchored" data-anchor-id="algunos-tipos-de-matrices"><span class="header-section-number">A.2.1</span> Algunos Tipos de Matrices</h3>
+<p>A continuación se muestra algunos tipos especiales de matrices cuadradas comúnmente utilizadas en robótica.</p>
+<ul>
+<li><p><em>Matriz triangular superior e inferior</em>. Una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span> es triangular superior si <span class="math inline">\(a_{ij}=0\)</span> para <span class="math inline">\(i&gt;j\)</span>. Si <span class="math inline">\(a_{ij}=0\)</span> para <span class="math inline">\(i&lt;j\)</span> se dice que es triangular inferior.</p></li>
+<li><p><em>Matriz diagonal</em>. Una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span> tal que <span class="math inline">\(a_{ij}=0\)</span> cuando <span class="math inline">\(i \neq j\)</span> es una matriz diagonal. Tal matriz se denota como <span class="math display">\[
+  A = \text{diag}(a_{11},a_{22},\cdots,a_{nn}).
+\]</span> La matriz <em>identidad</em> <span class="math inline">\(I \in \R^{n \times n}\)</span> (a veces denominada <span class="math inline">\(I_n\)</span>) es una matriz diagonal con todos sus <span class="math inline">\(n\)</span> elementos no nulos iguales a la unidad.</p></li>
+<li><p><em>Matriz simétrica</em>. Una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span> es simétrica si es igual a su transpuesta: <span class="math display">\[
+  A = A^T
+\]</span> o, equivalentemente, si <span class="math inline">\(a_{ij}=a_{ji},~\forall i,j\)</span>. Dada cualquier matriz <span class="math inline">\(A\)</span>, la matriz <span class="math inline">\(A+A^T\)</span> es simétrica.</p></li>
+<li><p><em>Matriz antisimétrica</em>. Una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span> es antisimétrica (en inglés llamada <em>skew-symmetric</em>) si es igual al negativo de su transpuesta: <span class="math display">\[
+  A = -A^T
+\]</span> o, equivalentemente, si <span class="math inline">\(a_{ij}=-a_{ji},~\forall i,j\)</span> con <span class="math inline">\(a_{ii}=0\)</span>. Dada cualquier matriz <span class="math inline">\(A\)</span>, la matriz <span class="math inline">\(A-A^T\)</span> es antisimétrica.</p></li>
+<li><p><em>Matriz ortogonal</em>. Una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span> es ortogonal si: <span class="math display">\[
+  AA^T = A^T A = I,
+\]</span> donde <span class="math inline">\(I\)</span> representa la matriz identidad. Usando esta definición se tiene que <span class="math inline">\(A^T = A^T(AA^{-1}) = (A^TA)A^{-1} = I A^{-1} = A^{-1}\)</span>, y por tanto la transpuesta de una matriz ortogonal es su inversa: <span class="math inline">\(A^{T}=A^{-1}\)</span>.</p>
+<p>Algunas propiedades importantes de una matriz ortogonal <span class="math inline">\(A\)</span> son que su determinante es <span class="math inline">\(\det(A)=\pm 1\)</span>, y que sus columnas forman vectores ortonormales (son unitarios y mutuamente ortogonales). Además, si <span class="math inline">\(A \in \R^{3 \times 3}\)</span>, sus valores propios son <span class="math inline">\(\lambda_1=1\)</span>, <span class="math inline">\(\lambda_{2,3}=e^{\pm i \theta}\)</span>, y el vector propio asociado con <span class="math inline">\(\lambda_1\)</span> se interpreta como un eje de rotación.</p></li>
+</ul>
+<p>Es posible expresar cualquier matriz cuadrada <span class="math inline">\(A \in \R^{n \times n}\)</span> como la suma de una matriz simétrica y una antisimétrica: <span class="math display">\[
+  A = \half (A+A^T) + \half(A-A^T),
+\]</span> donde el primer sumando es simétrico y el segundo es antisimétrico.</p>
+</section>
+<section id="multiplicación-de-matrices" class="level3" data-number="A.2.2">
+<h3 data-number="A.2.2" class="anchored" data-anchor-id="multiplicación-de-matrices"><span class="header-section-number">A.2.2</span> Multiplicación de Matrices</h3>
+<p>El producto de dos matrices <span class="math inline">\(A \in \R^{m \times n}\)</span> y <span class="math inline">\(B \in \R^{n \times p}\)</span> es la matriz <span class="math inline">\(C=AB \in \R^{m \times p}\)</span> cuyos términos <span class="math inline">\(c_{ij}\)</span> están definidos como <span class="math display">\[
+  c_{ij}=\sum_{k=1}^n a_{ik} b_{kj}.
+\]</span> Para que el producto de matrices exista, el número de columnas de <span class="math inline">\(A\)</span> debe ser igual al número de filas de <span class="math inline">\(B\)</span>. A continuación se muestra una visión más compacta de este producto, que puede ser útil en algunos casos.</p>
+<dl>
+<dt><strong>Producto Matriz-Vector</strong></dt>
+<dd>
+<p>Considerar la matriz <span class="math inline">\(A \in \R^{m \times n}\)</span> y el vector <span class="math inline">\(\x \in \R^n\)</span>. Su producto es un vector tal que <span class="math inline">\(\y = A\x \in \R^m\)</span>. Si se escribe la matriz <span class="math inline">\(A\)</span> usando sus filas, el producto será <span class="math display">\[
+  A \x = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T}\x = \bm{\a_1^T \x \\ \a_2^T
+\x \\ \vdots \\ \a_m^T \x};
+\]</span> es decir, el elemento <span class="math inline">\(i\)</span> del producto <span class="math inline">\(A\x\)</span> es el producto interno de la fila <span class="math inline">\(i\)</span> de la matriz <span class="math inline">\(A\)</span> con el vector <span class="math inline">\(\x\)</span>. Por otro lado, si se escribe <span class="math inline">\(A\)</span> usando sus columnas, se tiene <span class="math display">\[
+  A\x = \bm{\a_1 &amp; \a_2 &amp; \cdots &amp; \a_n} \bm{x_1 \\ \vdots \\ x_n} = \a_1 x_1 +
+  \a_2 x_2 + \cdots + \a_n x_n;
+\]</span> es decir, el resultado es la combinación lineal de las columnas de <span class="math inline">\(A\)</span>, siendo los elementos <span class="math inline">\(x_i\)</span> de <span class="math inline">\(\x\)</span> los coeficientes de la combinación.</p>
+</dd>
+<dt><strong>Producto Matriz-Matriz</strong></dt>
+<dd>
+<p>Si se representa la matriz <span class="math inline">\(A \in \R^{m \times n}\)</span> usando sus filas <span class="math inline">\(a_i^T\)</span>, y la matriz <span class="math inline">\(B \in \R^{n \times p}\)</span> usando sus columnas <span class="math inline">\(b_j\)</span>, el producto <span class="math inline">\(AB\)</span> es <span class="math display">\[
+  AB = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T} \bm{\vect b_1 &amp; \vect b_2 &amp;
+\cdots &amp; \vect b_p} =
+  \bm{\a_1^T\vect b_1 &amp; \a_1^T\vect b_2 &amp; \cdots &amp; \a_1^T\vect b_p \\
+\a_2^T\vect b_1 &amp; \a_2^T\vect b_2 &amp; \cdots &amp; \a_2^T\vect b_p \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\a_m^T\vect b_1 &amp; \a_m^T\vect b_2 &amp; \cdots &amp; \a_m^T\vect b_p
+  }.
+\]</span> De manera alternativa, si se representa <span class="math inline">\(A\)</span> usando sus columnas, y <span class="math inline">\(B\)</span> usando sus filas, el producto será <span class="math display">\[
+  AB = \bm{\a_1 &amp; \a_2 &amp; \cdots &amp; \a_n} \bm{\vect b_1^T \\ \vect b_2^T \\
+\vdots \\ \vect b_n^T} = \sum_{i=1}^n \a_i\vect b_i^T.
+\]</span> Este resultado indica que <span class="math inline">\(AB\)</span> es la suma de los productos externos de cada columna <span class="math inline">\(i\)</span> de <span class="math inline">\(A\)</span> con la respectiva fila <span class="math inline">\(i\)</span> de <span class="math inline">\(B\)</span>.</p>
+</dd>
+</dl>
+<p>Por otro lado, si solo se representa la matriz <span class="math inline">\(B\)</span> usando sus columnas, el resultado del producto es <span class="math display">\[
+  AB = A \bm{\vect b_1 &amp; \vect b_2 &amp; \cdots &amp; \vect b_p} = \bm{A \vect b_1 &amp; A
+    \vect b_2 &amp; \cdots &amp; A \vect b_p},
+\]</span> donde se observa que la columna <span class="math inline">\(i\)</span> del producto es el producto <span class="math inline">\(A\vect b_i\)</span>. Si ahora se representa la matriz <span class="math inline">\(A\)</span> usando sus filas, se tiene <span class="math display">\[
+  AB = \bm{\a_1^T \\ \a_2^T \\ \vdots \\ \a_m^T} B = \bm{\a_1^T B\\
+    \a_2^TB \\ \vdots \\ \a_m^TB},
+\]</span> donde la fila <span class="math inline">\(i\)</span> del producto está dado por <span class="math inline">\(\a_i^TB\)</span>. Se puede verificar en todos los casos que los productos indicados tienen las dimensiones adecuadas.</p>
+<dl>
+<dt><strong>Propiedades del Producto Matricial</strong></dt>
+<dd>
+<p>Las siguientes son propiedades de la multiplicación de matrices:</p>
+</dd>
+</dl>
+<ul>
+<li>Asociatividad: <span class="math inline">\((AB)C = A(BC)\)</span></li>
+<li>Distributividad: <span class="math inline">\(A(B+C) = AB+AC\)</span>, y <span class="math inline">\((A+B)C=AC+BC\)</span></li>
+<li>No conmutatividad: <span class="math inline">\(AB \neq BA\)</span> (en general)</li>
+</ul>
+<p>Es importante notar que, en general, <span class="math inline">\(AB=0\)</span> no implica que <span class="math inline">\(A=0\)</span> o que <span class="math inline">\(B=0\)</span>. De igual manera, <span class="math inline">\(AC=BC\)</span>, o <span class="math inline">\(CA=CB\)</span>, no implican, en general, que <span class="math inline">\(A=B\)</span>. Existen casos especiales; por ejemplo, si <span class="math inline">\(C\)</span> es una matriz cuadrada e invertible, entonces la implicancia sí es válida.</p>
+</section>
+<section id="sec-ap-matrices-antisimetricas" class="level3" data-number="A.2.3">
+<h3 data-number="A.2.3" class="anchored" data-anchor-id="sec-ap-matrices-antisimetricas"><span class="header-section-number">A.2.3</span> Matrices Antisimétricas</h3>
+<p>Considérese el vector <span class="math inline">\(\a=[a_1 \ a_2 \ a_3]^T \in \mathbb{R}^3\)</span>. La matriz antisimétrica (<em>skew-symmetric</em>) asociada con este vector se denota como <span class="math inline">\(\hat\a\)</span>, <span class="math inline">\(\a^{\wedge}\)</span>, <span class="math inline">\(S(\a)\)</span> o <span class="math inline">\([\a \times]\)</span>, cumple con la propiedad <span class="math inline">\(\hat\a^T=-\hat\a\)</span>, y se define término a término a partir de los elementos de <span class="math inline">\(\a\)</span> como <span class="math display">\[
+    \hat\a = \a^{\wedge} =
+    \begin{bmatrix}
+        0 &amp; -a_3 &amp; a_2 \\ a_3 &amp; 0 &amp; -a_1 \\ -a_2 &amp; a_1 &amp; 0
+    \end{bmatrix}.
+\]</span> {eq-matriz-antisimetrica} Debido a su constitución, esta matriz se utiliza para representar el producto cruz de dos vectores como una multiplicación de una matriz por un vector, es decir: <span id="eq-matriz-antisimetrica-propiedad"><span class="math display">\[
+    \a \times \vect b = \hat\a \vect b
+\tag{A.1}\]</span></span> donde <span class="math inline">\(\vect b=[b_1 \ b_2 \ b_3]^T \in \mathbb{R}^3\)</span>. Esta equivalencia se puede demostrar realizando las operaciones término a término, obteniéndose: <span class="math display">\[
+    \bm{a_1 \\ a_2 \\ a_3} \times \bm{b_1 \\ b_2 \\ b_3} = \bm{0
+        &amp; -a_3 &amp; a_2 \\ a_3 &amp; 0 &amp; -a_1 \\
+        -a_2 &amp; a_1 &amp; 0}\bm{b_1\\b_2\\b_3} = \bm{a_2b_3 - a_3b_2 \\ a_3b_1-a_1b_3 \\
+        a_1b_2-a_2b_1}.
+\]</span> La principal ventaja de expresar el producto vectorial como el producto de una matriz antisimétrica con un vector consiste en que al tener un producto matricial se puede aplicar el álgebra lineal de matrices, dejando de lado el álgebra del producto vectorial. Por ejemplo, la velocidad lineal <span class="math inline">\(\vv\)</span> se puede expresar en función de la velocidad angular <span class="math inline">\(\bomega\)</span> y la posición de un punto <span class="math inline">\(\p\)</span> a través de <span class="math inline">\(\vv = \bomega \times \p\)</span>, lo cual es igual a <span class="math inline">\(\vv = \hat\bomega \p\)</span> utilizando la matriz antisimétrica que acaba de ser definida.</p>
+<dl>
+<dt><strong>Propiedades de Matrices Antisimétricas</strong></dt>
+<dd>
+<p>Las siguientes son algunas propiedades útiles de la matriz antisimétrica.</p>
+</dd>
+</dl>
+<ul>
+<li><p>Dada la matriz de rotación <span class="math inline">\(\Rot\)</span> y el vector <span class="math inline">\(\a\)</span>, se tiene la siguiente propiedad importante: <span id="eq-propiedad-antisimetrica-tres-elementos"><span class="math display">\[
+      \Rot \hat\a \Rot^T = (\Rot \a)^{\wedge}.
+   \tag{A.2}\]</span></span> Esta propiedad se puede probar por desarrollo directo de cada término.</p></li>
+<li><p>Potencias de una matriz antisimétrica: Dada la matriz antisimétrica <span class="math inline">\(\hat{\a}\)</span>, su segunda y tercera potencia son: <span class="math display">\[
+\begin{align*}
+      \hat{\a}^2 &amp;=\a \a^T - \Vert \a \Vert^2 I\\
+      \hat{\a}^3 &amp;=-\Vert \a \Vert^2 \hat{\a}
+  \end{align*}
+\]</span> las cuales pueden ser verificadas por expansión de términos. Utilizando estas dos potencias, y reemplazando, las potencias de mayor orden pueden ser expresadas en función de <span class="math inline">\(\hat{\a}\)</span> y <span class="math inline">\(\hat{\a}^2\)</span> como: <span class="math display">\[
+\begin{align*}
+      \hat{\a}^4 &amp;= -\Vert \a \Vert^2 \hat{\a}^2, \qquad \qquad
+      \hat{\a}^7=-\Vert \a \Vert^6 \hat{\a} \\
+      \hat{\a}^5&amp;=\Vert \a \Vert^4 \hat{\a}, \qquad \qquad \quad ~
+      \hat{\a}^8=-\Vert \a \Vert^6 \hat{\a}^2 \\
+      \hat{\a}^6&amp;=\Vert \a \Vert^4 \hat{\a}^2, \qquad \qquad \quad
+      \hat{\a}^9=\Vert \a \Vert^8 \hat{\a}.
+  \end{align*}
+  \]</span> Siguiendo la misma idea, y reemplazando, es posible obtener expresiones para términos de aún mayor orden.</p></li>
+</ul>
+</section>
+<section id="operaciones-con-matrices" class="level3" data-number="A.2.4">
+<h3 data-number="A.2.4" class="anchored" data-anchor-id="operaciones-con-matrices"><span class="header-section-number">A.2.4</span> Operaciones con Matrices</h3>
+<dl>
+<dt><strong>Traza de una matriz</strong></dt>
+<dd>
+<p>La traza de una matriz cuadrada <span class="math inline">\(A \in \R^{n \times n}\)</span>, representada como <span class="math inline">\(\tr(A)\)</span>, es la suma de los coeficientes de la diagonal de <span class="math inline">\(A\)</span>: <span class="math display">\[
+  \tr(A) = \sum_{i=1}^na_{ii}
+\]</span> Las propiedades más importantes de la traza son:</p>
+</dd>
+</dl>
+<ul>
+<li><span class="math inline">\(\tr(A)=\tr(A^T)\)</span></li>
+<li><span class="math inline">\(\tr(A+B)=\tr(A)+\tr(B)\)</span></li>
+<li><span class="math inline">\(\tr(\lambda A) = \lambda~ \tr(A)\)</span>, <span class="math inline">\(\forall \lambda \in \R\)</span></li>
+<li><span class="math inline">\(\tr(AB) = \tr(BA)\)</span></li>
+<li><span class="math inline">\(\tr(ABC) = \tr(CAB) = \tr(BCA)\)</span></li>
+</ul>
+<dl>
+<dt><strong>Determinante de una matriz</strong></dt>
+<dd>
+<p>El determinante de una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span>, denotado como <span class="math inline">\(|A|\)</span> o como <span class="math inline">\(\det(A)\)</span>, es el escalar definido (recursivamente) por <span class="math display">\[
+  \det(A) = \sum_{j=1}^n a_{ij}(-1)^{i+j}\det(A_{i^-j^-}),
+\]</span> para cualquier fila <span class="math inline">\(i \in \{1,\cdots,n\}\)</span>, donde <span class="math inline">\(A_{i^-j^-} \in \R^{(n-1) \times (n-1)}\)</span> es la matriz que resulta de eliminar la fila <span class="math inline">\(i\)</span> y la columna <span class="math inline">\(j\)</span> de la matriz <span class="math inline">\(A\)</span>. Equivalentemente, se puede definir el determinante como <span class="math display">\[
+  \det(A) = \sum_{i=1}^n a_{ij}(-1)^{i+j}\det(A_{i^-j^-}),
+\]</span> para cualquier columna <span class="math inline">\(j \in \{1,\cdots,n\}\)</span> de <span class="math inline">\(A\)</span>. El caso inicial se define como <span class="math inline">\(\det(A)=a_{11}\)</span> para <span class="math inline">\(A\in \R^{1 \times 1}\)</span>.</p>
+</dd>
+</dl>
+<p>Considerando una matriz <span class="math inline">\(A \in \R^{n \times n}\)</span>, algunas propiedades importantes del determinante son:</p>
+<ul>
+<li><span class="math inline">\(\det(A) = \det(A^T)\)</span></li>
+<li><span class="math inline">\(\det(\alpha A) = \alpha^n \det(A)\)</span>, con <span class="math inline">\(\alpha \in \R\)</span></li>
+<li><span class="math inline">\(\det(AB) = \det(A)\det(B)\)</span>, si <span class="math inline">\(A,B \in \R^{n \times n}\)</span></li>
+<li><span class="math inline">\(\det(A)=0\)</span> si y solo si <span class="math inline">\(A\)</span> es singular (no invertible).</li>
+<li>Si <span class="math inline">\(A\)</span> es no singular (invertible), entonces <span class="math inline">\(\det(A^{-1})=1/\det(A)\)</span></li>
+<li>Si <span class="math inline">\(A\)</span> es triangular (o diagonal), entonces <span class="math inline">\(\det(A) = \prod_{i=1}^n a_{ii}\)</span>.</li>
+</ul>
+<dl>
+<dt><strong>Norma de una Matriz</strong></dt>
+<dd>
+<p>La norma más utilizada para las matrices es la norma de Frobenius, definida como <span class="math display">\[
+  \Vert A \Vert = \sqrt{\sum_{i=1}^m\sum_{j=1}^n a_{ij}^2} = \sqrt{\tr(A^TA)}.
+\]</span></p>
+</dd>
+<dt><strong>Inversa de una Matriz</strong></dt>
+<dd>
+<p>La inversa de una matriz cuadrada <span class="math inline">\(A \in \R^{n \times n}\)</span>, denotada <span class="math inline">\(A^{-1}\)</span>, se define como la única matriz que satisface <span class="math display">\[
+  AA^{-1} = A^{-1}A = I.
+\]</span> La inversa <span class="math inline">\(A^{-1}\)</span> se puede calcular como <span class="math display">\[
+  A^{-1} = \frac{1}{\det(A)}\text{Adj}(A),
+\]</span> donde <span class="math inline">\(\text{Adj}(A)\)</span> representa la adjunta de la matriz <span class="math inline">\(A\)</span> (la transpuesta de la matriz de cofactores) y, a su vez, se define como <span class="math display">\[
+  \text{Adj}(A) = [((-1)^{i+j} \det(A_{i^-j^-})]^T.
+\]</span> Numéricamente, esta forma de cálculo, via la adjunta y el determinante, es poco eficaz y no es utilizada en la práctica. Se dice que la matriz <span class="math inline">\(A\)</span> es <em>invertible</em> o <em>no singular</em> si existe su inversa; de otro modo, se dice que es <em>no invertible</em> o <em>singular</em>. Una matriz cuadrada <span class="math inline">\(A\)</span> es invertible cuando es de rango completo, lo cual implica que su determinante es diferente de cero.</p>
+</dd>
+</dl>
+<p>Las propiedades de la inversa son:</p>
+<ul>
+<li><span class="math inline">\((A^{-1})^{-1} = A\)</span></li>
+<li><span class="math inline">\((A^{-1})^T=(A^T)^{-1}\)</span>, y es usualmente denotada como <span class="math inline">\(A^{-T}\)</span></li>
+<li><span class="math inline">\((AB)^{-1}=B^{-1}A^{-1}\)</span></li>
+<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> son invertibles: <span class="math inline">\((A+BCD)^{-1}=A^{-1}-A^{-1}B(DA^{-1}B+C^{-1})^{-1}DA^{-1}\)</span>, donde se requiere que <span class="math inline">\(DA^{-1}B+C^{-1}\)</span> sea invertible.</li>
+</ul>
+<!-- **Métodos iterativos de inversión**
+
+: Cuando un problema está mal condicionado, las soluciones iterativas sucesivas
+limitan la propagación de los errores, y para problemas con una cantidad
+importante de variables, se substituyen de manera ventajosa a otras. Por el
+contrario, la rapidez de convergencia constituye un problema central. Los
+métodos más usados son:
+
+* Método de Jacobi que puede aplicarse si los elementos diagonales de la
+  matriz $A$ son no nulos.
+* El método alternativo de Gauss-Siedel, cuya convergencia es más rápida
+* Los métodos de sobre-relajación
+* Residuales mínimos generalizados (GMRES) para matrices no simétricas de
+  muy grande dimensión
+ -->
+<dl>
+<dt><strong>Exponencial de una matriz</strong></dt>
+<dd>
+<p>La exponencial de una matriz cuadrada <span class="math inline">\(A^{n \times n}\)</span> está definida como <span class="math display">\[
+  e^A = \sum_{n=0}^{n = \infty} \frac{A^n}{n!} = 1 + A + \frac{A^2}{2!} +
+  \cdots + \frac{A^n}{n!}
+\]</span> La exponencial siempre es una matriz inversible, y se tiene la relación <span class="math inline">\(e^A e^{-A} = e^0 = I\)</span>.</p>
+</dd>
+</dl>
+<!-- 
+** Diagonalización de una matriz**
+
+: La diagonalización de una matriz regular $A \in \R^{n \times n}$ está dada por
+$D$, tal que
+$$
+  A = SDS^{-1}
+$$
+o, equivalentemente, $AS=SD$ o $S^{-1}AS=D$. Por ejemplo, si $A=\bm{2 &1 \\ 1 & 2}$, $\lambda_1=1$, $\lambda_2=3$,
+con 
+$$
+  A = \bm{1 & 1 \\ -1 & 1}\bm{1 &0 \\ 0 & 3}\bm{1/2 & -1/2 \\ 1/2 & 1/2}.
+$$
+Si se divide $S$ entre $\sqrt{2}$ (y se multiplica $S^{-1}$ por $\sqrt 2$):
+$$
+  A = \bm{1/\sqrt{2} & 1/\sqrt{2} \\ -1/\sqrt{2} & 1/\sqrt{2}}\bm{1 &0 \\ 0 &
+    3}\bm{\sqrt{2}/2 & -\sqrt{2}/2 \\ \sqrt{2}/2 & \sqrt{2}/2}. 
+$$
+Si $A$ es simétrica, $S^{-1}=S^T$.
+-->
+</section>
+<section id="independencia-lineal-y-rango" class="level3" data-number="A.2.5">
+<h3 data-number="A.2.5" class="anchored" data-anchor-id="independencia-lineal-y-rango"><span class="header-section-number">A.2.5</span> Independencia Lineal y Rango</h3>
+<dl>
+<dt><strong>Combinación Lineal</strong></dt>
+<dd>
+<p>Una combinación lineal de <span class="math inline">\(n\)</span> vectores <span class="math inline">\(\x_1, \x_2, \cdots, \x_n\ \in \R^m\)</span> se define como el vector <span class="math inline">\(\vect v \in \R^m\)</span> tal que <span class="math display">\[
+  \vect v = \alpha_1 \x_1 + \alpha_2 \x_2 + \cdots + \alpha_n \x_n = \sum_{i=1}^n
+  \alpha_i \x_i,
+\]</span> con <span class="math inline">\(\alpha_i \in \R\)</span> para <span class="math inline">\(i=1,\cdots,n\)</span>.</p>
+</dd>
+<dt><strong>Dependencia Lineal</strong></dt>
+<dd>
+<p>Un conjunto de vectores <span class="math inline">\(\{ \x_1, \x_2, \cdots, \x_n\} \in \R^m\)</span> son linealmente dependientes si un vector del conjunto puede ser representado como una combinación lineal de los vectores restantes. Es decir, si <span class="math display">\[
+  \x_n = \sum_{i=1}^{n-1} \alpha_i \x_i
+\]</span> para algún conjunto de escalares <span class="math inline">\(\alpha_1,\cdots,\alpha_{n-1}\in \R\)</span>.</p>
+</dd>
+<dt><strong>Independencia Lineal</strong></dt>
+<dd>
+<p>Un conjunto de vectores <span class="math inline">\(\{ \x_1, \x_2, \cdots, \x_n\} \in \R^m\)</span> se dice linealmente independiente si ninguno de estos vectores <span class="math inline">\(\x_i\)</span> puede ser representado como una combinación lineal de los vectores restantes. Dicho de otro modo, el conjunto de vectores es linealmente independiente si se cumple que <span class="math display">\[
+  \sum_{i=1}^n \alpha_i \x_i =0
+\]</span> implica <span class="math inline">\(\alpha_i=0\)</span>, para todo <span class="math inline">\(i\)</span>.</p>
+</dd>
+<dt><strong>Base</strong></dt>
+<dd>
+<p>Una base de un espacio vectorial <span class="math inline">\(\mathcal X\)</span> es un conjunto de vectores <span class="math inline">\(\e_i\)</span> linealmente independientes, de tal modo que cada vector <span class="math inline">\(\x \in \mathcal X\)</span> puede ser escrito como una combinación lineal <span class="math display">\[
+  \x = x_1 \e_1 + x_2 \e_2 + \cdots + x_n \e_n.
+\]</span> La representación <span class="math inline">\(\x=(x_1,x_2,\cdots,x_n)\)</span> se encuentra determinada de manera única por la base <span class="math inline">\((\e_1,\cdots\e_n)\)</span>. La dimensión del espacio vectorial <span class="math inline">\(\mathcal X\)</span> es el número de vectores base.</p>
+</dd>
+<dt><strong>Rango</strong></dt>
+<dd>
+<p>El <em>rango columna</em> de una matriz <span class="math inline">\(A \in \R^{m \times n}\)</span> es el tamaño del más grande subconjunto de columnas de <span class="math inline">\(A\)</span> que constituye un conjunto linealmente independiente. De manera simplificada se dice que es el número de columnas linealmente independientes de <span class="math inline">\(A\)</span>. Igualmente, el <em>rango fila</em> de una matriz <span class="math inline">\(A\)</span> es el número más grande de rilas de <span class="math inline">\(A\)</span> que constituye un conjunto linealmente independiente.</p>
+</dd>
+</dl>
+<p>Para cualquier matriz <span class="math inline">\(A\)</span>, el rango columna de <span class="math inline">\(A\)</span> es igual al rango fila de <span class="math inline">\(A\)</span>, y ambas cantidades son colectivamente llamadas simplemente el <em>rango</em> de <span class="math inline">\(A\)</span> y se representa como <span class="math inline">\(\text{rang}(A)\)</span> o <span class="math inline">\(\rho(A)\)</span>. Así, el rango de una matriz <span class="math inline">\(A\)</span> es el número más grande de filas (o columnas) linealmente independientes de <span class="math inline">\(A\)</span>.</p>
+<p>Considerando la matriz <span class="math inline">\(A \in \R^{m \times n}\)</span>, se tiene las siguientes propiedades básicas del rango:</p>
+<ul>
+<li><span class="math inline">\(\rho(A) \leq \min\{m,n\}\)</span>. Si <span class="math inline">\(\rho(A)=\min\{m,n\}\)</span>, se dice que <span class="math inline">\(A\)</span> es de rango completo.</li>
+<li><span class="math inline">\(\rho(A) = \rho(A^T)\)</span></li>
+<li><span class="math inline">\(\rho(A^TA) = \rho(A)\)</span></li>
+<li>Si <span class="math inline">\(B \in \R^{n \times p}\)</span>, entonces <span class="math inline">\(\rho(AB) \leq \min\{\rho(A), \rho(B)\}\)</span></li>
+<li>Si <span class="math inline">\(B \in \R^{m \times n}\)</span>, entonces <span class="math inline">\(\rho(A+B) \leq \rho(A) + \rho(B)\)</span></li>
+</ul>
+<p>Una condición necesaria y suficiente para que el conjunto de <span class="math inline">\(n\)</span> vectores <span class="math inline">\(\x_i \in \R^m\)</span> descritos anteriormente sea linealmente independiente es que la matriz <span class="math inline">\(A\)</span> que contiene a estos vectores como columnas: <span class="math display">\[
+  A = \bm{\x_1 &amp; \x_2 &amp; \cdots &amp; \x_n}
+\]</span> tenga rango <span class="math inline">\(n\)</span>; es decir, <span class="math inline">\(\rho(A)=n\)</span>. Esto implica que una condición necesaria para la independencia lineal es que <span class="math inline">\(n \leq m\)</span>. Si, por el contrario, <span class="math inline">\(\rho(A)=r\)</span>, y <span class="math inline">\(r&lt;n\)</span>, entonces solo <span class="math inline">\(r\)</span> vectores son linealmente independientes, y los <span class="math inline">\(n-r\)</span> vectores restantes pueden ser expresados como combinación lineal de estos vectores independientes.</p>
+</section>
+<section id="diferenciación-de-matrices" class="level3" data-number="A.2.6">
+<h3 data-number="A.2.6" class="anchored" data-anchor-id="diferenciación-de-matrices"><span class="header-section-number">A.2.6</span> Diferenciación de Matrices</h3>
+<dl>
+<dt><strong>Derivada Temporal</strong></dt>
+<dd>
+<p>La derivada de una matriz <span class="math inline">\(A(t) \in \R^{m \times n}\)</span> variante con tel tiempo está dada por la derivada de cada uno de sus términos; es decir, <span class="math display">\[
+  \dot A(t) = \bm{
+\dot a_{11}(t) &amp; \dot a_{12}(t) &amp; \cdots &amp; \dot a_{1n}(t) \\
+\dot a_{21}(t) &amp; \dot a_{22}(t) &amp; \cdots &amp; \dot a_{2n}(t) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\dot a_{m1}(t) &amp; \dot a_{m2}(t) &amp; \cdots &amp; \dot a_{mn}(t)
+  }.
+\]</span> Si <span class="math inline">\(A\)</span> es una matriz cuyas componentes son funciones de <span class="math inline">\(\q(t)=(q_1(t),\cdots,q_k(t))\)</span>, la derivada temporal de <span class="math inline">\(A\)</span>, usando la regla de la cadena, es <span class="math display">\[
+  \dot A = \frac{\partial A}{\partial \q}\frac{d\q}{dt} = \sum_{i=1}^k
+  \frac{\partial A}{\partial q_i}\frac{dq_i}{dt} = \frac{\partial A}{\partial q_1}\frac{dq_1}{dt} +
+  \cdots +  \frac{\partial A}{\partial q_k}\frac{dq_k}{dt},
+\]</span> donde <span class="math inline">\(\dot A \in \R^{m \times n \times k}\)</span>.</p>
+</dd>
+<dt><strong>Derivada de la Inversa</strong></dt>
+<dd>
+<p>Si <span class="math inline">\(A(t) \in \R^{n \times n}\)</span> es invertible, con <span class="math inline">\(\rho(A)=n\)</span> para todo <span class="math inline">\(t\)</span>, y <span class="math inline">\(a_{ij}(t)\)</span> son funciones diferenciales, la derivada de la inversa de <span class="math inline">\(A(t)\)</span> es <span class="math display">\[
+  \dot A^{-1}(t) = -A^{-1}(t) \dot A (t) A^{-1}(t).
+\]</span></p>
+</dd>
+<dt><strong>Jacobiano</strong></dt>
+<dd>
+<p>Dada una función vectorial <span class="math inline">\(\g(\x) \in \R^{m \times 1}\)</span> cuyos elementos <span class="math inline">\(g_i\)</span> son diferenciables con respecto al vector <span class="math inline">\(\x \in \R^{n \times 1}\)</span>, la matriz Jacobiana, también llamada simplemente el Jacobiano, de la función se define como <span class="math inline">\(J(\x) \in \R^{m \times n}\)</span> tal que <span class="math display">\[
+  J(\x) = \frac{\partial \g(\x)}{\partial \x} = \bm{\frac{\partial g_1(\x)}{\partial
+  \x} \\ \frac{\partial g_2(\x)}{\partial \x} \\ \vdots \\ \frac{\partial
+  g_m(\x)}{\partial \x}}.
+\]</span> Si <span class="math inline">\(\x(t)\)</span> es una función diferenciable con respecto a <span class="math inline">\(t\)</span>, se utiliza la regla de la cadena para obtener <span class="math display">\[
+  \dot \g(\x) = \frac{\partial \g}{\partial \x}\dot\x = J(\x) \dot \x.
+\]</span></p>
+</dd>
+</dl>
+</section>
+<section id="sec-ap-pseudo-inversa-MP" class="level3" data-number="A.2.7">
+<h3 data-number="A.2.7" class="anchored" data-anchor-id="sec-ap-pseudo-inversa-MP"><span class="header-section-number">A.2.7</span> Pseudoinversa de Moore-Penrose</h3>
+<p>La pseudoinversa, también llamada <em>inversa generalizada</em>, generaliza la noción de inversa de una matriz para casos en los que la matriz no es inversible. En general, existen diversas inversas generalizadas, y no hay unicidad de esta inversa generalizada.</p>
+<p>Para una matriz con coeficientes reales o complejos no necesariamente cuadrada, existe una única pseudoinversa que satisface ciertas condiciones suplementales denominada pseudoinversa de Moore-Penrose. Puede ser calculada de diferentes maneras.</p>
+<ul>
+<li><p>Si <span class="math inline">\(A \in \R^{m \times n}\)</span> con <span class="math inline">\(n&gt;m\)</span> y si <span class="math inline">\(\rho(A)=m\)</span> (el rango es el número de filas; es decir, es una matriz de rango completo por filas): <span class="math display">\[
+  A^{\#}=A^T (AA^T)^{-1}
+\]</span> tal que <span class="math inline">\(A^{\#}A = I \in \R^{n \times n}\)</span>.</p></li>
+<li><p>Si <span class="math inline">\(A \in \R^{m \times n}\)</span> con <span class="math inline">\(m&gt;n\)</span> y si <span class="math inline">\(\rho(A)=n\)</span> (el rango es el número de columnas; es decir, es una matriz de rango completo por columnas): <span class="math display">\[
+  A^{\#}= (A^TA)^{-1}A^T
+\]</span> tal que <span class="math inline">\(AA^{\#} = I \in \R^{m \times m}\)</span>.</p></li>
+</ul>
+<p>La pseudoinversa brinda una solución aproximada a un sistema lineal en el sentido de mínimos cuadrados. Así, las soluciones a un sistema de ecuaciones lineales <span class="math display">\[
+  Ax=b
+\]</span> obtenidos por la pseudoinversa son tales que:</p>
+<ul>
+<li>Si <span class="math inline">\(m&gt;n\)</span>, la solución aproximada <span class="math inline">\(x=A^{\#}b\)</span> es tal que minimiza <span class="math inline">\(\Vert x - A^{\#}b \Vert^2\)</span></li>
+<li>Si <span class="math inline">\(n&gt;m\)</span>, la solución <span class="math inline">\(x=A^{\#}b\)</span> es tal que minimiza <span class="math inline">\(\Vert x \Vert^2\)</span></li>
+</ul>
+<p>La pseudoinversa tiene la propiedad que para un vector arbitrario <span class="math inline">\(z\)</span> se tiene <span class="math display">\[
+  A (I-A^{\#}A)z = 0
+\]</span> y <span class="math inline">\((I-A^{\#}A)\)</span> proyecta el vector arbitrario <span class="math inline">\(z\in\R^{n}\)</span> al espacio nulo de <span class="math inline">\(A\)</span>, representado como <span class="math inline">\(N(A)\)</span>.</p>
+<!-- 
+
+### Descomposiciones {#sec-ap-descomposiciones}
+Ver pdf
+
+**Descomposición LU**
+
+**Factorización de Cholesky**
+
+**Descomposición en valores singulares (SVD)**
+
+## Sistemas de ecuaciones lineales {#sec-ap-sist-de-ecuac} 
+-->
+</section>
+</section>
+<section id="otros-conceptos-matemáticos" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="otros-conceptos-matemáticos"><span class="header-section-number">A.3</span> Otros Conceptos Matemáticos</h2>
+<section id="sec-ap-funcion-atan2" class="level3" data-number="A.3.1">
+<h3 data-number="A.3.1" class="anchored" data-anchor-id="sec-ap-funcion-atan2"><span class="header-section-number">A.3.1</span> Función atan2</h3>
+<p>La función <span class="math inline">\(\atan2\)</span> es una función arcotangente (<span class="math inline">\(\arctan\)</span>), también llamada tangente inverso (<span class="math inline">\(\tan^{-1}\)</span>), pero a diferencia de la función tradicional que solamente retorna ángulos en el primer y tercer cuadrante (correspondientes a <span class="math inline">\([-\frac{\pi}{2},\frac{\pi}{2}]\)</span>), la función <span class="math inline">\(\atan2\)</span> brinda ángulos en los cuatro cuadrantes. Para determinar el cuadrante de salida, la función toma dos argumentos de entrada y utiliza sus signos. De manera concreta, esta función se define como <span class="math display">\[
+    \atan2(y,x) =
+    \begin{cases}
+        \arctan\left(\frac{y}{x}\right), \qquad \quad ~x &gt; 0\\
+        \phi + \arctan\left(\frac{y}{x}\right), \quad ~~y \geq 0, x &lt;0 \\
+        -\phi + \arctan\left(\frac{y}{x}\right), \quad y &lt;0, x&lt;0\\
+        \frac{\pi}{2}, \qquad \qquad \qquad \quad ~~y&gt;0,x=0 \\
+        -\frac{\pi}{2},  \qquad \qquad \qquad ~~~y&lt;0,x=0  \\
+        \text{indefinido}, \qquad \qquad ~y=0,x=0
+    \end{cases}
+\]</span> El rango de la función es el intervalo <span class="math inline">\([-\pi,\pi]\)</span>, cubriendo así los cuatro cuadrantes, y como se observa, se encuentra indefinida solamente para el valor <span class="math inline">\((0,0)\)</span>. Esta función se encuentra disponible en la mayoría de lenguajes de programación, así que usualmente codificarla a mano no es necesario.</p>
+<p>Nótese que, si se tiene <span class="math inline">\(\theta=\atan2(y,x)\)</span>, los argumentos a esta función son <span class="math inline">\(y=\sen(\theta)\)</span> y <span class="math inline">\(x=\cos(\theta)\)</span>, ya que <span class="math inline">\(\tan(\theta)=\frac{\sen(\theta)}{\cos(\theta)}\)</span>. Esta interpretación resulta útil en robótica al momento de obtener expresiones para su cálculo, por ejemplo al obtener ángulos de Euler a partir de matrices de rotación, o al determinar expresiones para la cinemática inversa de un robot manipulador.</p>
+</section>
+<section id="sec-ap-grupo" class="level3" data-number="A.3.2">
+<h3 data-number="A.3.2" class="anchored" data-anchor-id="sec-ap-grupo"><span class="header-section-number">A.3.2</span> Grupo Matemático</h3>
+<p>En matemática, un grupo es un conjunto <span class="math inline">\(G\)</span> junto a una operación binaria <span class="math inline">\(\circ\)</span> definida para los elementos de <span class="math inline">\(G\)</span> de tal modo que se satisfacen las siguientes cuatro propiedades:</p>
+<ul>
+<li>Clausura: Si <span class="math inline">\(g_1,g_2 \in G ~ \Rightarrow ~ g_1 \circ g_2 \in G\)</span>.</li>
+<li>Elemento identidad <span class="math inline">\(e\)</span>: dado cualquier <span class="math inline">\(g \in G\)</span>, existe <span class="math inline">\(e\)</span> tal que <span class="math inline">\(g \circ e = e \circ g = g\)</span>.</li>
+<li>Inversa: para cada <span class="math inline">\(g \in G\)</span>, existe un único elemento inverso <span class="math inline">\(g^{-1} \in G\)</span> tal que <span class="math inline">\(g \circ g^{-1} = g^{-1} \circ g = e\)</span>.</li>
+<li>Asociatividad: Si <span class="math inline">\(g_1,g_2,g_3 \in G ~ \Rightarrow ~ (g_1 \circ g_2) \circ g_3 = g_1 \circ (g_2 \circ g_3)\)</span>.</li>
+</ul>
+<!-- TODO 
+Añadir Definición de grupos, Algebra de grupos, etc. (A.5 de pdf)
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./referencias.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Referencias</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ap_cuaterniones.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Cuaterniones</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Oscar E. Ramos. Todos los derechos reservados.</div>   
+    <div class="nav-footer-right">Introducción a la Robótica - Oscar E. Ramos</div>
+  </div>
+</footer>
+
+
+
+</body></html>

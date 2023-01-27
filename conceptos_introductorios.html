@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./referencias.html" rel="next">
+<link href="./cr_posicion_orientacion.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -114,9 +114,39 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cr_posicion_orientacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Posición y Orientación de Cuerpos Rígidos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cr_parametrizaciones_orientacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parametrizaciones de la Orientación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./referencias.html" class="sidebar-item-text sidebar-link">Referencias</a>
   </div>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Apéndices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_elementos_matematicos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Elementos matemáticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_cuaterniones.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Cuaterniones</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -155,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="chap-conceptos-introductorios" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></span></h1>
+<h1 class="title"><span id="sec-chapter-conceptos-introductorios" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></span></h1>
 </div>
 
 
@@ -256,6 +286,23 @@ ul.task-list li input[type="checkbox"] {
      ====================================
 --> <span class="math display">\[
 \renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+\newcommand{\framen}[1]{\{{#1}\}}
+\newcommand{\supFrame}[1]{~\!{^{\mathcal{^{_{#1}}\!}}}}
+\newcommand{\ssr}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Rot}_{_{\mathcal{#2}}}}
+\newcommand{\ssrnocal}[2]{{{~\!}^{^{_{#1}}\!\!}}{\Rot}_{_{#2}}}
+\newcommand{\ssomega}[2]{{^{#1}}{\bomega}_{#2}}
+\newcommand{\ssv}[3]{{^{^{_{#1}}\!}}{#2}_{_{\!#3}}}
+\newcommand{\sv}[2]{{^{^{_{#1}}\!}}{#2}}
+\newcommand{\ssdr}[2]{{^{^{_{#1}}\!\!}}{\dot \Rot}_{_{#2}}}
+\newcommand{\sst}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Tran}_{_{\mathcal{#2}}}}
+\newcommand{\sstnocal}[2]{{^{^{_{#1}}}}{\Tran}_{_{#2}}}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\atan}{\text{atan}}
+\newcommand{\sen}{\text{sen}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\fpartial}[2]{\frac{\partial {#1}}{\partial {#2}}}
+\newcommand{\grad}{^{\circ}}
 \]</span></p>
 </div>
 <p>Un robot es un sistema complejo formado por diversos componentes mecánicos y electrónicos, así como por componentes computacionales, y su modelamiento completo implica el modelo de todos estos componentes físicos. Sin embargo, con fines de generación de movimiento, un robot suele ser modelado como un conjunto de cuerpos rígidos unidos mediante articulaciones. Este capítulo presenta algunos conceptos elementales relacionados tanto con los cuerpos rígidos que lo conforman, como con las articulaciones que unen dichos cuerpos rígidos. Se presenta, además, algunos conceptos relacionados con los grados de libertad de un robot, y los espacios que se utiliza para describir la configuración y las tareas que realiza un robot.</p>
@@ -291,7 +338,7 @@ Un desplazamiento rígido de un objeto <span class="math inline">\(\mathcal O\)<
   \g:\mathcal{O} \rightarrow \R^3.
 \]</span> Dado un vector libre <span class="math inline">\(\vv=\p_i-\p_j\)</span> con <span class="math inline">\(\p_i,\p_j \in \R^3\)</span>, el efecto de un desplazamiento rígido en el vector <span class="math inline">\(\vv\)</span> se representa por el mapa <span class="math inline">\(\overline{\g}\)</span> tal que <span class="math display">\[
   \overline{\g}(\vv)=\g(\p_i)-\g(\p_j).
-\]</span> Resulta común denominar <span class="math inline">\(\overline{\g}\)</span> al mapa que actúa sobre vectores y <span class="math inline">\(\g\)</span> al mapa correspondiente que actúa sobre puntos. En general, un desplazamiento rígido está compuesto por rotaciones y traslaciones de un objeto rígido, como se verá más adelante, en el capítulo~<span class="math inline">\(\ref{ch:representaciones-cuerpos-rigidos}\)</span>.
+\]</span> Resulta común denominar <span class="math inline">\(\overline{\g}\)</span> al mapa que actúa sobre vectores y <span class="math inline">\(\g\)</span> al mapa correspondiente que actúa sobre puntos. En general, un desplazamiento rígido está compuesto por rotaciones y traslaciones de un objeto rígido, como se verá más adelante, en el <a href="cr_posicion_orientacion.html">capítulo&nbsp;<span>2</span></a>.
 </dd>
 <dt><strong>Cuerpo Rígido Espacial y Planar</strong></dt>
 <dd>
@@ -624,7 +671,7 @@ Para representar un cuerpo rígido libre en el espacio, como se vio en la <a hre
 <dl>
 <dt><strong>Espacio de Configuración</strong></dt>
 <dd>
-Es el espacio <span class="math inline">\(n\)</span>-dimensional que contiene todas las posibles configuraciones de un robot, de tal modo que la configuración de un robot se representa por un punto en este espacio. Se debe notar que el espacio de configuración varía de robot a robot, según la cantidad y el tipo de articulaciones que posea. Las características de este espacio se presentarán con más detalle en la sección~<span class="math inline">\(\ref{sec-espacio-configuracion}\)</span>.
+Es el espacio <span class="math inline">\(n\)</span>-dimensional que contiene todas las posibles configuraciones de un robot, de tal modo que la configuración de un robot se representa por un punto en este espacio. Se debe notar que el espacio de configuración varía de robot a robot, según la cantidad y el tipo de articulaciones que posea. Las características de este espacio se presentarán con más detalle en la <a href="#sec-espacio-configuracion"><span>Sección&nbsp;1.4</span></a>.
 </dd>
 </dl>
 <div class="callout-note callout callout-style-simple no-icon">
@@ -657,11 +704,11 @@ El número de grados de libertad (<em>gdl</em>) de un robot es el número mínim
 <p>La fórmula de Grübler, también conocida como la fórmula de Chebychev-Grübler-Kutzbach, es un criterio que determina el número de grados de libertad o grados de mobilidad de una cadena cinemática. Se basa en el hecho que las articulaciones imponen restricciones al movimiento de los eslabones, reduciendo la libertad de movimiento que estos poseerían si estuviesen libres. Considerando que <span class="math inline">\(n_g\)</span> representa el número de grados de libertad de un mecanismo, se puede decir que: <span class="math display">\[
   n_g = \sum \text{libertad de eslabones} - \sum \text{restricciones de articulaciones}
 \]</span> donde la primera suma se realiza para todos los eslabones y la segunda para todas las articulaciones. La libertad de cada eslabón depende de si se encuentra en el espacio o en el plano: debido a que un eslabón es un cuerpo rígido, en el espacio posee 6 grados de libertad y en el plano 3 grados de libertad. Las restricciones de las articulaciones dependen de su tipo, y para el caso espacial se describen en la <a href="#sec-articulaciones"><span>Sección&nbsp;1.2.3</span></a>. Por ejemplo, las articulaciones prismáticas y de revolución presentan cada una cinco restricciones espaciales, permitiendo solamente un movimiento relativo entre los eslabones a los cuales unen.</p>
-<p>A partir de las sumatorias anteriores se puede obtener una expresión más concreta para el cálculo del número de grados de libertad. Considérese un mecanismo con <span class="math inline">\(N_{_L}\)</span> eslabones, donde el componente rígido que permanece inamovible, llamado , también se considera como un eslabón. Cada uno de estos eslabones tendría <span class="math inline">\(m\)</span> grados de libertad si se encontrase libre en el espacio. Si este mecanismo tiene además <span class="math inline">\(N_{_J}\)</span> articulaciones y cada articulación <span class="math inline">\(k\)</span> impone <span class="math inline">\(c_k\)</span> restricciones al movimiento de los dos eslabones que une, el número de grados de libertad <span class="math inline">\(n_g\)</span> del mecanismo será <span class="math display">\[
+<p>A partir de las sumatorias anteriores se puede obtener una expresión más concreta para el cálculo del número de grados de libertad. Considérese un mecanismo con <span class="math inline">\(N_{_L}\)</span> eslabones, donde el componente rígido que permanece inamovible, llamado <em>tierra</em>, también se considera como un eslabón. Cada uno de estos eslabones tendría <span class="math inline">\(m\)</span> grados de libertad si se encontrase libre en el espacio. Si este mecanismo tiene además <span class="math inline">\(N_{_J}\)</span> articulaciones y cada articulación <span class="math inline">\(k\)</span> impone <span class="math inline">\(c_k\)</span> restricciones al movimiento de los dos eslabones que une, el número de grados de libertad <span class="math inline">\(n_g\)</span> del mecanismo será <span class="math display">\[
   n_g = m(N_{_L}-1) - \sum_{k=1}^{N_{_J}}c_k
 \]</span> donde el primer término corresponde a la libertad de los eslabones, y el segundo término a las restricciones que imponen las articulaciones. En el primer término se resta uno a <span class="math inline">\(N_{_L}\)</span> debido a que el valor de <span class="math inline">\(N_{_L}\)</span> incluye la tierra, la cual permanece fija y no aporta ningún movimiento. Como se mencionó anteriormente, si el movimiento de los eslabones se realiza en el espacio tridimensional se tiene <span class="math inline">\(m=6\)</span>, y si se realiza en el plano se tiene <span class="math inline">\(m=3\)</span>. Como se vio en la <a href="#sec-articulaciones"><span>Sección&nbsp;1.2.3</span></a>, cada eslabón impone ciertas restricciones pero equivalentemente permite cierto movimiento. Sea <span class="math inline">\(f_k\)</span> la cantidad de movimientos independientes que permite la articulación <span class="math inline">\(k\)</span>-ésima, de tal modo que <span class="math inline">\(f_k+c_k=m\)</span>. Utilizando <span class="math inline">\(f_k\)</span> se puede reformular la anterior expresión como <span class="math display">\[
   n_g = m(N_{_L}-1) - \sum_{k=1}^{N_{_J}}(m-f_k).
-\]</span> Debido a las propiedades de la sumatoria se cumple la igualdad <span class="math inline">\(\sum_{k=1}^{N_{_J}}m=mN_{_J}\)</span>. Reemplazando esta igualdad en la expresión anterior, y agrupando términos, se obtiene la como: <span id="eq-grubler"><span class="math display">\[
+\]</span> Debido a las propiedades de la sumatoria se cumple la igualdad <span class="math inline">\(\sum_{k=1}^{N_{_J}}m=mN_{_J}\)</span>. Reemplazando esta igualdad en la expresión anterior, y agrupando términos, se obtiene la <em>fórmula de Grübler</em> como: <span id="eq-grubler"><span class="math display">\[
   n_g = m (N_{_L}-1- N_{_J}) + \sum_{k=1}^{N_{J}}f_k.
 \tag{1.1}\]</span></span> Esta fórmula brinda el número de grados de libertad <span class="math inline">\(n_g\)</span> de un mecanismo. A veces, a esta cantidad también se le conoce como el <em>grado de movilidad</em>. La fórmula de Grübler dada en <a href="#eq-grubler">Ecuación&nbsp;<span>1.1</span></a> solo es válida si todas las restricciones impuestas por las articulaciones son independientes. Si al menos una restricción no es independiente, entonces la fórmula de Grübler no brinda el número exacto de grados de libertad del mecanismo sino solamente una cota inferior. Es importante recalcar que en <a href="#eq-grubler">Ecuación&nbsp;<span>1.1</span></a> se considera que cada articulación une solamente dos eslabones. <!-- (si llegase a unir tres eslabones, tendría que separarse ficticiamente en dos
 % articulaciones). --></p>
@@ -843,7 +890,7 @@ Las dos articulaciones más utilizadas en robótica son la articulación de revo
 \]</span> asumiendo que el robot posee <span class="math inline">\(n\)</span> articulaciones. El vector <span class="math inline">\(\q \in \mathcal Q\)</span> es a veces denominado vector de <em>configuración articular</em> del robot y representa cada elemento de su espacio articular.</p>
 <p>El espacio articular <span class="math inline">\(\mathcal Q\)</span> depende de la cantidad y del tipo de articulaciones que el robot posee. Por ejemplo, un robot de SCARA, cuya configuración articular es RRPR (considerando la orientación del efector final), tendrá como espacio articular a <span class="math inline">\(\mathcal Q = \mathbb S^1 \times \mathbb S^1 \times \mathbb R \times \mathbb S^1\)</span>, o equivalentemente a <span class="math inline">\(\mathcal Q = \mathbb T^2 \times \mathbb R \times \mathbb S^1\)</span>. Por otro lado, si un robot posee cuatro articulaciones, y todas son de revolución, su espacio articular estará dado por <span class="math inline">\(\mathcal Q = \mathbb S^1 \times \mathbb S^1 \times \mathbb S^1 \times \mathbb S^1\)</span>, que se puede representar de manera equivalente como <span class="math inline">\(\mathcal Q = \mathbb T^4\)</span>. En general, un robot con <span class="math inline">\(n\)</span> grados de libertad cuyas articulaciones sean todas de revolución, tendrá un espacio articular dado por <span class="math inline">\(\mathcal Q = \mathbb T^n\)</span>.</p>
 <!-- La configuración de los robots manipuladores queda completamente especificada mediante la configuración de sus articulaciones, debido a su estructura serial. Así, por ejemplo, para determinar la configuración de un robot de $n$ grados de libertad es necesario especificar. El espacio articular $Q$ de un manipulador consiste en todos los posibles valores de las variables articulares del robot. También se le conoce como el espacio de configuración, dado que especificando los valores angulares se especifica la localización de todos los eslabones del robot. -->
-<p>Para robots móviles, su espacio de configuración está dado por su posición y orientación. De tratarse de robots móviles terrestres, tanto la posición como la orientación se encuentran en el plano y son tres valores que representan los tres grados de libertad planares. En el caso de robots móviles aéreos o submarinos, la posición y orientación deben describir los seis grados de libertad espaciales. La posición no suele ser un problema, pero sí lo es la representación de la orientación, la cual será descrita con mayor detalle en el capítulo~<span class="math inline">\(\ref{ch:representaciones-cuerpos-rigidos}\)</span>. Si un robot posee partes articuladas y una base móvil, como un robot cuadrúpedo o humanoide, su espacio articular consiste en la representación de la posición y orientación de algún punto del cuerpo llamado la base, y en la configuración articular. A veces esto suele ser denominado el <em>espacio articular generalizado</em>.</p>
+<p>Para robots móviles, su espacio de configuración está dado por su posición y orientación. De tratarse de robots móviles terrestres, tanto la posición como la orientación se encuentran en el plano y son tres valores que representan los tres grados de libertad planares. En el caso de robots móviles aéreos o submarinos, la posición y orientación deben describir los seis grados de libertad espaciales. La posición no suele ser un problema, pero sí lo es la representación de la orientación, la cual será descrita con mayor detalle en el <a href="cr_posicion_orientacion.html">capítulo&nbsp;<span>2</span></a> y en el <a href="cr_parametrizaciones_orientacion.html">capítulo&nbsp;<span>3</span></a>. Si un robot posee partes articuladas y una base móvil, como un robot cuadrúpedo o humanoide, su espacio articular consiste en la representación de la posición y orientación de algún punto del cuerpo llamado la base, y en la configuración articular. A veces esto suele ser denominado el <em>espacio articular generalizado</em>.</p>
 </section>
 <section id="sec-representacion-configuracion" class="level3" data-number="1.4.3">
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="sec-representacion-configuracion"><span class="header-section-number">1.4.3</span> Representación del Espacio de Configuración</h3>
@@ -1043,8 +1090,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./referencias.html" class="pagination-link">
-        <span class="nav-page-text">Referencias</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cr_posicion_orientacion.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Posición y Orientación de Cuerpos Rígidos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

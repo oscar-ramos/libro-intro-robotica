@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Oscar E. Ramos Ponce">
+
+<title>Introducción a la Robótica - 3&nbsp; Parametrizaciones de la Orientación</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./referencias.html" rel="next">
+<link href="./cr_posicion_orientacion.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parametrizaciones de la Orientación</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a la Robótica</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conceptos_introductorios.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Conceptos Introductorios</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cr_posicion_orientacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Posición y Orientación de Cuerpos Rígidos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cr_parametrizaciones_orientacion.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parametrizaciones de la Orientación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Apéndices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_elementos_matematicos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Elementos matemáticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ap_cuaterniones.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Cuaterniones</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#sec-angulos-de-euler" id="toc-sec-angulos-de-euler" class="nav-link active" data-scroll-target="#sec-angulos-de-euler"><span class="toc-section-number">3.1</span>  Ángulos de Euler</a>
+  <ul class="collapse">
+  <li><a href="#ángulos-de-euler-zyz" id="toc-ángulos-de-euler-zyz" class="nav-link" data-scroll-target="#ángulos-de-euler-zyz"><span class="toc-section-number">3.1.1</span>  Ángulos de Euler ZYZ</a></li>
+  <li><a href="#sec-otros-angulos-euler" id="toc-sec-otros-angulos-euler" class="nav-link" data-scroll-target="#sec-otros-angulos-euler"><span class="toc-section-number">3.1.2</span>  Otros ángulos de Euler</a></li>
+  </ul></li>
+  <li><a href="#sec-angulos-roll-pitch" id="toc-sec-angulos-roll-pitch" class="nav-link" data-scroll-target="#sec-angulos-roll-pitch"><span class="toc-section-number">3.2</span>  Ángulos Roll, Pitch, Yaw (angulos de Euler ZYX)</a></li>
+  <li><a href="#parametrización-de-eje-y-ángulo" id="toc-parametrización-de-eje-y-ángulo" class="nav-link" data-scroll-target="#parametrización-de-eje-y-ángulo"><span class="toc-section-number">3.3</span>  Parametrización de Eje y Ángulo</a>
+  <ul class="collapse">
+  <li><a href="#matriz-de-rotación-equivalente" id="toc-matriz-de-rotación-equivalente" class="nav-link" data-scroll-target="#matriz-de-rotación-equivalente"><span class="toc-section-number">3.3.1</span>  Matriz de Rotación Equivalente</a></li>
+  <li><a href="#problema-inverso" id="toc-problema-inverso" class="nav-link" data-scroll-target="#problema-inverso"><span class="toc-section-number">3.3.2</span>  Problema Inverso</a></li>
+  <li><a href="#propiedades-de-la-rotación-genérica" id="toc-propiedades-de-la-rotación-genérica" class="nav-link" data-scroll-target="#propiedades-de-la-rotación-genérica"><span class="toc-section-number">3.3.3</span>  Propiedades de la rotación genérica</a></li>
+  <li><a href="#singularidades" id="toc-singularidades" class="nav-link" data-scroll-target="#singularidades"><span class="toc-section-number">3.3.4</span>  Singularidades</a></li>
+  </ul></li>
+  <li><a href="#sec-cuaterniones-unitarios" id="toc-sec-cuaterniones-unitarios" class="nav-link" data-scroll-target="#sec-cuaterniones-unitarios"><span class="toc-section-number">3.4</span>  Cuaterniones Unitarios</a>
+  <ul class="collapse">
+  <li><a href="#sec-cuaternion-orientacion" id="toc-sec-cuaternion-orientacion" class="nav-link" data-scroll-target="#sec-cuaternion-orientacion"><span class="toc-section-number">3.4.1</span>  Orientación usando cuaterniones unitarios</a></li>
+  <li><a href="#sec-cuaternion-matriz-rotacion" id="toc-sec-cuaternion-matriz-rotacion" class="nav-link" data-scroll-target="#sec-cuaternion-matriz-rotacion"><span class="toc-section-number">3.4.2</span>  Relación con la matriz de rotación</a></li>
+  <li><a href="#composición-de-cuaterniones" id="toc-composición-de-cuaterniones" class="nav-link" data-scroll-target="#composición-de-cuaterniones"><span class="toc-section-number">3.4.3</span>  Composición de cuaterniones</a></li>
+  </ul></li>
+  <li><a href="#aplicación-de-parametrizaciones-a-vectores" id="toc-aplicación-de-parametrizaciones-a-vectores" class="nav-link" data-scroll-target="#aplicación-de-parametrizaciones-a-vectores"><span class="toc-section-number">3.5</span>  Aplicación de Parametrizaciones a Vectores</a>
+  <ul class="collapse">
+  <li><a href="#rotación-usando-eje-ángulo" id="toc-rotación-usando-eje-ángulo" class="nav-link" data-scroll-target="#rotación-usando-eje-ángulo"><span class="toc-section-number">3.5.1</span>  Rotación usando Eje-ángulo</a></li>
+  <li><a href="#rotación-usando-cuaterniones-unitarios" id="toc-rotación-usando-cuaterniones-unitarios" class="nav-link" data-scroll-target="#rotación-usando-cuaterniones-unitarios"><span class="toc-section-number">3.5.2</span>  Rotación usando Cuaterniones Unitarios</a></li>
+  </ul></li>
+  <li><a href="#sec-coordenadas-exponenciales" id="toc-sec-coordenadas-exponenciales" class="nav-link" data-scroll-target="#sec-coordenadas-exponenciales"><span class="toc-section-number">3.6</span>  Coordenadas Exponenciales</a>
+  <ul class="collapse">
+  <li><a href="#ecuación-fundamental-del-movimiento-de-rotación" id="toc-ecuación-fundamental-del-movimiento-de-rotación" class="nav-link" data-scroll-target="#ecuación-fundamental-del-movimiento-de-rotación"><span class="toc-section-number">3.6.1</span>  Ecuación Fundamental del Movimiento de Rotación</a></li>
+  <li><a href="#sec-significado-omega" id="toc-sec-significado-omega" class="nav-link" data-scroll-target="#sec-significado-omega"><span class="toc-section-number">3.6.2</span>  Significado Físico de <span class="math inline">\(\hat{\omega}\)</span></a></li>
+  <li><a href="#sec-exponencial-matrix" id="toc-sec-exponencial-matrix" class="nav-link" data-scroll-target="#sec-exponencial-matrix"><span class="toc-section-number">3.6.3</span>  Exponencial de una Matriz</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chapter-parametrizaciones-or" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Parametrizaciones de la Orientación</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="hidden">
+<!-- ====================================
+     Vectors (bolds)
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\x}{\vect{x}}
+\newcommand{\y}{\vect{y}}
+\newcommand{\z}{\vect{z}}
+\newcommand{\e}{\vect{e}}
+\newcommand{\f}{\vect{f}}
+\newcommand{\g}{\vect{g}}
+\newcommand{\G}{\vect{G}}
+\newcommand{\h}{\vect{h}}
+\newcommand{\J}{\vect{J}}
+\newcommand{\n}{\vect{n}}
+\newcommand{\p}{\vect{p}}
+\newcommand{\q}{\vect{q}}
+\newcommand{\s}{\vect{s}}
+\newcommand{\w}{\vect{w}}
+\newcommand{\m}{\vect{m}}
+\renewcommand{\a}{\vect{a}}
+\renewcommand{\b}{\vect{b}}
+\renewcommand{\c}{\vect{c}}
+\renewcommand{\d}{\vect{d}}
+\renewcommand{\r}{\vect{r}}
+\renewcommand{\u}{\vect{u}}
+\renewcommand{\v}{\vect{v}} % Problems?
+\newcommand{\vv}{\vect{v}}
+\newcommand{\rr}{\vect{r}}
+\newcommand{\bv}{\vect{v}}
+\]</span> <!-- Special for i, j, k --> <span class="math display">\[
+\newcommand{\vi}{\vect{i}}
+\newcommand{\vj}{\vect{j}}
+\newcommand{\vk}{\vect{k}}
+\]</span> <!-- Bold for greek letters --> <span class="math display">\[
+\newcommand{\bomega}{\vect{\omega}}
+\newcommand{\bphi}{\vect{\phi}}
+\newcommand{\bepsilon}{\vect{\epsilon}}
+\newcommand{\btheta}{\vect{\theta}}
+\newcommand{\btau}{\vect{\tau}}
+\newcommand{\bmu}{\vect{\mu}}
+\newcommand{\bvarphi}{\vect{\varphi}}
+\newcommand{\bxi}{\vect{\xi}}
+\]</span> <!-- Bold for numbers --> <span class="math display">\[
+\newcommand{\zeros}{\vect{0}}
+\]</span> <!-- Bold with derivatives --> <span class="math display">\[
+\newcommand{\dq}{\dot {\vect{q}}}
+\newcommand{\ddq}{\ddot {\vect{q}}}
+\newcommand{\dx}{\dot {\vect{x}}}
+\newcommand{\ddx}{\ddot {\vect{x}}}
+\]</span> <!-- Jacobians --> <span class="math display">\[
+\newcommand{\Ja}{{J_{_{\!A}}}}
+\]</span></p>
+<!-- ====================================
+     Fractions
+     ==================================== 
+-->
+<p><span class="math display">\[
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\quarter}{\frac{1}{4}}
+\]</span></p>
+<!-- ====================================
+     Matrices
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\bm}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\Rot}{\mat{R}}
+\newcommand{\Tran}{\mat{T}}
+\newcommand{\tr}{\text{tr}}  % For trace
+\]</span></p>
+<!-- ====================================
+     Other special rules
+     ====================================
+-->
+<p><span class="math display">\[
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dt}{\Delta t}
+\]</span> <!-- ===================================
+     Reference frames (systems)
+     ====================================
+--> <span class="math display">\[
+\renewcommand{\frame}[1]{\{\mathcal{#1}\}}
+\newcommand{\framen}[1]{\{{#1}\}}
+\newcommand{\supFrame}[1]{~\!{^{\mathcal{^{_{#1}}\!}}}}
+\newcommand{\ssr}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Rot}_{_{\mathcal{#2}}}}
+\newcommand{\ssrnocal}[2]{{{~\!}^{^{_{#1}}\!\!}}{\Rot}_{_{#2}}}
+\newcommand{\ssomega}[2]{{^{#1}}{\bomega}_{#2}}
+\newcommand{\ssv}[3]{{^{^{_{#1}}\!}}{#2}_{_{\!#3}}}
+\newcommand{\sv}[2]{{^{^{_{#1}}\!}}{#2}}
+\newcommand{\ssdr}[2]{{^{^{_{#1}}\!\!}}{\dot \Rot}_{_{#2}}}
+\newcommand{\sst}[2]{{{~\!}^{^{_{\mathcal{#1}}}\!\!}}{\Tran}_{_{\mathcal{#2}}}}
+\newcommand{\sstnocal}[2]{{^{^{_{#1}}}}{\Tran}_{_{#2}}}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\atan}{\text{atan}}
+\newcommand{\sen}{\text{sen}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\fpartial}[2]{\frac{\partial {#1}}{\partial {#2}}}
+\newcommand{\grad}{^{\circ}}
+\]</span></p>
+</div>
+<p>Una matriz de rotación es de tamaño <span class="math inline">\(3 \times 3\)</span> y, por tanto, posee nueve elementos. Sin embargo, como se vio en la <a href="cr_posicion_orientacion.html#sec-grupo-rotacion"><span>Sección&nbsp;2.3.4</span></a>, de dichos nueve elementos solamente tres son independientes, y los otros seis son mutuamente dependientes. Por este motivo, se considera que una matriz de rotación es una representación redundante de la orientación. Debido a que en el espacio tridimensional un cuerpo rígido posee tres grados de libertad para la orientación, se esperaría que se pudiese contar con solo tres elementos para la representación de la orientación y no con los nueve que posee una matriz de rotación. A la representación de la orientación utilizando menos de nueve parámetros se le denomina una <em>parametrización</em> de la rotación o de la orientación, o de manera más formal, una parametrización del espacio generado por <span class="math inline">\(SO(3)\)</span>.</p>
+<p>La representación de la orientación, a diferencia de la representación de la posición, no es un problema simple. Uno de los motivos es que, a pesar de que <span class="math inline">\(SO(3)\)</span> es un espacio tridimensional, tiene la topología de un espacio proyectivo <span class="math inline">\(\mathbb P^3\)</span>, el cual no puede ser mapeado suavemente a <span class="math inline">\(\R^3\)</span>. Esto significa que si se utiliza solamente tres parámetros para su representación existirá algunos problemas en algunos puntos, los cuales son denominados puntos singulares. A estos problemas se denomina <em>singularidades de la representación</em>, ya que varían según la representación que se utilice. Así, existe un compromiso entre la cantidad de parámetros que se utiliza para representar la orientación, y los problemas que puede tener la representación en algunos puntos. Además, dado que las rotaciones no son conmutativas, no se puede utilizar vectores en el sentido convencional para representarlas, ya que no constituyen espacios vectoriales.</p>
+<p>Las representaciones que utilizan solamente tres parámetros independientes para la orientación son denominadas <em>representaciones mínimas</em>, como se mencionó en la <a href="conceptos_introductorios.html#sec-representacion-configuracion"><span>Sección&nbsp;1.4.3</span></a>. En general, una representación mínima del grupo ortogonal especial <span class="math inline">\(SO(m)\)</span> requiere <span class="math inline">\(m(m-1)-2\)</span> parámetros, de donde se deduce que se requiere tres parámetros para parameterizar <span class="math inline">\(SO(3)\)</span>, mientras que solo uno para parametrizar las rotaciones en el plano <span class="math inline">\(SO(2)\)</span>. El problema de las representaciones mínimas es que poseen singularidades. Para evitar este problema se puede utilizar representaciones con más parámetros. Este capítulo detalla las parametrizaciones de la orientación más utilizadas en robótica.</p>
+<section id="sec-angulos-de-euler" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-angulos-de-euler"><span class="header-section-number">3.1</span> Ángulos de Euler</h2>
+<p>Una matriz de rotación genérica puede ser obtenida realizando la composición de tres rotaciones elementales, donde cada una de las rotaciones implica el giro de un ángulo <span class="math inline">\(\phi_i\)</span> alrededor de un eje canónico. Se debe considerar que dos rotaciones sucesivas no pueden ser realizadas sobre ejes paralelos, ya que en dicho caso podrían ser representadas por una sola rotación. A los tres ángulos correspondientes a cada una de estas tres matrices de rotación elementales se les denomina comúnmente <em>ángulos de Euler</em>. De esta manera, una representación mínima de la orientación puede ser obtenida usando un conjunto de tres parámetros <span class="math display">\[
+\bphi=(\phi_1,\phi_2,\phi_3)
+\]</span> denominados ángulos de Euler, donde cada parámetro es un ángulo asociado con una matriz de rotación elemental. Debido a esta asociación, los ángulos de Euler no son únicos, ya que dependerán del eje con respecto al cual se realicen las rotaciones elementales. Por convención, cada conjunto de ángulos de Euler se denomina utilizando las letras correspondientes a los ejes canónicos, y asumiendo que las rotaciones se realizan con respecto al sistema actual, a lo que a veces se conoce como <em>rotación intrínseca</em>. En otras palabras, los ángulos de Euler representan rotaciones elementales respecto a los ejes de los sistemas de referencia locales (existe otra convención donde se realiza rotaciones con respecto al sistema fijo, llamada rotación extrínseca, pero no es usual en robótica). Por ejemplo, en los ángulos de Euler YZX, el primer parámetro representa el ángulo de giro alrededor de <span class="math inline">\(\y\)</span>, el segundo parámetro el ángulo alrededor del eje <span class="math inline">\(\z\)</span> actual, y el tercer parámetro el ángulo de rotación alrededor del eje <span class="math inline">\(\x\)</span> actual.</p>
+<p>Considerando que cada una de las tres rotaciones elementales puede ser realizada alrededor de uno de los tres ejes canónicos (<span class="math inline">\(\x\)</span>, <span class="math inline">\(\y\)</span>, <span class="math inline">\(\z\)</span>), existen 27 posibles combinaciones de rotaciones. Sin embargo, de todas estas combinaciones se descarta aquellas que tienen dos o más rotaciones consecutivas alrededor de un mismo eje, quedando solo 12 posibles combinaciones, las cuales se dividen usualmente en dos tipos.</p>
+<ul>
+<li><em>Ángulos de Euler propios o clásicos</em>. Utilizan el mismo eje para la primera y para la tercera rotación: XZX, XYX, YXY, YZY, ZYZ, ZXZ.</li>
+<li><em>Ángulos de Tait-Bryan</em>. Utilizan diferentes ejes para cada una de las rotaciones, y son: XYZ, XZY, YXZ, YZX, ZXY, ZYX.</li>
+</ul>
+<p>Las combinaciones más utilizadas son los ángulos ZYZ, ZYX (llamado ángulos de Fick), YZX (ángulos de Helmholtz) y ZXZ.</p>
+<p>Desde un punto de vista matemático, los ángulos de Euler son un ejemplo de una parameterización local de <span class="math inline">\(SO(3)\)</span>, que además es mínima ya que solo posee tres parámetros. Es, además, un resultado topológico fundamental que las singularidades nunca pueden ser eliminadas en cualquier representación tridimensional de <span class="math inline">\(SO(3)\)</span>, ya que no existen soluciones globales o suaves al problema inverso de determinar los ángulos de Euler a partir de una rotación. <!-- % (esto sería equivalente a intentar encontrar una carta coordenada global en una esfera, lo cual no es posible). % TODO: colocar esta frase? --> Por este motivo, la representación de la orientación mediante ángulos de Euler siempre tendrá singularidades, pero los puntos donde surgen las singularidades dependerán del conjunto particular de ángulos que se esté utilizando.</p>
+<p>A continuación se analizará con cierto detalle un conjunto específico de ángulos de Euler (los ángulos ZYZ). El mismo procedimiento de análisis puede ser extendido a todos los demás conjuntos de ángulos, pero las expresiones obtenidas serán evidentemente diferentes.</p>
+<!-- % Como en el caso de la representación eje/ángulo, ocurren singularidades en la
+% parameterización cuando $\Rot=I$ debido a la falta de existencia de
+% soluciones globales, suaves al problema inverso de determinar los ángulos de
+% Euler a partir de una rotación. 
+% Tanto los ángulos de Euler ZYX como YZX tienen la ventaja de no tener
+% singularidades en la orientación identidad $\Rot=I$, pero contienen
+% singularidades en otras orientaciones diferentes. -->
+<section id="ángulos-de-euler-zyz" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="ángulos-de-euler-zyz"><span class="header-section-number">3.1.1</span> Ángulos de Euler ZYZ</h3>
+<p>El conjunto de ángulos de Euler ZYZ contiene tres parámetros <span class="math inline">\((\phi_1,\phi_2,\phi_3)\)</span> que representan la rotación alrededor del eje <span class="math inline">\(\z\)</span>, seguida de la rotación alrededor del eje actual <span class="math inline">\(\y\)</span>, seguida de la rotación alrededor del eje actual <span class="math inline">\(\z\)</span>. De manera más detallada, estos ángulos representan las siguientes rotaciones.</p>
+<div id="fig-angulos-euler-zyz" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/EulerZYZ.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3.1: Secuencia de rotaciones para los ángulos de Euler ZYZ.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Partiendo de un sistema de referencia, se realiza una rotación de un ángulo <span class="math inline">\(\phi_1\)</span> alrededor del eje <span class="math inline">\(\z\)</span>, la cual se describe mediante la matriz <span class="math inline">\(\Rot_z(\phi_1)\)</span>. Esta rotación se esquematiza en la <a href="#fig-angulos-euler-zyz">Figura&nbsp;<span>3.1</span></a> (izquierda).</p></li>
+<li><p>El sistema resultante de la rotación anterior es rotado un ángulo <span class="math inline">\(\phi_2\)</span> alrededor del eje <span class="math inline">\(\y\)</span> actual (eje rotado), denominado <span class="math inline">\(\y'\)</span>. Esta rotación se describe utilizando la matriz <span class="math inline">\(\Rot_{y'}(\phi_2)\)</span> y se esquematiza en la <a href="#fig-angulos-euler-zyz">Figura&nbsp;<span>3.1</span></a> (centro).</p></li>
+<li><p>El sistema resultante de la rotación anterior es rotado un ángulo <span class="math inline">\(\phi_3\)</span> alrededor del eje <span class="math inline">\(\z\)</span> actual (rotado), denominado <span class="math inline">\(\z''\)</span>. Esta rotación se describe por la matriz <span class="math inline">\(\Rot_{z''}(\phi_3)\)</span> y se esquematiza en la <a href="#fig-angulos-euler-zyz">Figura&nbsp;<span>3.1</span></a> (derecha).</p></li>
+</ul>
+<p>La orientación del sistema resultante se obtiene a partir de la composición de rotaciones y, debido a que cada rotación se especifica con respecto al sistema actual, es necesario realizar post-multiplicaciones sucesivas de las matrices de rotación elementales: <span class="math display">\[
+  \Rot(\bphi) = \Rot_z(\phi_1) \Rot_{y'}(\phi_2) \Rot_{z''}(\phi_3).
+\]</span> Desarrollando estos productos matriciales elemento a elemento se obtiene que la matriz de rotación equivalente es <span id="eq-R-euler-zyz"><span class="math display">\[
+  \Rot(\bphi) = \bm{
+    c_{\phi_1} c_{\phi_2} c_{\phi_3}-s_{\phi_1}s_{\phi_3} &amp;
+    - s_{\phi_1}c_{\phi_3}-c_{\phi_1}c_{\phi_2}s_{\phi_3} &amp;
+    c_{\phi_1}s_{\phi_2} \\
+    s_{\phi_1}c_{\phi_2}c_{\phi_3} + c_{\phi_1}s_{\phi_3} &amp;
+    c_{\phi_1}c_{\phi_3} - s_{\phi_1}c_{\phi_2}s_{\phi_3} &amp;
+    s_{\phi_1}s_{\phi_2} \\
+    -s_{\phi_2}c_{\phi_3} &amp; s_{\phi_2}s_{\phi_3} &amp;
+    c_{\phi_2}
+},
+\tag{3.1}\]</span></span> donde por conveniencia <span class="math inline">\(c_{\phi}=\cos(\phi)\)</span>, y <span class="math inline">\(s_{\phi}=\sen(\phi)\)</span>. Así, dados los ángulos de Euler ZYZ <span class="math inline">\((\phi_1, \phi_2, \phi_3)\)</span> se puede obtener la matriz de rotación que describe la misma rotación utilizando <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a>.</p>
+<dl>
+<dt><strong>Problema inverso</strong></dt>
+<dd>
+<p>El problema inverso consiste en determinar el conjunto de ángulos de Euler dada una matriz de rotación genérica <span class="math display">\[
+  \Rot = \bm{
+r_{11} &amp; r_{12} &amp; r_{13} \\
+r_{21} &amp; r_{22} &amp; r_{23} \\
+r_{31} &amp; r_{32} &amp; r_{33} }
+\]</span> que es puramente numérica. Para resolver este problema se compara esta expresión numérica de <span class="math inline">\(\Rot\)</span> con la expresión algebraica dada en <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a>, con el fin de despejar los elementos que contienen a los ángulos deseados. Para preservar el cuadrante de los ángulos se prefiere siempre el uso de la función <span class="math inline">\(\atan2\)</span> (descrita en el <a href="ap_elementos_matematicos.html#sec-ap-funcion-atan2">Apéndice&nbsp;<span>A.3.1</span></a>), que es una tangente inversa que considera el cuadrante. En la medida de lo posible se intenta evitar el uso del coseno inverso o del seno inverso, a menos que quede claro los límites que tiene el ángulo que se está utilizando.</p>
+</dd>
+</dl>
+<p>Comparando <span class="math inline">\(\Rot\)</span> con <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> se puede observar que <span class="math inline">\(r_{13}^2+r_{23}^2=\sen^2\phi_2\)</span>, de donde se puede despejar el valor de <span class="math inline">\(\sen\phi_2\)</span>, obteniéndose dos posibles valores según el signo de la raíz cuadrada. Usando este seno, y la equivalencia <span class="math inline">\(r_{33}=\cos\phi_2\)</span>, el ángulo <span class="math inline">\(\phi_2\)</span> se obtiene como <span id="eq-phi2-euler-zyz"><span class="math display">\[
+  \phi_2 = \atan2\left( \pm \sqrt{r_{13}^2+r_{23}^2}, r_{33} \right).
+\tag{3.2}\]</span></span> Existen dos posibles soluciones para <span class="math inline">\(\phi_2\)</span> dependiendo de si se toma la raiz cuadrada con signo positivo o negativo. La elección del signo positivo para el término conteniendo la raíz cuadrada limita el rango de posibles valores de <span class="math inline">\(\phi_2\)</span> a <span class="math inline">\((0,\pi)\)</span>, ya que el seno (primer argumento de <span class="math inline">\(\atan2\)</span>) es positivo en los cuadrantes I y II, y la elección del signo negativo limita <span class="math inline">\(\phi_2\)</span> a valores de <span class="math inline">\(-\pi\)</span> a <span class="math inline">\(0\)</span>, ya que el seno es negativo en los cuadrantes III y IV. Una vez calculado <span class="math inline">\(\phi_2\)</span>, asumiendo que <span class="math inline">\(\sen\phi_2\neq 0\)</span>, se puede usar el hecho que <span class="math inline">\(r_{23}/\sen\phi_2 = \sen\phi_1\)</span> y <span class="math inline">\(r_{13}/\sen\phi_2=\cos\phi_1\)</span> para calcular <span class="math inline">\(\phi_1\)</span> como <span id="eq-phi1-euler-zyz"><span class="math display">\[
+  \phi_1 =
+  \atan2\left(\frac{r_{23}}{\sen\phi_2},\frac{r_{13}}{\sen\phi_2}\right).
+\tag{3.3}\]</span></span> De igual manera, siempre que <span class="math inline">\(\sen\phi_2\neq 0\)</span>, se obtiene el ángulo <span class="math inline">\(\phi_3\)</span>, con las observaciones que <span class="math inline">\(r_{32}/\sen\phi_2=\sen\phi_3\)</span> y <span class="math inline">\(r_{31}/\sen\phi_2=-\cos\phi_3\)</span>, llegando a: <span id="eq-phi3-euler-zyz"><span class="math display">\[
+  \phi_3 =
+  \atan2\left(\frac{r_{32}}{\sen\phi_2},-\frac{r_{31}}{\sen\phi_2}\right).
+\tag{3.4}\]</span></span> Notar que dado que existen dos posibles soluciones para <span class="math inline">\(\phi_2\)</span>, en general existirán dos conjuntos solución para <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\phi_3\)</span> dependiendo del valor de <span class="math inline">\(\phi_2\)</span> que se haya escogido.</p>
+<dl>
+<dt><strong>Singularidades de la Representación</strong></dt>
+<dd>
+<p>Para el cálculo de <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\phi_3\)</span> se realizó la suposición que <span class="math inline">\(\sen\phi_2\neq 0\)</span>, lo cual lleva a excluir valores de <span class="math inline">\(\phi_2\)</span> donde <span class="math inline">\(\phi_2 = k\pi\)</span>, con <span class="math inline">\(k \in \mathbb Z\)</span>. Cuando <span class="math inline">\(\phi_2=k\pi\)</span>, no es posible encontrar un conjunto solución para los ángulos de Euler ZYZ, ya que <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\phi_3\)</span> se encuentran mal definidos en dichos valores debido a una división entre cero. Por este motivo, se dice que la representación de Euler ZYZ presenta <em>singularidades de representación</em> en <span class="math inline">\(\phi_2 = k\pi\)</span>. Esto es una consecuencia de que toda representación mínima no cubre por completo todo el espacio SO(3) y presenta singularidades de representación.</p>
+</dd>
+</dl>
+<p>Debido a que no es posible reemplazar el valor de <span class="math inline">\(\phi_2=k\pi\)</span> (la singularidad) en <a href="#eq-phi1-euler-zyz">Ecuación&nbsp;<span>3.3</span></a> ni en <a href="#eq-phi3-euler-zyz">Ecuación&nbsp;<span>3.4</span></a>, pues <span class="math inline">\(\sen\phi_2=0\)</span>, es necesario obtener la matriz de rotación equivalente considerando estos valores específicos de <span class="math inline">\(\phi_2\)</span>. Cuando <span class="math inline">\(k\)</span> es par, la matriz de rotación es <span class="math inline">\(\Rot_z(\phi_1) \Rot_{y'}(0) \Rot_{z''}(\phi_3)\)</span>, con <span class="math inline">\(\sen\phi_2=0\)</span> y <span class="math inline">\(\cos\phi_2=1\)</span>, y la matriz en <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> se convierte en <span class="math display">\[
+  \Rot(\bphi) = \bm{
+    c_{\phi_1} c_{\phi_3}-s_{\phi_1}s_{\phi_3} &amp; -
+    s_{\phi_1}c_{\phi_3}-c_{\phi_1}s_{\phi_3} &amp; 0 \\
+    s_{\phi_1}c_{\phi_3} + c_{\phi_1}s_{\phi_3} &amp;
+    c_{\phi_1}c_{\phi_3} - s_{\phi_1}s_{\phi_3} &amp; 0 \\
+    0 &amp; 0 &amp; 1}
+  = \bm{
+    c_{\phi_1+\phi_3} &amp; -s_{\phi_1+\phi_3} &amp; 0 \\
+    s_{\phi_1+\phi_3} &amp; c_{\phi_1+\phi_3} &amp; 0 \\
+    0 &amp; 0 &amp; 1},
+\]</span> donde <span class="math inline">\(c_{\phi_1+\phi_3}=\cos(\phi_1+\phi_3)\)</span> y <span class="math inline">\(s_{\phi_1+\phi_3}=\sen(\phi_1+\phi_3)\)</span>. En este caso la rotación se reduce a una rotación alrededor de <span class="math inline">\(\z\)</span> y solo es posible obtener la suma <span class="math inline">\(\phi_1+\phi_3\)</span>, mas no cada ángulo por separado. Esto se debe a que la secuencia de rotaciones se realiza alrededor de <span class="math inline">\(\z\)</span> luego <span class="math inline">\(\y\)</span>, luego <span class="math inline">\(\z\)</span>, y si el ángulo alrededor de <span class="math inline">\(\y\)</span> es nulo, se tiene dos rotaciones consecutivas alrededor del mismo eje <span class="math inline">\(\z\)</span>, no pudiéndose distinguir entre la primera y la tercera rotación aplicadas. Por otro lado, cuando <span class="math inline">\(k\)</span> es impar la matriz de rotación equivalente es <span class="math inline">\(\Rot_z(\phi_1) \Rot_{y'}(\pi) \Rot_{z''}(\phi_3)\)</span>, con <span class="math inline">\(\sen \phi_2=0\)</span> y <span class="math inline">\(\cos\phi_2=-1\)</span>. Así, la matriz <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> se convierte en <span class="math display">\[
+  \Rot(\bphi) = \bm{
+    -c_{\phi_1} c_{\phi_3}-s_{\phi_1}s_{\phi_3} &amp; -
+    s_{\phi_1}c_{\phi_3}+c_{\phi_1}s_{\phi_3} &amp; 0 \\
+    -s_{\phi_1}c_{\phi_3} + c_{\phi_1}s_{\phi_3} &amp;
+    c_{\phi_1}c_{\phi_3} + s_{\phi_1}s_{\phi_3} &amp; 0 \\
+    0 &amp; 0 &amp; -1}
+  = \bm{
+    -c_{\phi_3-\phi_1} &amp; s_{\phi_3-\phi_1} &amp; 0 \\
+    s_{\phi_3-\phi_1} &amp; c_{\phi_3-\phi_1} &amp; 0 \\
+    0 &amp; 0 &amp; -1},
+\]</span> donde <span class="math inline">\(c_{\phi_3-\phi_1}=\cos(\phi_3-\phi_1)\)</span> y <span class="math inline">\(s_{\phi_3-\phi_1}=\sen(\phi_3-\phi_1)\)</span>. En este caso solo se puede obtener la diferencia de los ángulos <span class="math inline">\(\phi_3-\phi_1\)</span> pero no se puede recuperar el valor de cada ángulo <span class="math inline">\(\phi_1\)</span>, <span class="math inline">\(\phi_3\)</span> por separado. Este resultado también es fácilmente interpretable ya que el giro de 180<span class="math inline">\(^{\circ}\)</span> alrededor del eje <span class="math inline">\(\y\)</span> hace que la tercera rotación se realice alrededor del eje <span class="math inline">\(\z\)</span> inicial pero con dirección opuesta (y de allí el signo negativo).</p>
+<p>Una observación adicional de los ángulos de Euler ZYZ es que, si se tiene los ángulos <span class="math inline">\(\phi_1=\alpha\)</span>, <span class="math inline">\(\phi_2=0\)</span>, <span class="math inline">\(\phi_3=-\alpha\)</span>, con <span class="math inline">\(\alpha \in \mathbb R\)</span>, la matriz de rotación resultante en <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> es <span class="math inline">\(\Rot(\alpha,0,-\alpha)=I\)</span>. Esto muestra que existen infinitas representaciones de la identidad de rotación (cualquier valor de <span class="math inline">\(\alpha\)</span> anterior) cuando se utiliza la parameterización ZYZ de los ángulos de Euler.</p>
+</section>
+<section id="sec-otros-angulos-euler" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="sec-otros-angulos-euler"><span class="header-section-number">3.1.2</span> Otros ángulos de Euler</h3>
+<p>Como se mencionó anteriormente, existen en total 12 posibles ángulos de Euler, siendo el caso anterior una de estas posibilidades. El análisis de los otros ángulos de Euler es similar al desarrollado para los ángulos ZYZ: se calcula la matriz de rotación equivalente a los tres ángulos (similar a <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> pero usando la definición específica de ejes asociada a los ángulos utilizados), y se resuelve el problema inverso haciendo uso, en la medida de lo posible, de la función <span class="math inline">\(\atan2\)</span> para encontrar cada ángulo. Se debe tener especial cuidado al sacar las raíces cuadradas ya que suelen llevar a dos posibles soluciones. De igual manera, el análisis de singularidades se realiza considerando aquellos valores que producen resultados indefinidos. Es importante notar que los valores en los cuales se producen las singularidades son, en general, diferentes para diferentes ángulos de Euler. Por ejemplo, a diferencia de los ángulos ZYZ, tanto los ángulos de Euler ZYX como los ángulos YZX no poseen singularidades en la identidad.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-angulos-Euler-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.1 (Matriz de rotación a partir de ángulos de Euler) </strong></span>Encontrar la matriz de rotación equivalente a las siguientes tuplas que representan ángulos de Euler ZYZ: a) (30<span class="math inline">\(^{\circ}\)</span>, 50<span class="math inline">\(^{\circ}\)</span>, 90<span class="math inline">\(^{\circ}\)</span>), b) (-150<span class="math inline">\(^{\circ}\)</span>, -50<span class="math inline">\(^{\circ}\)</span>, -90<span class="math inline">\(^{\circ}\)</span>)</p>
+<p><em>Solución:</em></p>
+<p>En ambos casos se debe aplicar la definición de los ángulos de Euler ZYZ. Se puede reemplazar los ángulos en las matrices canónicas que definen la secuencia de rotaciones (en <span class="math inline">\(\z\)</span>, en <span class="math inline">\(\y\)</span>, en <span class="math inline">\(\z\)</span>), o se puede utilizar reemplazar directamente en <a href="#eq-R-euler-zyz">Ecuación&nbsp;<span>3.1</span></a> si se tiene la expresión ingresada, por ejemplo, en algún paquete computacional.</p>
+<ol type="a">
+<li><p>Reemplazando los ángulos dados en la secuencia de rotaciones ZYZ, y operando los productos, se tiene <span class="math display">\[
+\Rot = \Rot_z(30^{\circ}) \Rot_{y}(50^{\circ}) \Rot_{z}(90^{\circ}) =
+\bm{-0.5 &amp; -0.557 &amp; 0.663 \\ 0.866 &amp; -0.321 &amp; 0.383 \\ 0 &amp; 0.766 &amp; 0.643}.
+\]</span></p></li>
+<li><p>Al igual que en a), reemplazando los ángulos dados se tiene <span class="math display">\[
+\Rot = \Rot_z(-150^{\circ}) \Rot_{y}(-50^{\circ}) \Rot_{z}(-90^{\circ}) =
+\bm{-0.5 &amp; -0.557 &amp; 0.663 \\ 0.866 &amp; -0.321 &amp; 0.383 \\ 0 &amp; 0.766 &amp; 0.643}.
+\]</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-angulos-Euler-2" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.2 (Ángulos de Euler a partir de la matriz de rotación) </strong></span>Encontrar los ángulos de Euler ZYZ que representan la misma rotación dada por la siguiente matriz de rotación</p>
+<p><span class="math display">\[
+\Rot = \bm{-0.5 &amp; -0.557 &amp; 0.663 \\ 0.866 &amp; -0.321 &amp; 0.383 \\ 0 &amp; 0.766 &amp; 0.643}.
+\]</span></p>
+<p><em>Solución:</em></p>
+<p>Para encontrar los ángulos de Euler ZYZ se deben aplicar directamente las expresiones dadas en <a href="#eq-phi1-euler-zyz">Ecuación&nbsp;<span>3.3</span></a>, <a href="#eq-phi2-euler-zyz">Ecuación&nbsp;<span>3.2</span></a>, <a href="#eq-phi3-euler-zyz">Ecuación&nbsp;<span>3.4</span></a>. El ángulo <span class="math inline">\(\phi_2\)</span> alrededor del eje <span class="math inline">\(\y\)</span> estará dado por <a href="#eq-phi2-euler-zyz">Ecuación&nbsp;<span>3.2</span></a> y es: <span class="math display">\[
+\begin{align*}
+\phi_2 &amp; = \atan2\left( \pm \sqrt{{0.663}^2+{0.383}^2}, {0.643} \right) \\
+&amp;= \atan2\left( \pm 0.766, {0.643} \right) \approx \pm 50^{\circ}.
+\end{align*}
+\]</span> Como en cualquier conjunto de ángulos de Euler, existen dos posibles soluciones. Al utilizar <span class="math inline">\(\phi_2=50^{\circ}\)</span>, se tiene <span class="math inline">\(\sen(50^{\circ})=0.766\)</span>, y reemplazando en <a href="#eq-phi1-euler-zyz">Ecuación&nbsp;<span>3.3</span></a> y <a href="#eq-phi3-euler-zyz">Ecuación&nbsp;<span>3.4</span></a> se tiene los siguientes ángulos alrededor del eje <span class="math inline">\(\z\)</span>: <span class="math display">\[
+\begin{align*}
+\phi_1 &amp; =
+\atan2\left(\frac{0.383}{0.766},\frac{0.663}{0.766}\right)\approx 30^{\circ}, \\
+\phi_3 &amp; =
+\atan2\left(\frac{0.766}{0.766},-\frac{0}{0.766}\right)=90^{\circ}.
+\end{align*}
+\]</span> Entonces el primer conjunto de ángulos de Euler es <span class="math inline">\((30^{\circ}, 50^{\circ}, 90^{\circ})\)</span>. La segunda solución se obtiene de manera equivalente, utilizando <span class="math inline">\(\phi_2=-50^{\circ}\)</span> y <span class="math inline">\(\sen(-50^{\circ})=-0.766\)</span>. Reemplazando en <a href="#eq-phi1-euler-zyz">Ecuación&nbsp;<span>3.3</span></a> y <a href="#eq-phi3-euler-zyz">Ecuación&nbsp;<span>3.4</span></a> se llega a: <span class="math display">\[
+\begin{align*}
+\phi_1 = &amp;
+\atan2\left(\frac{0.383}{-0.766},\frac{0.663}{-0.766}\right)\approx -150^{\circ}, \\
+\phi_3 = &amp;
+\atan2\left(\frac{0.766}{-0.766},\frac{0}{0.766}\right)=-90^{\circ}.
+\end{align*}
+\]</span> Así, el segundo conjunto de ángulos de Euler es <span class="math inline">\((-150^{\circ}, -50^{\circ}, -90^{\circ})\)</span>. Dado que en el enunciado no se está restringiendo los ángulos a ningún intervalo, ambos conjuntos solución son válidos. Si, por ejemplo, se restringiese los ángulos al intervalo <span class="math inline">\([0, 180^{\circ}]\)</span>, entonces solamente el primer conjunto sería válido. Notar, además, que este ejemplo es el inverso del ejemplo <a href="#exm-angulos-Euler-1">Ejemplo&nbsp;<span>3.1</span></a>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-angulos-roll-pitch" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-angulos-roll-pitch"><span class="header-section-number">3.2</span> Ángulos Roll, Pitch, Yaw (angulos de Euler ZYX)</h2>
+<p>Estos ángulos, llamados también ángulos náuticos o ángulos de Cardán, se originan a partir de la representación de la orientación en el campo aeronáutico, e históricamente describen los cambios típicos de altitud de una aeronave representados mediante rotaciones definidas con respecto a ejes fijos que se encuentran en el centro de masa de la aeronave. En español se les denomina ángulos de <em>alabeo</em>, <em>cabeceo</em> y <em>guiñada</em>, pero debido a que los términos en inglés <em>roll</em>, <em>pitch</em>, <em>yaw</em> son bastante utilizados en robótica, en este libro se hará uso de ellos. Por claridad de notación, este conjunto de ángulos será representado como <span class="math display">\[
+\bphi=(\phi_r,\phi_p,\phi_y)
+\]</span> donde <span class="math inline">\(\phi_r\)</span> es el ángulo de <em>roll</em>, <span class="math inline">\(\phi_p\)</span> el ángulo de <em>pitch</em>, y <span class="math inline">\(\phi_y\)</span> el ángulo de <em>yaw</em>. Al igual que con los ángulos de Euler, estos ángulos se encuentran ligados cada uno a una matriz de rotación, y los tres ángulos forman una composición de tres matrices de rotación, pero en este caso las rotaciones se realizan siempre con respecto al sistema de referencia fijo, como se esquematiza en la <a href="#fig-angulos-rpy">Figura&nbsp;<span>3.2</span></a>. La definición concreta de estos ángulos es la siguiente.</p>
+<div id="fig-angulos-rpy" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/RPY.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3.2: Secuencia de rotaciones para los ángulos roll, pitch, yaw.</figcaption><p></p>
+</figure>
+</div>
+<ul>
+<li><p>Dado un sistema de referencia inercial, primero se rota este sistema un ángulo <span class="math inline">\(\phi_y\)</span> (<em>yaw</em>) alrededor del eje <span class="math inline">\(\x\)</span>. Esta rotación se describe por la matriz <span class="math inline">\(\Rot_x(\phi_y)\)</span>.</p></li>
+<li><p>Luego se rota el sistema resultante un ángulo <span class="math inline">\(\phi_p\)</span> (<em>pitch</em>) alrededor del eje <span class="math inline">\(\y\)</span> fijo. Esta rotación se describe por la matriz <span class="math inline">\(\Rot_y(\phi_p)\)</span>.</p></li>
+<li><p>Finalmente, se rota el sistema resultante un ángulo <span class="math inline">\(\phi_r\)</span> (<em>roll</em>) alrededor del eje <span class="math inline">\(\z\)</span>. Esta rotación se describe por la matriz <span class="math inline">\(\Rot_z(\phi_r)\)</span>.</p></li>
+</ul>
+<p>La matriz de rotación equivalente se puede obtener mediante la composición de las rotaciones anteriores. Debido a que todas las rotaciones sucesivas se aplican con respecto al sistema fijo, es necesario realizar pre-multiplicaciones (multiplicaciones por la izquierda) en cada caso. De esta manera se obtiene que la rotación equivalente a los ángulos de roll, pitch, yaw es <span class="math display">\[
+  \Rot(\bphi) = \Rot_z(\phi_r) \Rot_{y}(\phi_p) \Rot_{x}(\phi_y).
+\]</span> De manera equivalente, el orden de la multiplicación puede también ser interpretado en sentido inverso: primero aplicar una rotación alrededor del eje <span class="math inline">\(\z\)</span>, luego una rotación alrededor del eje actual <span class="math inline">\(\y\)</span> y finalmente una rotación alrededor del eje actual <span class="math inline">\(\x\)</span>. Con esta interpretación, los ángulos de roll, pitch, yaw son exactamente equivalentes a los <em>ángulos de Euler ZYX</em>. Desarrollando término a término el producto de la composición de las rotaciones anteriores se llega a <span id="eq-R-rpy"><span class="math display">\[
+  \Rot(\bphi) = \bm{
+    c_{\phi_r}c_{\phi_p} &amp; c_{\phi_r}s_{\phi_p}s_{\phi_y}-s_{\phi_r}c_{\phi_y} &amp;
+    c_{\phi_r}s_{\phi_p}c_{\phi_y} + s_{\phi_r}s_{\phi_y} \\
+    s_{\phi_r}c_{\phi_p} &amp; s_{\phi_r}s_{\phi_p}s_{\phi_y} + c_{\phi_r}c_{\phi_y} &amp;
+    s_{\phi_r}s_{\phi_p}c_{\phi_y}-c_{\phi_r}s_{\phi_y} \\
+    -s_{\phi_p} &amp; c_{\phi_p}s_{\phi_y} &amp; c_{\phi_p}c_{\phi_y}
+}.
+\tag{3.5}\]</span></span></p>
+<p>Utilizando <a href="#eq-R-rpy">Ecuación&nbsp;<span>3.5</span></a> se obtiene la matriz de rotación equivalente dados un conjunto de ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em>.</p>
+<dl>
+<dt><strong>Orden de las rotaciones</strong></dt>
+<dd>
+<p>Es importante tener en cuenta que el orden descrito para las rotaciones es el orden clásico, y se adecúa a la descripción de la orientación del efector final de un manipulador. Sin embargo, no es la única definición existente: en algunos casos se definen las rotaciones intercambiando el eje <span class="math inline">\(\z\)</span> con el eje <span class="math inline">\(\x\)</span>, como si se tratase de ángulos de Euler XYZ. Esto es usual en robots móviles donde el eje <span class="math inline">\(\x\)</span> se define hacia adelante del robot y el eje <span class="math inline">\(\z\)</span> apunta hacia arriba, de tal modo que el ángulo <em>roll</em> es el giro alrededor del eje <span class="math inline">\(\x\)</span> y el ángulo <em>yaw</em> es el giro alrededor del eje <span class="math inline">\(\z\)</span>. En otros casos, inclusive, se realiza la misma definición anterior (Euler ZYX), pero se intercambia de nombre a los ángulos <em>roll</em> con <em>yaw</em>. En general, en robótica no existe un consenso sobre qué estándar tomar al referirse a ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em>, así que se debe tener especial cuidado con tener el orden de rotaciones y los nombres de los ángulos claros cuando se trabaje con esta parametrización, ya que de otro modo se obtendrá resultados erróneos a pesar de tener cálculos aparentemente correctos. A lo largo de este libro, a menos que se mencione lo contrario, se utilizará la definición dada en esta sección para este conjunto de ángulos.</p>
+</dd>
+<dt><strong>Problema inverso</strong></dt>
+<dd>
+<p>Al igual que para los ángulos de Euler ZYZ, el problema inverso consiste en determinar los ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em> dada una matriz numérica que representa una rotación genérica <span class="math display">\[
+  \Rot = \bm{
+r_{11} &amp; r_{12} &amp; r_{13} \\
+r_{21} &amp; r_{22} &amp; r_{23} \\
+r_{31} &amp; r_{32} &amp; r_{33} }.
+\]</span> La solución a este problema se basa en comparar esta matriz <span class="math inline">\(\Rot\)</span> numérica con la expresión algebraica dada en <a href="#eq-R-rpy">Ecuación&nbsp;<span>3.5</span></a>. Realizando esta comparación se puede observar que <span class="math inline">\(r_{32}^2+r_{33}^2=\cos^2\phi_p\)</span>, y que <span class="math inline">\(r_{31}=-\sen\phi_p\)</span>. Tomando la raiz cuadrada de <span class="math inline">\(\cos^2\phi_p\)</span> y usando <span class="math inline">\(\sen\phi_p\)</span> se puede generar la tangente de <span class="math inline">\(\phi_p\)</span>, que se despeja como <span id="eq-ang-pitch"><span class="math display">\[
+  \phi_p  = \atan2\left(-r_{31}, \pm \sqrt{r_{32}^2+r_{33}^2} \right),
+\tag{3.6}\]</span></span> donde se tiene dos posibles signos para la raíz cuadrada, y por tanto dos posibles soluciones. Cuando se desea que <span class="math inline">\(\phi_p\)</span> esté en el rango <span class="math inline">\((-\frac{\pi}{2},\frac{\pi}{2})\)</span> se utiliza el valor positivo, ya que en este caso el coseno (segundo argumento de <span class="math inline">\(\atan2\)</span>) es positivo en los cuadrantes IV y I, y cuando se desea que esté en el rango <span class="math inline">\((\frac{\pi}{2},\frac{3\pi}{2})\)</span> se usa el valor negativo, ya que el coseno es negativo en los cuadrantes II y III. Notar que, al igual que con cualquier conjunto de ángulos de Euler, existen en general dos soluciones. El ángulo <span class="math inline">\(\phi_r\)</span>, suponiendo <span class="math inline">\(\cos\phi_p \neq 0\)</span>, se obtiene como <span id="eq-ang-roll"><span class="math display">\[
+  \phi_r =
+  \atan2\left(\frac{r_{21}}{\cos\phi_p},\frac{r_{11}}{\cos\phi_p}\right)
+\tag{3.7}\]</span></span> y finalmente el ángulo <span class="math inline">\(\phi_y\)</span> como <span id="eq-ang-yaw"><span class="math display">\[
+  \phi_y =
+  \atan2\left(\frac{r_{32}}{\cos\phi_p},\frac{r_{33}}{\cos\phi_p}\right).
+\tag{3.8}\]</span></span> Dependiendo del signo que se haya escogido para la raíz cuadrada en <a href="#eq-ang-pitch">Ecuación&nbsp;<span>3.6</span></a>, se tendrá dos pares de soluciones exactamente equivalentes. El hecho de escoger una u otra solución depende del rango en el cual se desea que esté <span class="math inline">\(\phi_p\)</span>. <!-- Add reference to KrisH --></p>
+</dd>
+<dt><strong>Singularidades de la Representación</strong></dt>
+<dd>
+<p>Para estos ángulos la singularidad de la representación se obtiene cuando <span class="math inline">\(\cos\phi_p=0\)</span>, ya que en dicho caso los ángulos <span class="math inline">\(\phi_r, \phi_y\)</span> dados en <a href="#eq-ang-roll">Ecuación&nbsp;<span>3.7</span></a> y <a href="#eq-ang-yaw">Ecuación&nbsp;<span>3.8</span></a> no se encuentran bien definidos. Esta singularidad se presenta cuando <span class="math inline">\(\phi_p= k \frac{\pi}{2}\)</span>, con <span class="math inline">\(k\in\mathbb Z\)</span> sin incluir el cero. Cuando <span class="math inline">\(\phi_p=\frac{\pi}{2}\)</span>, se tiene la matriz de rotación <span class="math inline">\(\Rot(\bphi) = \Rot_z(\phi_r) \Rot_{y}(\frac{\pi}{2}) \Rot_{x}(\phi_y)\)</span>, con <span class="math inline">\(\cos\phi_p=0\)</span> y <span class="math inline">\(\sen\phi_p= 1\)</span>. En este caso, <a href="#eq-R-rpy">Ecuación&nbsp;<span>3.5</span></a> se convierte en <span class="math display">\[
+  \Rot(\bphi) = \bm{
+0 &amp; c_{\phi_r}s_{\phi_y}-s_{\phi_r}c_{\phi_y} &amp;
+c_{\phi_r}c_{\phi_y} + s_{\phi_r}s_{\phi_y} \\
+0 &amp; s_{\phi_r}s_{\phi_y} + c_{\phi_r}c_{\phi_y} &amp;
+s_{\phi_r}c_{\phi_y}-c_{\phi_r}s_{\phi_y} \\
+-1 &amp; 0 &amp; 0 }
+  =
+  \bm{
+0 &amp; -s_{\phi_r-\phi_y} &amp; c_{\phi_r-\phi_y} \\
+0 &amp; c_{\phi_r-\phi_y} &amp; s_{\phi_r-\phi_y} \\
+-1 &amp; 0 &amp; 0
+  },
+\]</span> donde <span class="math inline">\(c_{\phi_r-\phi_y} = \cos({\phi_r-\phi_y})\)</span> y <span class="math inline">\(s_{\phi_r-\phi_y} = \sen({\phi_r-\phi_y})\)</span>. Como se observa, solo es posible determinar la diferencia de los ángulos <span class="math inline">\(\phi_r-\phi_y\)</span>, pero no el valor de cada ángulo por separado. Por otro lado, cuando <span class="math inline">\(\phi_2=-\frac{\pi}{2}\)</span>, se tiene la rotación <span class="math inline">\(\Rot_z(\phi_r) \Rot_{y}(-\frac{\pi}{2}) \Rot_{x}(\phi_y)\)</span>, con <span class="math inline">\(\cos\phi_p=0\)</span>, <span class="math inline">\(\sen\phi_p= -1\)</span>, y <span class="math display">\[
+  \Rot(\bphi) = \bm{
+0 &amp; -c_{\phi_r}s_{\phi_y}-s_{\phi_r}c_{\phi_y} &amp;
+-c_{\phi_r}c_{\phi_y} + s_{\phi_r}s_{\phi_y} \\
+0 &amp; -s_{\phi_r}s_{\phi_y} + c_{\phi_r}c_{\phi_y} &amp;
+-s_{\phi_r}c_{\phi_y}-c_{\phi_r}s_{\phi_y} \\
+1 &amp; 0 &amp; 0 }
+  =
+  \bm{
+0 &amp; -s_{\phi_r+\phi_y} &amp; -c_{\phi_r+\phi_y} \\
+0 &amp; c_{\phi_r+\phi_y} &amp; -s_{\phi_r+\phi_y} \\
+1 &amp; 0 &amp; 0
+  },
+\]</span> donde <span class="math inline">\(c_{\phi_r+\phi_y} = \cos({\phi_r+\phi_y})\)</span> y <span class="math inline">\(s_{\phi_r+\phi_y} = \sen({\phi_r+\phi_y})\)</span>. En este caso solo es posible determinar la suma de los ángulos <span class="math inline">\(\phi_r+\phi_y\)</span>, pero no es posible encontrar cada ángulo por separado.</p>
+</dd>
+</dl>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-angulos-rpy-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.3 (Ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em> a partir de la matriz de rotación) </strong></span>Encontrar los ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em> que representan la rotación dada por la siguiente matriz de rotación <span class="math display">\[
+\Rot = \bm{-0.5 &amp; -0.557 &amp; 0.663 \\ 0.866 &amp; -0.321 &amp; 0.383 \\ 0 &amp; 0.766 &amp; 0.643}.
+\]</span></p>
+<p><em>Solución:</em></p>
+<p>Para encontrar los ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em> se utilizan las expresiones dadas en <a href="#eq-ang-roll">Ecuación&nbsp;<span>3.7</span></a>, <a href="#eq-ang-pitch">Ecuación&nbsp;<span>3.6</span></a> y <a href="#eq-ang-roll">Ecuación&nbsp;<span>3.7</span></a>. El ángulo de <em>pitch</em>, usando <a href="#eq-ang-pitch">Ecuación&nbsp;<span>3.6</span></a> estará dado por: <span class="math display">\[
+\begin{align*}
+\phi_p &amp;= \atan2\left( -0, \pm \sqrt{{0.766}^2+{0.643}^2} \right) \\
+&amp;= \atan2\left( 0, \pm{1} \right) = 0^{\circ} \text{ o } 180^{\circ}.
+\end{align*}
+\]</span> Existen dos posibles soluciones. La primera solución utilizará <span class="math inline">\(\phi_p=0^{\circ}\)</span>, con lo que <span class="math inline">\(\cos(0^{\circ})=1\)</span>, y reemplazando en <a href="#eq-ang-roll">Ecuación&nbsp;<span>3.7</span></a> y <a href="#eq-ang-yaw">Ecuación&nbsp;<span>3.8</span></a> se tiene: <span class="math display">\[
+\begin{align*}
+\phi_r &amp; =
+\atan2\left(\frac{0.866}{1},\frac{-0.5}{1}\right) = 120^{\circ}, \\
+\phi_y &amp; =
+\atan2\left(\frac{0.766}{1},\frac{0.643}{1}\right) \approx 50^{\circ}.
+\end{align*}
+\]</span> Con estos resultados, el primer conjunto de ángulos <em>roll</em>, <em>pitch</em>, <em>yaw</em> está dado por <span class="math inline">\((120^{\circ}, 0^{\circ}, 50^{\circ})\)</span>. La segunda solución se obtiene utilizando <span class="math inline">\(\phi_p=180^{\circ}\)</span>, de tal modo que <span class="math inline">\(\cos(180^{\circ})=-1\)</span>. Reemplazando en <a href="#eq-ang-roll">Ecuación&nbsp;<span>3.7</span></a> y <a href="#eq-ang-yaw">Ecuación&nbsp;<span>3.8</span></a>: <span class="math display">\[
+\begin{align*}
+\phi_r &amp; =
+\atan2\left(\frac{0.866}{-1},\frac{-0.5}{-1}\right)\approx -60^{\circ}, \\
+\phi_y &amp; =
+\atan2\left(\frac{0.766}{-1},\frac{0.643}{-1}\right)=-130^{\circ}.
+\end{align*}
+\]</span> Con estos ángulos, el segundo conjunto de ángulos es <span class="math inline">\((-60^{\circ}, 180^{\circ}, -130^{\circ})\)</span>. El enunciado no restringe ningún intervalo para la solución, así que se considera las dos soluciones como válidas. A modo de verificación, se puede aplicar la secuencia de rotaciones <span class="math inline">\(\Rot_z(\phi_r) \Rot_{y}(\phi_p) \Rot_{x}(\phi_y)\)</span>, con ambos conjuntos de ángulos obtenidos, llegando en ambos casos a la matriz inicialmente propuesta en el ejemplo.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="parametrización-de-eje-y-ángulo" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="parametrización-de-eje-y-ángulo"><span class="header-section-number">3.3</span> Parametrización de Eje y Ángulo</h2>
+<p>Toda rotación, por muy compleja que sea, puede ser descrita como el giro de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un determinado eje <span class="math inline">\(\u\)</span>, como se esquematiza en la <a href="#fig-eje-angulo-generico">Figura&nbsp;<span>3.3</span></a>. A esta representación de una rotación mediante un ángulo <span class="math inline">\(\theta\)</span> y un eje <span class="math inline">\(\u\)</span> se le denomina parametrización eje-ángulo. La justificación de esta parametrización se basa en el denominado <em>teorema de rotación de Euler</em>, el cual establece que, en el espacio tridimensional, cualquier desplazamiento de un cuerpo rígido tal que un punto en el cuerpo rígido se mantiene fijo, es equivalente a una sola rotación alrededor de un eje que pasa por dicho punto fijo.</p>
+<div id="fig-eje-angulo-generico" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/eje-angulo-generico.png" class="img-fluid figure-img" style="width:30.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3.3: Rotación genérica de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u\)</span></figcaption><p></p>
+</figure>
+</div>
+<section id="matriz-de-rotación-equivalente" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="matriz-de-rotación-equivalente"><span class="header-section-number">3.3.1</span> Matriz de Rotación Equivalente</h3>
+<p>La relación existente entre una matriz de rotación y la parametrización eje-ángulo puede ser deducida de diversas maneras, utilizando argumentos geométricos, algebraicos o proyecciones. A continuación, y por facilidad de presentación, se realizará una derivación algebraica.</p>
+<p>Considérese una rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u\)</span>, el cual es arbitrario y cumple <span class="math inline">\(\Vert \u\Vert = 1\)</span>. Debido a que no se conoce el eje, se obtendrá la matriz de rotación equivalente <span class="math inline">\(\Rot(\theta,\u)\)</span> de manera indirecta. Con este fin se seguirá los siguientes pasos, esquematizados en la <a href="#fig-eje-angulo-rotaciones">Figura&nbsp;<span>3.4</span></a>, iniciando con un sistema de referencia descrito por los ejes <span class="math inline">\(\x_0, \y_0, \z_0\)</span>.</p>
+<div id="fig-eje-angulo-rotaciones" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-eje-angulo-rotacion-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/eje-angulo-rotacion-1.png" class="img-fluid figure-img" data-ref-parent="fig-eje-angulo-rotaciones"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-eje-angulo-rotacion-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/eje-angulo-rotacion-2.png" class="img-fluid figure-img" data-ref-parent="fig-eje-angulo-rotaciones"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 27.1%;justify-content: center;">
+<div id="fig-eje-angulo-rotacion-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/eje-angulo-rotacion-3.png" class="img-fluid figure-img" data-ref-parent="fig-eje-angulo-rotaciones"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 22.9%;justify-content: center;">
+<div id="fig-eje-angulo-rotacion-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/eje-angulo-rotacion-4.png" class="img-fluid figure-img" data-ref-parent="fig-eje-angulo-rotaciones"></p>
+<p></p><figcaption class="figure-caption">(d)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3.4: Secuencia de rotaciones para obtener la matriz de rotación que describe la orientación de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje <span class="math inline">\(\u\)</span></figcaption><p></p>
+</figure>
+</div>
+<ol type="1">
+<li><p>Primero se aplicará una rotación <span class="math inline">\(\Rot_1\)</span> al sistema de referencia inicial (<a href="#fig-eje-angulo-rotacion-1">Figura&nbsp;<span>3.4 (a)</span></a>), la cual hará que el eje <span class="math inline">\(\z\)</span> de este sistema quede alineado con el eje de giro <span class="math inline">\(\u\)</span>.</p></li>
+<li><p>Luego se realizará la rotación del ángulo <span class="math inline">\(\theta\)</span> alrededor del eje <span class="math inline">\(\z\)</span> local, <span class="math inline">\(\Rot_z(\theta)\)</span>, ya que este eje se encuentra ahora alineado con el eje unitario de interés <span class="math inline">\(\u\)</span> (<a href="#fig-eje-angulo-rotacion-2">Figura&nbsp;<span>3.4 (b)</span></a>). La rotación resultante hasta este punto es: <span class="math inline">\(\Rot_1 \Rot_z(\theta)\)</span> (<a href="#fig-eje-angulo-rotacion-3">Figura&nbsp;<span>3.4 (c)</span></a>).</p></li>
+<li><p>Finalmente, luego de aplicada la rotación del ángulo <span class="math inline">\(\theta\)</span> deseado, se “deshace” o “invierte” la rotación inicial aplicando la inversa <span class="math inline">\(\Rot_1^{-1}\)</span> al sistema local (<a href="#fig-eje-angulo-rotacion-4">Figura&nbsp;<span>3.4 (d)</span></a>), siendo la rotación resultante: <span class="math inline">\(\Rot_1 \Rot_z(\theta)\Rot_1^{-1}\)</span>.</p></li>
+</ol>
+<p>Puesto que en una matriz de rotación la inversa es igual a la transpuesta, estos tres pasos se pueden escribir como <span class="math display">\[
+  \Rot(\theta,\u) = \Rot_1 \Rot_z(\theta) \Rot_1^T,
+\]</span> donde <span class="math inline">\(\Rot(\theta,\u)\)</span> es la matriz de rotación equivalente deseada. La estructura de <span class="math inline">\(\Rot_z(\theta)\)</span> está dada por <a href="cr_posicion_orientacion.html#eq-rotz">Ecuación&nbsp;<span>2.4</span></a> ya que es una rotación canónica, así que el problema consiste en determinar la estructura de la matriz <span class="math inline">\(\Rot_1\)</span>. Debido a que <span class="math inline">\(\Rot_1\)</span> alinea el eje <span class="math inline">\(\z\)</span> inicial con el eje <span class="math inline">\(\u\)</span>, la tercera columna de esta matriz describe las coordenadas de <span class="math inline">\(\u\)</span> en el sistema inicial. Dicho de otra manera, luego de aplicar la rotación, el nuevo eje <span class="math inline">\(\z\)</span> tiene como coordenadas a <span class="math inline">\(\u\)</span> con respecto al sistema inicial. Por tanto, la estructura de <span class="math inline">\(\Rot_1\)</span> será <span class="math display">\[
+  \Rot_1 = \bm{\vect{n} &amp; \vect{s} &amp; \u},
+\]</span> donde <span class="math inline">\(\vect n, \vect s, \u\)</span> son vectores columna que describen la orientación de los ejes canónicos rotados, con respecto al sistema inicial. En dicha matriz se conoce el valor de <span class="math inline">\(\u\)</span> pero se desconoce los valores de <span class="math inline">\(\n\)</span> y de <span class="math inline">\(\s\)</span>. Reemplazando esta estructura en la expresión anterior de <span class="math inline">\(\Rot(\theta,\u)\)</span>, y utilizando la expresión de la rotación en <span class="math inline">\(\z\)</span>, se tiene <span class="math display">\[
+  \Rot(\theta,\u) = \bm{\vect{n} &amp; \vect{s} &amp; \u}
+  \bm{\cos(\theta) &amp; -\sen(\theta) &amp; 0 \\ \sen(\theta) &amp; \cos(\theta) &amp; 0 \\ 0 &amp; 0 &amp; 1}
+  \bm{\vect{n}^T \\ \vect{s}^T \\ \u^T}.
+\]</span></p>
+<!-- En general esta expresión se puede resolver utilizando diadas.  -->
+<p>Se puede fácilmente realizar la multiplicación término a término de estas matrices, sin necesidad de expandir los componentes de <span class="math inline">\(\n\)</span>, <span class="math inline">\(\s\)</span> o <span class="math inline">\(\u\)</span>, ya que los tamaños de los vectores fila y columna son coherentes. El producto resultante es <span class="math display">\[
+\begin{align*}
+\Rot(\theta,\u) &amp; = \cos(\theta) \n\n^T - \sen(\theta) \n\s^T + \sen(\theta) \s
+\n^T + \cos(\theta) \s \s^T + \u\u^T \\
+&amp; = \u\u^T + (\n\n^T+\s\s^T)\cos(\theta) +
+(\s\n^T-\n\s^T)\sen(\theta).
+\end{align*}
+\]</span> El problema de la expresión anterior es que contiene los vectores <span class="math inline">\(\vect n\)</span> y <span class="math inline">\(\vect s\)</span>, los cuales son desconocidos. Para resolver este problema se puede usar el hecho que <span class="math inline">\(\Rot_1\Rot_1^T=\n\n^T+\s\s^T+\u\u^T=I\)</span>, de donde <span class="math inline">\(\n\n^T+\s\s^T=I-\u\u^T\)</span>. Además, debido a que <span class="math inline">\(\Rot_1\)</span> es una matriz de rotación y sus columnas representan sus ejes, se cumple que <span class="math inline">\(\n \times \s = \u\)</span>. Con base en esta última propiedad, se puede demostrar, desarrollando explícitamente cada uno de los términos, que <span class="math inline">\(\s\n^T-\n\s^T=\hat\u\)</span>, donde dado un vector <span class="math inline">\(\u=(u_x,u_y,u_z)\)</span>, la matriz <span class="math inline">\(\hat\u\)</span> (también representada como <span class="math inline">\(\u^{\wedge}\)</span>) se denomina matriz antisimétrica (<em>skew-symmetric</em>) asociada con <span class="math inline">\(\u\)</span> y se define como <span id="eq-matriz-antisimetrica-u"><span class="math display">\[
+  \hat\u = \bm{0 &amp; -u_z &amp; u_y \\ u_z &amp; 0 &amp; -u_x \\ -u_y &amp; u_x &amp; 0}
+\tag{3.9}\]</span></span> (en realidad, el resultado <span class="math inline">\((\n \times \s)^{\wedge}=s\n^T-\n\s^T\)</span> se conoce como el corchete de Lie de la rotación infinitesimal). Utilizando estas equivalencias, la matriz de rotación equivalente a la rotación arbitraria de <span class="math inline">\(\theta\)</span> alrededor del eje unitario <span class="math inline">\(\u\)</span> queda dada por <span id="eq-eje-angulo"><span class="math display">\[
+  \Rot(\theta,\u) = \u\u^T + (I-\u\u^T)\cos(\theta) + \hat \u \sen(\theta).
+\tag{3.10}\]</span></span> Esta expresión puede ser rescrita utilizando la propiedad <span class="math inline">\(\u\u^T=\hat\u^2+I\)</span>, la cual puede ser fácilmente verificada mediante cálculo directo término a término. Así, se tiene <span class="math display">\[
+  \Rot(\theta,\u) = (\hat\u^2+I) + (I-\hat\u^2-I) \cos(\theta) + \hat \u
+  \sen(\theta),
+\]</span> que, agrupando términos, puede ser escrito como <span id="eq-eje-angulo-rodrigues"><span class="math display">\[
+  \Rot(\theta,\u) = I + \hat \u \sen(\theta) + \hat\u^2 (1-\cos(\theta)).
+\tag{3.11}\]</span></span> La expresión <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a> se denomina <em>fórmula de Rodrigues</em>. En general, se puede utilizar tanto <a href="#eq-eje-angulo">Ecuación&nbsp;<span>3.10</span></a> como <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a> para el cálculo de la matriz de rotación equivalente a una rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u=(u_x,u_y,u_z)\)</span>. De manera explícita, operando término a término, la matriz <span class="math inline">\(\Rot(\theta,\u)\)</span> queda definida como <span id="eq-rot-eje-angulo"><span class="math display">\[
+\Rot(\theta,\u) = \bm{
+u_x^2 v_{\theta} + c_{\theta} &amp; u_xu_y v_{\theta} - u_z
+s_{\theta} &amp; u_xu_z v_{\theta} + u_y s_{\theta} \\
+u_x u_y v_{\theta} + u_z s_{\theta} &amp; u_y^2 v_{\theta}
++ c_{\theta} &amp; u_y u_z v_{\theta} - u_x s_{\theta} \\
+u_x u_z v_{\theta} - u_y s_{\theta} &amp; u_y u_z
+v_{\theta} + u_x s_{\theta} &amp; u_z^2 v_{\theta} + c_{\theta}
+},
+\tag{3.12}\]</span></span> donde las abreviaciones utilizadas por conveniencia son <span class="math inline">\(c_{\theta} = \cos(\theta)\)</span>, <span class="math inline">\(s_{\theta} = \sen(\theta)\)</span>, y la función verseno es <span class="math inline">\(v_{\theta} = \text{versen}(\theta) = 1-\cos(\theta)\)</span>.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-formula-rodriguez-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.4 (Matriz de rotación alrededor de un eje genérico) </strong></span>Encontrar la matriz de rotación <span class="math inline">\(\Rot\)</span> que representa una rotación de 30<span class="math inline">\(^{\circ}\)</span> alrededor del eje <span class="math inline">\((2, 1, 2)\)</span>.</p>
+<p><em>Solución:</em></p>
+<p>Para encontrar esta matriz de rotación se utiliza la fórmula de Rodrigues dada en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>, o su expresión alternativa dada en <a href="#eq-eje-angulo">Ecuación&nbsp;<span>3.10</span></a>. En cualquier caso, primero se necesita que el eje de giro sea unitario, así que se convertirá <span class="math inline">\((2,1,2)\)</span> en unitario dividiéndolo entre su magnitud, que es <span class="math inline">\(\Vert (2,1,2) \Vert = 3\)</span>, obteniendo <span class="math inline">\(\u=(2/3, 1/3, 2/3)\)</span> o <span class="math inline">\(\u=(0.667, 0.333, 0.667)\)</span>. Se requiere, además, tener la matriz antisimétrica asociada con el eje unitario de giro, que se obtiene usando <a href="#eq-matriz-antisimetrica-u">Ecuación&nbsp;<span>3.9</span></a>, y el cuadrado de esta matriz. Ambas matrices son: <span class="math display">\[
+\begin{align*}
+\hat{\u} &amp; = \bm{0 &amp; -0.667 &amp; 0.333 \\ 0.667 &amp; 0 &amp; -0.667 \\ -0.333 &amp; 0.667 &amp; 0}, \\
+\hat{\u}^2 = \hat{\u}\hat{\u} &amp; =\bm{-0.555 &amp; 0.222 &amp; 0.444 \\ 0.222 &amp; -0.888 &amp; 0.222 \\ 0.444 &amp; 0.222 &amp; -0.555}
+\end{align*}
+\]</span> Reemplazando estas matrices en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>, considerando además que <span class="math inline">\(\sen(30^{\circ})=0.5\)</span> y que <span class="math inline">\(1-\cos(30^{\circ})=0.134\)</span>, se tiene <!-- 
+\Rot = I + 0.5\bm{0 & -0.667 & 0.333 \\ 0.667 & 0 & -0.667 \\ -0.333 & 0.667 & 0} +0.134\bm{-0.555 & 0.222 & 0.444 \\ 0.222 & -0.888 & 0.222 \\ 0.444 & 0.222 & -0.555}
+--> <span class="math display">\[
+\Rot = I + 0.5 \hat{\u} +0.134 \hat{\u}^2
+\]</span></p>
+<p>que finalmente es <span class="math display">\[
+\Rot = \bm{0.926 &amp; -0.304 &amp; 0.226 \\ 0.363 &amp; 0.881 &amp; -0.304 \\ -0.107 &amp; 0.363 &amp; 0.926}.
+\]</span> Esta matriz de rotación representa la rotación deseada.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="problema-inverso" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="problema-inverso"><span class="header-section-number">3.3.2</span> Problema Inverso</h3>
+<p>El problema inverso consiste en encontrar el vector unitario <span class="math inline">\(\u=(u_x,u_y,u_z)\)</span> y el escalar <span class="math inline">\(\theta\)</span> tal que el efecto de rotar el ángulo <span class="math inline">\(\theta\)</span> alrededor de <span class="math inline">\(\u\)</span> sea equivalente al efecto de aplicar una matriz de rotación dada. Considérese una matriz de rotación numérica <span class="math inline">\(\Rot \in SO(3)\)</span> tal que los elementos de <span class="math inline">\(\Rot\)</span> son <span class="math display">\[
+  \Rot = \begin{bmatrix}
+    r_{11} &amp; r_{12} &amp; r_{13} \\ r_{21} &amp; r_{22} &amp; r_{23} \\ r_{31} &amp; r_{32} &amp; r_{33}
+  \end{bmatrix}.
+\]</span> Comparando esta matriz con <a href="#eq-rot-eje-angulo">Ecuación&nbsp;<span>3.12</span></a> se puede resolver el problema inverso. Por inspección, se puede observar que <span class="math inline">\(r_{32}-r_{23}=2 u_x\sen\theta\)</span>, que <span class="math inline">\(r_{13}-r_{31}=2 u_y\sen\theta\)</span>, y que <span class="math inline">\(r_{21}-r_{12}=2 u_z\sen\theta\)</span>. Despejando <span class="math inline">\(u_x\)</span>, <span class="math inline">\(u_y\)</span> y <span class="math inline">\(u_z\)</span> de estas expresiones, y agrupando los términos en forma de vector, se obtiene el vector <span class="math inline">\(\u\)</span> como <span id="eq-eje-angulo_eje"><span class="math display">\[
+\u = \bm{u_x \\ u_y \\ u_z} = \dfrac{1}{2\sen(\theta)}
+\begin{bmatrix} {r_{32}-r_{23}} \\ {r_{13}-r_{31}} \\ {r_{21}-r_{12}}\end{bmatrix},
+\tag{3.13}\]</span></span> donde se debe tener <span class="math inline">\(\sen(\theta) \neq 0\)</span> para evitar indeterminaciones.</p>
+<p>Para encontrar el ángulo <span class="math inline">\(\theta\)</span>, es recomendable utilizar la función <span class="math inline">\(\text{atan2}\)</span>, para lo cual es necesario encontrar primero <span class="math inline">\(\sen(\theta)\)</span> y <span class="math inline">\(\cos(\theta)\)</span>. Se puede observar que la traza de <span class="math inline">\(\Rot\)</span> es <span class="math inline">\(\text{tr}\Rot = \text{versen}{\theta}+3\cos{\theta}=1+2\cos{\theta}\)</span>, de donde se obtiene <span class="math inline">\(\cos(\theta)=\frac{\text{tr}\Rot-1}{2}\)</span>. Se observa además que <span class="math inline">\((r_{21}-r_{12})^2+(r_{31}-r_{13})^2+(r_{32}-r_{23})^2 = 4 \sen^2(\theta)\)</span>, de donde se puede despejar el seno. Usando estas dos expresiones se obtiene la tangente y por tanto el arcotangente como <span id="eq-eje-angulo_angulo"><span class="math display">\[
+  \theta = \atan2 \left(
+    \dfrac{\pm \sqrt{(r_{21}-r_{12})^2+(r_{31}-r_{13})^2+(r_{32}-r_{23})^2}}{2},
+    \dfrac{\text{tr} \Rot-1}{2}\right).
+\tag{3.14}\]</span></span> Cuando se toma la raíz positiva, se tendrá <span class="math inline">\(\theta \in [0,\pi)\)</span>, y cuando se tome el signo negativo de la raíz se tendrá <span class="math inline">\(\theta \in (-\pi,0)\)</span>. Usando este ángulo se calcula el eje respectivo en <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a>. Tener en cuenta que siempre se tendrá dos posibles soluciones, por lo que la representación eje-ángulo (a veces denominada <em>representación equivalente de eje</em>) no es única. De hecho, usando <a href="#eq-eje-angulo_angulo">Ecuación&nbsp;<span>3.14</span></a> y <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a> es posible verificar que <span id="eq-propiedad-rot-generica-equivalente"><span class="math display">\[
+    \Rot(\theta, \u) = \Rot(-\theta, -\u).
+\tag{3.15}\]</span></span> Un detalle adicional es que se puede multiplicar el eje unitario <span class="math inline">\(\u\)</span> con el ángulo <span class="math inline">\(\theta\)</span> para obtener el vector no unitario <span class="math inline">\(\rr=\u\theta\)</span>. Así, usando el vector de tres parámetros <span class="math inline">\(\rr=\u\theta\)</span> se puede representar el eje-ángulo con solamente tres valores, por lo que esta representación es mínima. Si se tiene el vector <span class="math inline">\(\rr\)</span>, el ángulo se recupera fácilmente como <span class="math inline">\(\theta=\vert \rr \vert\)</span>, y el eje unitario como <span class="math inline">\(\u = \frac{\rr}{\Vert \rr \Vert}\)</span>.</p>
+<!-- TODO: Añadir en exponencial de una matriz
+Los componentes del vector $\theta \bomega \in \mathbb{R}^3$ se denominan *coordenadas exponenciales* para $\Rot$ y constituyen las denominadas coordenadas  *canónicas* del grupo de rotación $SO(3)$. La representación de una rotación utilizando el ángulo $\theta$ y el eje unitario de rotación $\bomega$ a veces es denominado la *representación equivalente de eje* o la *representación eje/ángulo*. 
+-->
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-eje-angulo-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.5 (Representación eje-ángulo a partir de la matriz de rotación) </strong></span>Encontrar el eje y el ángulo, que se debe girar alrededor de dicho eje, para obtener una orientación equivalente a la representada por la siguiente matriz de rotación: <span class="math display">\[
+\Rot = \bm{0.926 &amp; -0.304 &amp; 0.226 \\ 0.363 &amp; 0.881 &amp; -0.304 \\ -0.107 &amp; 0.363 &amp; 0.926}.
+\]</span></p>
+<p><em>Solución:</em></p>
+<p>El ángulo equivalente se obtiene utilizando la expresión <a href="#eq-eje-angulo_angulo">Ecuación&nbsp;<span>3.14</span></a>. Primero se calculará la traza, que es <span class="math inline">\(\text{tr}\Rot=0.926+0.881+0.926=2.733\)</span>, tal que <span class="math inline">\(\text{tr}\Rot-1=1.733\)</span>. Además, reemplazando los elementos de la matriz en la raíz cuadrada se tiene <span class="math inline">\(\sqrt{(0.363+0.304)^2+(-0.107-0.226)^2+(0.363+0.304)^2}=1\)</span>. Reemplazando estos valores en <a href="#eq-eje-angulo_angulo">Ecuación&nbsp;<span>3.14</span></a> se tiene: <span class="math display">\[
+\theta = \atan2 \left(
+\dfrac{\pm 1}{2},
+\dfrac{1.733}{2}\right)
+\]</span> que lleva a los dos siguientes posibles ángulos, según si se toma el valor positivo o negativo de 1: <span class="math display">\[
+\theta = \atan2 \left(
+\dfrac{1}{2}, \dfrac{1.733}{2}\right) = 30^{\circ} \quad \text{y} \quad
+\theta = \atan2 \left(
+-\dfrac{1}{2}, \dfrac{1.733}{2}\right) = -30^{\circ}.
+\]</span> Usando el ángulo positivo (<span class="math inline">\(30^{\circ}\)</span>) se tiene <span class="math inline">\(\sen(30^{\circ})= 0.5\)</span>, y reemplazando en <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a> se obtiene que el eje asociado es <span class="math display">\[
+\u = \dfrac{1}{2(0.5)}
+\begin{bmatrix} {0.363+0.304} \\ {0.226+0.107} \\ {0.363+0.304}\end{bmatrix}=
+\bm{0.667 \\ 0.333 \\ 0.667}.
+\]</span> Entonces, una solución es el eje unitario <span class="math inline">\(\u=(0.667, 0.333, 0.667)\)</span> con un ángulo de giro de <span class="math inline">\(\theta=30^{\circ}\)</span>.</p>
+<p>Para obtener la otra solución se puede utilizar el ángulo <span class="math inline">\(\theta=-30^{\circ}\)</span> y reemplazar en <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a> para calcular el nuevo eje de giro. Sin embargo, debido a la propiedad <a href="#eq-propiedad-rot-generica-equivalente">Ecuación&nbsp;<span>3.15</span></a> se sabe que la otra solución será similar a la primera solución pero con el ángulo negado y el eje de giro negado. De manera concreta, la segunda solución consiste en girar <span class="math inline">\(\theta=-30^{\circ}\)</span> alrededor del eje unitario <span class="math inline">\(\u=(-0.667, -0.333, -0.667)\)</span>. Dado que no se restringe el intervalo del ángulo, ambas soluciones son posibles. Sin embargo, resulta común utilizar ángulos positivos.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="propiedades-de-la-rotación-genérica" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="propiedades-de-la-rotación-genérica"><span class="header-section-number">3.3.3</span> Propiedades de la rotación genérica</h3>
+<p>La matriz de rotación genérica <span class="math inline">\(\Rot(\theta,\u)\)</span> que describe un giro de <span class="math inline">\(\theta\)</span> alrededor del eje unitario <span class="math inline">\(\u\)</span> tiene las siguientes propiedades:</p>
+<ul>
+<li><p>El eje de rotación <span class="math inline">\(\u\)</span> es invariante a la rotación: <span class="math inline">\(\Rot(\theta,\u)\u = \u\)</span>. Esto se puede fácilmente probar multiplicando <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a> con <span class="math inline">\(\u\)</span> y usando el hecho que el producto cruz de un vector consigo mismo es nulo.</p></li>
+<li><p>Cuando <span class="math inline">\(\u\)</span> es uno de los ejes coordenados, <span class="math inline">\(\Rot\)</span> se convierte en una de las rotaciones canónicas dadas por <a href="cr_posicion_orientacion.html#eq-rotx">Ecuación&nbsp;<span>2.2</span></a>, <a href="cr_posicion_orientacion.html#eq-roty">Ecuación&nbsp;<span>2.3</span></a> y <a href="cr_posicion_orientacion.html#eq-rotz">Ecuación&nbsp;<span>2.4</span></a>.</p></li>
+<li><p>Siempre hay dos rotaciones equivalentes: <span class="math inline">\(\Rot(\theta, \u) = \Rot(-\theta, -\u)\)</span>. Esto implica que el mapa <span class="math inline">\((\theta,\u) \rightarrow \Rot\)</span> no es inyectivo; es decir, dos elementos del dominio, <span class="math inline">\((\theta,\u)\)</span> y <span class="math inline">\((-\theta,-\u)\)</span> mapearán al mismo elemento del codominio.</p></li>
+<li><p>Los autovalores de cualquier matriz de rotación <span class="math inline">\(\Rot\)</span> son <span class="math inline">\(1\)</span>, <span class="math inline">\(e^{i\theta}\)</span>, <span class="math inline">\(e^{-i\theta}\)</span>, y se encuentran en un círculo unitario en el plano complejo.</p></li>
+</ul>
+<p>Esta última propiedad se puede probar como sigue. A partir de la primera propiedad, que establece <span class="math inline">\(\Rot(\theta,\u)\u = 1 \u\)</span>, se observa que <span class="math inline">\(\u\)</span> es un autovector de <span class="math inline">\(\Rot\)</span>, siendo <span class="math inline">\(\lambda_1=1\)</span> su autovalor asociado. Por propiedad de matrices se tiene que el determinante de una matriz es igual al producto de sus autovalores, por lo que <span class="math inline">\(\lambda_2\lambda_3=+1\)</span>. Igualmente, para toda matriz se cumple que la traza es la suma de los autovalores, es decir <span class="math inline">\(\tr(\Rot) = 1+2\cos(\theta)=1+\lambda_2+\lambda_3\)</span>. Reemplazando <span class="math inline">\(\lambda_3=\frac{1}{\lambda_2}\)</span> en esta expresión se llega a <span class="math inline">\(\lambda_2^2-2\cos(\theta) \lambda_2 +1 = 0\)</span>. Resolviendo esta ecuación se tiene <span class="math inline">\(\lambda_{2,3} = \cos(\theta) \pm \sqrt{\cos^2(\theta)-1} = \cos(\theta) \pm i \sen(\theta)= e^{\pm i \theta}\)</span>.</p>
+</section>
+<section id="singularidades" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="singularidades"><span class="header-section-number">3.3.4</span> Singularidades</h3>
+<p>Como se observa en <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a>, esta representación presenta una singularidad cuando <span class="math inline">\(\sen(\theta)=0\)</span>. Así, las singularidades ocurren cuando <span class="math inline">\(\theta=k\pi\)</span>, con <span class="math inline">\(k \in \mathbb Z\)</span>. Cuando <span class="math inline">\(\theta=0\)</span> el ángulo de rotación es nulo, y por tanto no existe, en realidad, rotación. Esto se verifica ya que con <span class="math inline">\(\theta=0\)</span> se tiene <span class="math inline">\(\Rot=I\)</span>, en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>. Entonces, en este caso, el eje <span class="math inline">\(\u\)</span> puede ser escogido de manera arbitraria.</p>
+<p>Por otro lado, cuando <span class="math inline">\(\theta = \pi\)</span>, se tiene <span class="math inline">\(\Rot=I+2 \hat\u^2\)</span>, reemplazando en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>, o de manera equivalente, <span class="math inline">\(\Rot=-I+2\u\u^T\)</span> reemplazando en <a href="#eq-eje-angulo">Ecuación&nbsp;<span>3.10</span></a>. La segunda expresión resulta más fácil de interpretar ya que se trata del doble del producto exterior del eje unitario de giro menos la matriz identidad. Esto se puede verificar reemplazando <span class="math inline">\(\sen(\theta)=0\)</span>, <span class="math inline">\(\cos(\theta)=-1\)</span> <span class="math inline">\(\operatorname{versen}(\theta)=2\)</span> en <a href="#eq-rot-eje-angulo">Ecuación&nbsp;<span>3.12</span></a>, llegando a <span class="math display">\[
+\Rot(\pi,\u) = \bm{
+    2u_x^2 -1 &amp; 2u_xu_y &amp; 2u_xu_z \\
+    2u_x u_y  &amp; 2u_y^2 -1 &amp; 2u_y u_z  \\
+    2 u_x u_z &amp; 2 u_y u_z &amp; 2u_z^2 -1
+}.
+\]</span> A partir de esta expresión, los componentes del eje se obtienen a partir de la diagonal principal como: <span id="eq-eje-anglo_eje-singularidad"><span class="math display">\[
+\begin{align*}
+    u_x &amp;= \pm \sqrt{\half (r_{11}+1)}, \\
+    u_y &amp;= \pm \sqrt{\half (r_{22}+1)}, \\
+    u_z &amp;= \pm \sqrt{\half (r_{33}+1)},
+\end{align*}
+\tag{3.16}\]</span></span> donde cada elemento tiene dos posibles signos. Sin embargo, las posibles combinaciones se reducen a solamente dos posibilidades utilizando las siguientes relaciones que se obtienen a partir de los elementos fuera de la diagonal principal: <span id="eq-eje-anglo_eje-singularidad-signos"><span class="math display">\[
+    u_x u_y = \frac{r_{12}}{2}, \qquad
+    u_x u_z = \frac{r_{13}}{2}, \qquad
+    u_y u_z = \frac{r_{23}}{2}.
+\tag{3.17}\]</span></span> Estas expresiones permiten obtener los signos correctos para <span class="math inline">\(u_x, u_y, u_z\)</span>. Se puede, además, notar que siempre habrá dos soluciones de signo opuesto.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-eje-angulo-3" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.6 (Eje-ángulo dada una matriz de rotación) </strong></span>Encontrar el eje y el ángulo equivalentes a la siguiente matriz de rotación: <span class="math display">\[
+\Rot = \bm{-1 &amp; 0&amp; 0 \\ 0 &amp; -0.707 &amp; -0.707 \\ 0 &amp; -0.707 &amp; 0.707}.
+\]</span></p>
+<p><em>Solución:</em></p>
+<p>El ángulo equivalente se obtiene utilizando <a href="#eq-eje-angulo_angulo">Ecuación&nbsp;<span>3.14</span></a>. La traza, en este caso, es <span class="math inline">\(\text{tr}\Rot=-1-0.707+0.707=-1\)</span>, y por tanto, <span class="math inline">\(\text{tr}\Rot-1=-2\)</span>. Reemplazando los demás valores en <a href="#eq-eje-angulo_angulo">Ecuación&nbsp;<span>3.14</span></a> se tiene: <span class="math display">\[
+\theta = \atan2 \left(
+\dfrac{\pm \sqrt{(0-0)^2+(0-0)^2+(-0.707+0.707)^2}}{2},
+\dfrac{-2}{2}\right)
+\]</span> a partir de donde se obtiene <span class="math inline">\(\theta = 180^{\circ}\)</span>. En este caso hay solo un ángulo para la solución dado que el primer término de la función <span class="math inline">\(\atan2\)</span> es cero, y no varía sea positivo o negativo. El seno de <span class="math inline">\(180^{\circ}\)</span> es cero, por lo que no se puede obtener el eje utilizando <a href="#eq-eje-angulo_eje">Ecuación&nbsp;<span>3.13</span></a>, y se está en una singularidad. Como se vio anteriormente, cuando el ángulo es <span class="math inline">\(180^{\circ}\)</span> se debe utilizar las expresiones dadas en <a href="#eq-eje-anglo_eje-singularidad">Ecuación&nbsp;<span>3.16</span></a>, con las que se obtiene <span class="math display">\[
+\begin{align*}
+u_x &amp;= \pm \sqrt{\half (-1+1)}=0 \\
+u_y &amp;= \pm \sqrt{\half (-0.707+1)}=\pm 0.383, \\
+u_z &amp;= \pm \sqrt{\half (0.707+1)} = \pm 0.924.
+\end{align*}
+\]</span> Para determinar los signos correctos de <span class="math inline">\(u_y\)</span>, <span class="math inline">\(u_z\)</span> se utiliza las relaciones multiplicativas dadas en <a href="#eq-eje-anglo_eje-singularidad-signos">Ecuación&nbsp;<span>3.17</span></a>, obteniéndose: <span class="math display">\[
+u_x u_y = \frac{0}{2}=0, \qquad
+u_x u_z = \frac{0}{2}=0, \qquad
+u_y u_z = \frac{-0.707}{2}=-0.354.
+\]</span> Las dos primeras expresiones son cero debido a que <span class="math inline">\(u_x=0\)</span> (y no era necesario calcularlas). La tercera expresión muestra que el producto de <span class="math inline">\(u_y\)</span> con <span class="math inline">\(u_z\)</span> debe ser negativo, por lo que cuando <span class="math inline">\(u_y=0.383\)</span> se tiene <span class="math inline">\(u_z=-0.924\)</span>, y cuando <span class="math inline">\(u_y=-0.383\)</span> se tiene <span class="math inline">\(u_z=-0.924\)</span>. Finalmente, las dos soluciones tienen como ángulo de giro a <span class="math inline">\(180^{\circ}\)</span> y como ejes a <span class="math inline">\((0, 0.383, -0.924)\)</span> o a <span class="math inline">\((0, -0.383, 0.924)\)</span>. Se puede verificar el resultado utilizando la fórmula de Rodrigues con estos ángulos, para obtener la matriz de rotación equivalente.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-cuaterniones-unitarios" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-cuaterniones-unitarios"><span class="header-section-number">3.4</span> Cuaterniones Unitarios</h2>
+<p>En robótica es cada vez más común representar la orientación de los cuerpos rígidos que forman parte de un robot a través de cuaterniones unitarios, los cuales son un caso particular de los cuaterniones.</p>
+<dl>
+<dt><strong>Cuaterniones</strong></dt>
+<dd>
+<p>Un cuaternión <span class="math inline">\(Q \in \mathbb Q\)</span>, también llamado <em>cuaternio</em>, es una tupla de cuatro elementos reales, con operaciones de adición y multiplicación, que se representa como <span class="math display">\[
+Q = (w,\epsilon_x,\epsilon_y,\epsilon_z),\qquad \text{o} \qquad
+Q = w+\epsilon_x \vi + \epsilon_y \vj + \epsilon_z\vk,
+\]</span> donde <span class="math inline">\(w,\epsilon_x,\epsilon_y,\epsilon_z \in \R\)</span>, y los elementos <span class="math inline">\(\vi\)</span>, <span class="math inline">\(\vj\)</span>, <span class="math inline">\(\vk\)</span> son componentes de la base de los cuaterniones. El término <span class="math inline">\(w\)</span> es el componente escalar de <span class="math inline">\(Q\)</span>, y el término <span class="math inline">\(\bepsilon=(\epsilon_x,\epsilon_y,\epsilon_z)\)</span> constituye su componente vectorial, de tal modo que el cuaternión <span class="math inline">\(Q\)</span> puede también representarse como <span class="math display">\[
+Q = (w,\bepsilon), \qquad \text{o} \qquad Q = w+\bepsilon,
+\]</span> con <span class="math inline">\(w \in \R\)</span> y <span class="math inline">\(\bepsilon \in \R^3\)</span>. Debido a que <span class="math inline">\(\bepsilon\)</span> es el componente vectorial, al representar el cuaternión como una suma de componentes, sus elementos <span class="math inline">\(\epsilon_x,\epsilon_y,\epsilon_z\)</span> utilizan la base <span class="math inline">\(\vi,\vj,\vk\)</span> para ser claramente distinguidos del término escalar, que tiene base <span class="math inline">\(1\)</span>. Es usual representar como <span class="math inline">\(\mathbb Q\)</span> al espacio de todos los cuaterniones. Más detalles sobre cuaterniones y sus operaciones se puede encontrar en el <a href="ap_cuaterniones.html">apéndice&nbsp;<span>B</span></a>apéndice~<span class="math inline">\(\ref{ap:cuaterniones}\)</span>.</p>
+</dd>
+</dl>
+<p>Al representar un cuaternión como una tupla de cuatro elementos, es importante conocer el orden de estos elementos, ya que no existe una convención establecida. En este libro se utiliza la convención mostrada; es decir, primero el término escalar y luego los términos vectoriales. Sin embargo, algunas convenciones y paquetes de software, sin pérdida de generalidad, hacen lo contrario, y el no tener claro este orden es una fuente frecuente de errores, principalmente al utilizar bibliotecas para la implementación.</p>
+<dl>
+<dt><strong>Cuaterniones unitarios</strong></dt>
+<dd>
+<p>Los <em>cuaterniones unitarios</em>, cuyos elementos se conocen como <em>parámetros de Euler</em>, son el subconjunto de todos los cuaterniones <span class="math inline">\(Q \in \mathbb Q\)</span> tales que su magnitud es unitaria; es decir <span class="math display">\[
+  \Vert Q \Vert = 1,
+\]</span> o, equivalentemente, <span class="math inline">\(w^2+\epsilon_x^2+\epsilon_y^2+\epsilon_z^2=1\)</span>. Al espacio que contiene a los cuaterniones unitarios se denominará <span class="math inline">\(\mathbb Q_u\)</span>. Al igual que los cuaterniones genéricos, los cuaterniones unitarios forman un grupo con respecto a la multiplicación de cuaterniones, representada por <span class="math inline">\(\circ\)</span>. Esto implica que:</p>
+</dd>
+</dl>
+<ul>
+<li>La multiplicación de dos cuaterniones unitarios es un cuaternión unitario: si <span class="math inline">\(Q_1,Q_2 \in \mathbb Q_u\)</span>, entonces <span class="math inline">\(Q_1 \circ Q_2 \in \mathbb Q_u\)</span>.</li>
+<li>La multiplicación de cuaterniones unitarios es asociativa: si <span class="math inline">\(Q_1,Q_2, Q_3 \in \mathbb Q_u\)</span>, entonces <span class="math inline">\((Q_1 \circ Q_2) \circ Q_3 = Q_1 \circ (Q_2 \circ Q_3)\)</span>.</li>
+<li>Existe un elemento identidad con respecto a la multiplicación, que para los cuaterniones es <span class="math inline">\(Q_I=(1,0,0,0)\)</span>; es decir, la parte escalar es 1 y la parte vectorial tiene ceros.</li>
+<li>El elemento inverso <span class="math inline">\(Q^{-1}\)</span> de un cuaternión unitario <span class="math inline">\(Q=(w,\bepsilon)\)</span>, tal que <span class="math inline">\(Q \circ Q^{-1} = Q_I\)</span>, es el cuaternión unitario <span class="math inline">\(Q^{-1}=(w,-\bepsilon)\)</span>, y es único.</li>
+</ul>
+<p>Una consecuencia es que, dados <span class="math inline">\(Q_1, Q_2 \in \mathbb Q_u\)</span> se cumple que <span class="math inline">\(\Vert Q_1 \circ Q_2 \Vert = 1\)</span>; es decir, la norma del producto de dos cuaterniones unitarios es unitaria. Además, en cuaterniones unitarios, la inversa <span class="math inline">\(Q^{-1}\)</span> es igual a la conjugada <span class="math inline">\(Q^{*}\)</span>; es decir, <span class="math inline">\(Q^{-1}=Q^*\)</span>.</p>
+<section id="sec-cuaternion-orientacion" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="sec-cuaternion-orientacion"><span class="header-section-number">3.4.1</span> Orientación usando cuaterniones unitarios</h3>
+<p>La orientación resultante de rotar un cuerpo rígido un ángulo <span class="math inline">\(\theta \in \R\)</span> alrededor de un eje unitario <span class="math inline">\(\u=(u_x, u_y, u_z) \in \R^3\)</span>, como se ilustra en la <a href="#fig-eje-angulo-generico">Figura&nbsp;<span>3.3</span></a>, está representada por el cuaternión unitario <span id="eq-cuaternion-rotacion"><span class="math display">\[
+Q = \left(\cos\frac{\theta}{2},
+\u ~ \sen \frac{\theta}{2} \right),
+\tag{3.18}\]</span></span> donde el primer elemento es el componente escalar <span class="math inline">\(w\)</span> y el segundo elemento es el componente vectorial <span class="math inline">\(\bepsilon=(\epsilon_x, \epsilon_y, \epsilon_z)\)</span>, tal que <span id="eq-cuaternion-rotacion-elementos"><span class="math display">\[
+    w = \cos \left(\frac{\theta}{2}\right) \qquad \text{y} \qquad
+    \bepsilon = \u ~ \sen \left(\frac{\theta}{2} \right).
+\tag{3.19}\]</span></span> De forma equivalente, se puede representar <a href="#eq-cuaternion-rotacion">Ecuación&nbsp;<span>3.18</span></a> mostrando los componentes del eje unitario de rotación como <span class="math display">\[
+    Q = \left(\cos\frac{\theta}{2},
+    u_x \sen \frac{\theta}{2}, u_y \sen \frac{\theta}{2}, u_z \sen \frac{\theta}{2} \right).
+\]</span> Debido a que, dado un ángulo <span class="math inline">\(\alpha=\frac{\theta}{2}\)</span> se tiene <span class="math inline">\(\cos(\alpha)=\cos(-\alpha)\)</span> y <span class="math inline">\(\sen(\alpha)=-\sen(-\alpha)\)</span>, se cumple que el cuaternión <span class="math inline">\(Q\)</span> asociado con una rotación de <span class="math inline">\(\theta\)</span> alrededor de <span class="math inline">\(\u\)</span> es el mismo que el asociado con una rotación de <span class="math inline">\(-\theta\)</span> alrededor de <span class="math inline">\(-\u\)</span>. En otros términos, los pares eje-ángulo <span class="math inline">\((\theta,\u)\)</span> y <span class="math inline">\((-\theta,-\u)\)</span> originan el mismo cuaternión, como consecuencia de representar la misma rotación (esto es análogo a la propiedad dada en <a href="#eq-propiedad-rot-generica-equivalente">Ecuación&nbsp;<span>3.15</span></a>). Por otro lado, la ausencia de rotación, representada por <span class="math inline">\(\theta=0\)</span>, lleva al cuaternión <span class="math inline">\(Q_I=(1,0,0,0)\)</span>, el cual es el elemento identidad.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-cuaternion-eje-angulo-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.7 (Rotación arbitraria) </strong></span>Considerar una rotación de <span class="math inline">\(60^{\circ}\)</span> alrededor del eje <span class="math inline">\((2,2,0)\)</span>. a) Encontrar el cuaternión unitario <span class="math inline">\(Q\)</span> que representa dicha rotación. b) Encontrar la conjugada y la inversa del cuaternión <span class="math inline">\(Q\)</span>.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>Primero se necesita que el eje de giro sea unitario, así que se divide <span class="math inline">\((2,2,0)\)</span> entre su módulo (<span class="math inline">\(\sqrt{2^2+2^2} \approx 2.83\)</span>) para obtener <span class="math inline">\(\u=(0.707, 0.707, 0)\)</span>. Luego, la rotación arbitraria se obtiene reemplazando <span class="math inline">\(\theta=60^{\circ}\)</span> y el eje <span class="math inline">\(\u\)</span> calculado en <a href="#eq-cuaternion-rotacion">Ecuación&nbsp;<span>3.18</span></a>, para obtener <span class="math display">\[
+\begin{align*}
+Q &amp;= \left(\cos\frac{60^{\circ}}{2},
+(0.707, 0.707, 0) \sen \frac{60^{\circ}}{2} \right) \\
+&amp; = \left(0.866, ~0.5(0.707, 0.707, 0)  \right) \\
+&amp; = \left(0.866, ~0.354, 0.354, 0  \right).
+\end{align*}
+\]</span> El componente escalar del cuaternión unitario <span class="math inline">\(Q\)</span> obtenido es 0.866 y el componente vectorial es <span class="math inline">\((0.354, 0.354, 0)\)</span>.</p></li>
+<li><p>La conjugada de este cuaternión es <span class="math inline">\(Q^{*}=(0.866,-0.354,-0.354,0)\)</span>. Dado que se trata de cuaterniones unitarios, la inversa <span class="math inline">\(Q^{-1}\)</span> es igual a la conjugada <span class="math inline">\(Q^{*}\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-cuaternion-rotaciones-canonicas" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.8 (Rotaciones canónicas) </strong></span>Determinar los cuaterniones que representan las rotaciones canónicas de un ángulo <span class="math inline">\(\theta\)</span> alrededor de los ejes <span class="math inline">\(\x\)</span>, <span class="math inline">\(\y\)</span>, <span class="math inline">\(\z\)</span>.</p>
+<p><em>Solución:</em></p>
+<p>Las relaciones pedidas se obtienen utilizando el eje adecuado en <a href="#eq-cuaternion-rotacion">Ecuación&nbsp;<span>3.18</span></a>. Reemplazando, la rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor del eje canónico <span class="math inline">\(\x=(1,0,0)\)</span> estará dada por <span class="math display">\[
+Q_x = \left(\cos\frac{\theta}{2}, \sen \frac{\theta}{2}, 0, 0 \right).
+\]</span> Igualmente, la rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor del eje canónico <span class="math inline">\(\y=(0,1,0)\)</span> estará dada por <span class="math display">\[
+Q_x = \left(\cos\frac{\theta}{2}, 0, \sen \frac{\theta}{2}, 0 \right).
+\]</span> Finalmente, la rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor del eje canónico <span class="math inline">\(\z=(0,0,1)\)</span> estará dada por <span class="math display">\[
+Q_x = \left(\cos\frac{\theta}{2}, 0, 0, \sen \frac{\theta}{2} \right).
+\]</span> Es importante reconocer estas rotaciones canónicas en cuaterniones ya que, en algunos casos particulares, pueden ser las que describan algún tipo de movimiento. Por ejemplo, los robots móviles con ruedas en el plano tienen solamente orientaciones descritas por el último cuaternión, ya que su rotación es posible solo alrededor del eje <span class="math inline">\(\z\)</span> (asumiendo un plano sin irregularidades).</p>
+</div>
+</div>
+</div>
+</div>
+<dl>
+<dt><strong>Relación inversa: eje-ángulo dado un cuaternión unitario</strong></dt>
+<dd>
+Considérese una rotación representada mediante el cuaternión unitario <span class="math inline">\(Q=(w,\bepsilon)\)</span>, donde se asume que tanto <span class="math inline">\(w\)</span> como <span class="math inline">\(\bepsilon\)</span> son valores numéricos. Esta rotación es equivalente al giro de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u\)</span>. Ambos elementos se pueden obtener a partir de <a href="#eq-cuaternion-rotacion-elementos">Ecuación&nbsp;<span>3.19</span></a>. Para el caso del ángulo, el componente escalar brinda directamente <span class="math inline">\(w=\cos(\frac{\theta}{2})\)</span>, y el componente vectorial brinda <span class="math inline">\(\bepsilon=\u~\sen(\frac{\theta}{2})\)</span>. Tomando el módulo de esta última expresión se obtiene <span class="math inline">\(\Vert \bepsilon \Vert = \vert \sen(\frac{\theta}{2}) \vert\)</span>, puesto que <span class="math inline">\(\Vert \u \Vert = 1\)</span>. Usando la función <span class="math inline">\(\atan2\)</span>, dado el seno y el coseno, se tiene <span class="math inline">\(\frac{\theta}{2} = \atan2(\Vert \bepsilon \Vert,w)\)</span>, que lleva a: <span id="eq-angulo-cuaternion"><span class="math display">\[
+\theta = 2~ \atan2(\Vert \bepsilon \Vert,w).
+\tag{3.20}\]</span></span> Notar que la primera componente de <span class="math inline">\(\atan2\)</span> siempre será positiva, por lo que el ángulo <span class="math inline">\(\theta\)</span> siempre estará en el intervalo <span class="math inline">\([0, \pi]\)</span>. El eje se puede obtener despejando <span class="math inline">\(\bepsilon=\u~\sen(\frac{\theta}{2})\)</span> como <span class="math inline">\(\u=\frac{\bepsilon}{\sen(\theta/2)}\)</span>. Sin embargo, dado que para el cálculo del ángulo se está considerando solamente el valor positivo del seno, en el cálculo de <span class="math inline">\(\u\)</span> también se deberá considerar <span class="math inline">\(|\sen(\frac{\theta}{2})|\)</span>, el cual se mostró que es equivalente a <span class="math inline">\(\Vert \bepsilon \Vert\)</span>. Así, siempre que <span class="math inline">\(\Vert \bepsilon \Vert \neq 0\)</span>, el eje queda dado por <span id="eq-eje-cuaternion"><span class="math display">\[
+  \u = \frac{\bepsilon}{\Vert \bepsilon \Vert}.
+\tag{3.21}\]</span></span> Notar que en <a href="#eq-eje-cuaternion">Ecuación&nbsp;<span>3.21</span></a> hay una indeterminación cuando <span class="math inline">\(\Vert \bepsilon \Vert = \sen(\frac{\theta}{2}) = 0\)</span>. Esto se cumple cuando <span class="math inline">\(\frac{\theta}{2}=k\pi\)</span>, con <span class="math inline">\(k \in \mathbb Z\)</span>, o equivalentemente cuando <span class="math inline">\(\theta=2k\pi\)</span>; es decir, cuando <span class="math inline">\(\theta=0\)</span>. Se puede ver que este caso es un resultado de la indeterminación fundamental del eje de rotación cuando existe una rotación nula, y corresponde al cuaternión identidad <span class="math inline">\(Q_I=(1,0,0,0)\)</span>. Así, en este caso se puede escoger cualquier eje <span class="math inline">\(\u\)</span> arbitrario, dado que el ángulo de giro es 0 y por tanto no hay rotación.
+</dd>
+</dl>
+</section>
+<section id="sec-cuaternion-matriz-rotacion" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-cuaternion-matriz-rotacion"><span class="header-section-number">3.4.2</span> Relación con la matriz de rotación</h3>
+<p>Como se mostró en la <a href="#sec-cuaternion-orientacion"><span>Sección&nbsp;3.4.1</span></a>, resulta directo obtener un cuaternión unitario a partir del eje y ángulo que representa una rotación. Igualmente, la relación inversa se obtiene usando <a href="#eq-angulo-cuaternion">Ecuación&nbsp;<span>3.20</span></a> y <a href="#eq-eje-cuaternion">Ecuación&nbsp;<span>3.21</span></a>. Así, para convertir un cuaternión a una matriz de rotación, y viceversa, se puede utilizar dicha representación eje-ángulo como representación intermedia. Sin embargo, se puede realizar la conversión de manera más directa como se muestra a continuación.</p>
+<dl>
+<dt><strong>Matriz de Rotación dado un cuaternión unitario</strong></dt>
+<dd>
+<p>Para encontrar una matriz de rotación <span class="math inline">\(\Rot\)</span> equivalente a un cuaternión unitario <span class="math inline">\(Q=(w,\bepsilon)\)</span> dado, se puede utilizar la relación de los componentes <span class="math inline">\((w,\bepsilon)\)</span> del cuaternión con el eje unitario <span class="math inline">\(\u\)</span> y con el ángulo <span class="math inline">\(\theta\)</span>, dada en <a href="#eq-cuaternion-rotacion-elementos">Ecuación&nbsp;<span>3.19</span></a>. Luego, se aplica propiedades trigonométricas para reemplazar los componentes del cuaternión en la matriz de rotación dada en <a href="#eq-rot-eje-angulo">Ecuación&nbsp;<span>3.12</span></a>.</p>
+</dd>
+</dl>
+<p>De manera concreta, a partir de trigonometría básica se conoce la expresión del ángulo medio <span class="math inline">\(\cos(\theta)=2\cos^2(\frac{\theta}{2})-1\)</span>, la cual, reemplazando <span class="math inline">\(\cos\frac{\theta}{2}=w\)</span>, queda como <span class="math inline">\(\cos(\theta)=2w^2-1\)</span>. Por otro lado, se sabe que <span class="math inline">\(\sen(\theta) = 2\sen(\frac{\theta}{2})\cos(\frac{\theta}{2})\)</span>, y realizando el mismo reemplazo que en el caso anterior para <span class="math inline">\(w\)</span> se llega a <span class="math inline">\(\sen(\theta)= 2w\sen(\frac{\theta}{2})\)</span>. La expresión obtenida se puede multiplicar con los componentes <span class="math inline">\(u_i\)</span> del vector unitario, donde <span class="math inline">\(i=x,y,z\)</span>, obteniendo <span class="math inline">\(u_i\sen(\theta)=2w\epsilon_i\)</span>, ya que <span class="math inline">\(u_i\sen(\frac{\theta}{2})=\epsilon_i\)</span>. Finalmente, se tiene <span class="math inline">\(\cos(\theta)=1-2\sen^2(\frac{\theta}{2})\)</span>, de donde <span class="math inline">\(\text{versen}(\theta)=1-\cos(\theta)=2\sen^2(\frac{\theta}{2})\)</span>. Multiplicando esta expresión con los componentes <span class="math inline">\(u_iu_j\)</span> del eje unitario (<span class="math inline">\(i,j=x,y,z\)</span>) se llega a <span class="math inline">\(u_iu_j\text{versen}(\theta)=2u_iu_j\sen^2(\frac{\theta}{2})\)</span>, de donde se obtiene <span class="math inline">\(u_iu_j\text{versen}(\theta)=2\epsilon_i \epsilon_j\)</span>, ya que <span class="math inline">\(u_i\sen(\frac{\theta}{2})=\epsilon_i\)</span>. Los resultados obtenidos se resumen a continuación: <span class="math display">\[
+\cos(\theta)=2w^2-1, \qquad u_i\sen(\theta)=2w\epsilon_i, \qquad u_iu_j\text{versen}(\theta)=2\epsilon_i \epsilon_j,
+\]</span> donde <span class="math inline">\(i,j=x,y,z\)</span>. Reemplazando directamente estos resultados en <a href="#eq-rot-eje-angulo">Ecuación&nbsp;<span>3.12</span></a>, y realizando un pequeño arreglo de términos, se llega a <span id="eq-matriz-rotacion-cuaternion"><span class="math display">\[
+  \Rot(w,\bepsilon) = \bm{
+    2(w^2+\epsilon_x^2)-1 &amp; 2(\epsilon_x\epsilon_y -w\epsilon_z) &amp; 2(\epsilon_x
+    \epsilon_z + w \epsilon_y) \\
+    2(\epsilon_x\epsilon_y+w\epsilon_z) &amp; 2(w^2+\epsilon_y^2)-1 &amp; 2(\epsilon_y
+    \epsilon_z - w \epsilon_x) \\
+    2(\epsilon_x\epsilon_z -w\epsilon_y) &amp; 2(\epsilon_y\epsilon_z + w
+    \epsilon_x) &amp; 2(w^2+\epsilon_z^2)-1
+  },
+\tag{3.22}\]</span></span> que es la matriz de rotación equivalente a un cuaternión dado <span class="math inline">\(Q=(w,\epsilon_x,\epsilon_y,\epsilon_z)\)</span>.</p>
+<dl>
+<dt><strong>Cuaternión dada una matriz de rotación</strong></dt>
+<dd>
+<p>Este problema consiste en encontrar el cuaternión <span class="math inline">\(Q\)</span> que describe la misma rotación que una matriz de rotación <span class="math inline">\(\Rot\)</span> genérica dada por <span class="math display">\[
+  \Rot = \bm{
+r_{11} &amp; r_{12} &amp; r_{13} \\
+r_{21} &amp; r_{22} &amp; r_{23} \\
+r_{31} &amp; r_{32} &amp; r_{33} },
+\]</span> donde cada <span class="math inline">\(r_{ij}\)</span> es un valor numérico. Comparando los elementos de esta matriz con la matriz de rotación dada en <a href="#eq-matriz-rotacion-cuaternion">Ecuación&nbsp;<span>3.22</span></a>, se puede establecer las siguientes combinaciones lineales de los elementos de la diagonal principal que se relacionan con los cuadrados de los elementos del cuaternión: <span class="math display">\[
+\begin{align*}
+w^2 &amp; = \frac{1}{4} (1+r_{11}+r_{22}+r_{33}), &amp; \epsilon_x^2 = \frac{1}{4} (1+r_{11}-r_{22}-r_{33}), \\
+\epsilon_y^2 &amp; = \frac{1}{4} (1-r_{11}+r_{22}-r_{33}),  &amp; \epsilon_z^2 = \frac{1}{4} (1-r_{11}-r_{22}+r_{33}).
+\end{align*}
+\]</span> El problema de utilizar directamente estas ecuaciones radica en encontrar los signos correctos al momento de despejar el término cuadrático. Para resolver este problema se determina, por comparación de las matrices anteriores, las siguientes relaciones cruzadas: <span class="math display">\[
+\begin{align*}
+w\epsilon_x &amp; = \frac{1}{4} (r_{32}-r_{23}), &amp; w\epsilon_y = \frac{1}{4} (r_{13}-r_{31}), \qquad ~~ &amp; w\epsilon_z = \frac{1}{4} (r_{21}-r_{12}),\\
+\epsilon_x \epsilon_y &amp; = \frac{1}{4} (r_{12}+r_{21}), &amp; \epsilon_x\epsilon_z = \frac{1}{4} (r_{13}+r_{31}), \qquad ~~ &amp; \epsilon_y\epsilon_z = \frac{1}{4} (r_{23}+r_{32}),
+\end{align*}
+\]</span> las cuales ayudan a desambiguar el signo de los componentes del cuaternión. De manera concreta, se puede despejar <span class="math inline">\(\w\)</span> de la primera relación cuadrática, obteniendo <span id="eq-w-dado-R"><span class="math display">\[
+  w = \frac{1}{2} \sqrt{1+r_{11}+r_{22}+r_{33}},
+\tag{3.23}\]</span></span> donde se ha mantenido solo el signo positivo de la raíz cuadrada. Esta elección hace que <span class="math inline">\(w=\cos(\frac{\theta}{2})\)</span> siempre sea positivo, y que <span class="math inline">\(\theta\)</span> se encuentre en el intervalo abierto <span class="math inline">\((-\pi, \pi)\)</span>, cubriendo todos los posibles valores angulares, a excepción de <span class="math inline">\(\pi\)</span>. De las expresiones cruzadas anteriores, se puede despejar los componentes vectoriales del cuaternión usando las tres ecuaciones que contienen <span class="math inline">\(w\)</span>, ya que <span class="math inline">\(w\)</span> ya se encuentra calculado usando <a href="#eq-w-dado-R">Ecuación&nbsp;<span>3.23</span></a>, obteniendo <span id="eq-epsilon-dado-R"><span class="math display">\[
+\begin{align*}
+\epsilon_x &amp; = \frac{1}{4w} (r_{32}-r_{23}), \\
+  \epsilon_y &amp; = \frac{1}{4w} (r_{13}-r_{31}), \\
+  \epsilon_z &amp; = \frac{1}{4w} (r_{21}-r_{12}),  
+\end{align*}
+\tag{3.24}\]</span></span> sin tener problemas de signo. Así, usando <a href="#eq-w-dado-R">Ecuación&nbsp;<span>3.23</span></a> y <a href="#eq-epsilon-dado-R">Ecuación&nbsp;<span>3.24</span></a> se obtiene el cuaternión unitario deseado a partir de una matriz de rotación dada.</p>
+</dd>
+</dl>
+<p>Nótese que <a href="#eq-epsilon-dado-R">Ecuación&nbsp;<span>3.24</span></a> presenta una indeterminación cuando <span class="math inline">\(w=0\)</span>, es decir cuando <span class="math inline">\(\theta=\pm 180^{\circ}\)</span>, ya que en dicho caso no se podría calcular <span class="math inline">\(\bepsilon\)</span>. Esta indeterminación no es una singularidad del cuaternión (los cuaterniones no sufren de singularidades), sino un problema de la elección arbitraria realizada para calcular <span class="math inline">\(w\)</span> en <a href="#eq-w-dado-R">Ecuación&nbsp;<span>3.23</span></a>. En este caso, una solución consiste en calcular los valores positivos de <span class="math inline">\(\epsilon_x\)</span>, <span class="math inline">\(\epsilon_y\)</span> y <span class="math inline">\(\epsilon_z\)</span> de las expresiones cuadráticas anteriores, manteniendo solo la raíz positiva. Luego se encuentra el componente con mayor valor, por ejemplo <span class="math inline">\(\epsilon_i\)</span>, y se le mantiene, descartando los otros dos componentes. Una vez calculado <span class="math inline">\(\epsilon_i\)</span>, se utiliza las expresiones cruzadas anteriores que involucran a <span class="math inline">\(\epsilon_i\)</span> para despejar los 3 componentes restantes del cuaternión (los otros dos componentes de <span class="math inline">\(\bepsilon\)</span>, y el valor escalar <span class="math inline">\(w\)</span>).</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-cuaternion-matriz-rotacion" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.9 (Cuaternión a partir de una matriz de rotación) </strong></span>Determinar el cuaternión unitario <span class="math inline">\(Q\)</span> equivalente a la matriz de rotación <span class="math inline">\(\Rot\)</span> dada por <span class="math display">\[
+\Rot = \bm{0.321 &amp; -0.117 &amp; 0.940 \\ 0.683 &amp; 0.716 &amp; -0.145 \\ -0.656 &amp; 0.688 &amp; 0.310}.
+\]</span></p>
+<p><em>Solución:</em></p>
+<p>Utilizando <a href="#eq-w-dado-R">Ecuación&nbsp;<span>3.23</span></a>, y reemplazando los valores de la matriz dada, se calcula el componente escalar <span class="math inline">\(w\)</span> del cuaternión resultante como <span class="math display">\[
+w = 0.5 \sqrt{1+0.321+0.716+0.310} = 0.766.
+\]</span> Debido a que el resultado no es cero, se procede con la siguiente parte. Cada uno de los componentes vectoriales se calcula luego utilizando <a href="#eq-epsilon-dado-R">Ecuación&nbsp;<span>3.24</span></a>. Reemplazando valores se tiene <span class="math display">\[
+\begin{align*}
+    \epsilon_x &amp; = \frac{1}{4(0.766)}(0.688+0.145) = 0.272 \\
+    \epsilon_y &amp; = \frac{1}{4(0.766)}(0.940+0.656) = 0.521 \\
+    \epsilon_z &amp; = \frac{1}{4(0.766)}(0.683+0.117) = 0.261.
+\end{align*}
+\]</span> El cuaternión resultante es, entonces, <span class="math inline">\(Q=(0.766, 0.272, 0.521, 0.261)\)</span>. Se puede, además, fácilmente verificar que se trata de un cuaternión unitario.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="composición-de-cuaterniones" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="composición-de-cuaterniones"><span class="header-section-number">3.4.3</span> Composición de cuaterniones</h3>
+<p>Debido a que los cuaterniones parametrizan la orientación, al igual que una matriz de rotación representan la orientación de un sistema de referencia con respecto a otro sistema de referencia. Por ejemplo, el cuaternión <span class="math inline">\(\ssv{A}{Q}{B}\)</span> representa la orientación del sistema <span class="math inline">\(\frame B\)</span> con respecto al sistema <span class="math inline">\(\frame A\)</span>. Considérese además el cuaternión <span class="math inline">\(\ssv{B}{Q}{C}\)</span> que representa al sistema <span class="math inline">\(\frame C\)</span> con respecto al sistema <span class="math inline">\(\frame B\)</span>. El sistema <span class="math inline">\(\frame C\)</span> quedará representado con respecto al sistema <span class="math inline">\(\frame A\)</span> utilizando la composición de rotaciones como: <span class="math display">\[
+\ssv{A}{Q}{C} = \ssv{A}{Q}{B} \circ \ssv{B}{Q}{C}.
+\]</span> Como se observa, la composición de cuaterniones para múltiples sistemas de referencia es similar a la composición de matrices de rotación, pero utiliza el producto de cuaterniones, definido en el siguiente párrafo. Al igual que con matrices de rotación:</p>
+<ul>
+<li><p>Si se realiza una rotación con respecto a un sistema fijo, se premultiplica el cuaternión correspondiente (se multiplica por la izquierda).</p></li>
+<li><p>Si se realiza la rotación con respecto a un sistema móvil o rotado, se postmultiplica el cuaternión correspondiente (se multiplica por la derecha).</p></li>
+</ul>
+<dl>
+<dt><strong>Producto de cuaterniones</strong></dt>
+<dd>
+<p>El producto de un cuaternión <span class="math inline">\(Q_1=(w_1,\bepsilon_1)\)</span> con un cuaternión <span class="math inline">\(Q_2=(w_2, \bepsilon_2)\)</span>, representado como <span class="math inline">\(Q_1 \circ Q_2\)</span>, se obtiene aplicando el producto término a término y utilizando las relaciones fundamentales de las bases de un cuaternión (<span class="math inline">\(\vi\)</span>, <span class="math inline">\(\vj\)</span>, <span class="math inline">\(\vk\)</span>). El resultado de este producto está dado por: <span class="math display">\[
+Q_1 \circ Q_2 =
+(w_1w_2-\bepsilon_1^T\bepsilon_2,~w_1\bepsilon_2+w_2\bepsilon_1+\bepsilon_1
+\times \bepsilon_2),
+\]</span> donde la parte escalar del resultado es <span class="math inline">\(w_1w_2-\bepsilon_1^T\bepsilon_2\)</span>, y la parte vectorial es <span class="math inline">\(w_1\bepsilon_2+w_2\bepsilon_1+\bepsilon_1 \times \bepsilon_2\)</span>. Nótese que para poder operar el término <span class="math inline">\(\bepsilon_1^T\bepsilon_2\)</span> se está asumiendo que tanto <span class="math inline">\(\bepsilon_1\)</span> como <span class="math inline">\(\bepsilon_2\)</span> son vectores columna, y de manera alternativa se podría utilizar <span class="math inline">\(\bepsilon_1 \cdot \bepsilon_2\)</span>.</p>
+</dd>
+</dl>
+<p>De manera alternativa, el producto de dos cuaterniones también puede ser calculado convirtiendo el primer vector a matriz, <span class="math inline">\(\hat Q_1\)</span> y multiplicando esta matriz con el segundo cuaternión <span class="math inline">\(Q_2\)</span>, expresado como vector columna. Con este fin, dado el cuaternión <span class="math inline">\(Q\)</span>, se define la matriz <span class="math inline">\(\hat Q\)</span> como: <span class="math display">\[
+\hat Q = \bm{
+    w &amp; -\epsilon_x &amp; -\epsilon_y &amp; -\epsilon_z \\
+    \epsilon_x &amp; w &amp; -\epsilon_z &amp; \epsilon_y \\
+    \epsilon_y &amp; \epsilon_z &amp; w &amp; -\epsilon_x \\
+    \epsilon_z &amp; -\epsilon_y &amp; \epsilon_x &amp; w
+} =
+\bm{
+    w &amp; -\bepsilon^T \\
+    \bepsilon &amp; wI+\hat\bepsilon
+},
+\]</span> donde <span class="math inline">\(\hat \bepsilon\)</span> es la matriz antisimétrica asociada al vector <span class="math inline">\(\bepsilon\)</span> usando la misma forma que <a href="#eq-matriz-antisimetrica-u">Ecuación&nbsp;<span>3.9</span></a>. Usando <span class="math inline">\(\hat Q\)</span>, la multiplicación de los cuaterniones <span class="math inline">\(Q\)</span> con <span class="math inline">\(Q_2\)</span> es equivalente al producto matricial: <span class="math display">\[
+Q \circ Q_2 = \hat Q Q_2,
+\]</span> donde <span class="math inline">\(Q_2\)</span> se expresa como vector columna, siendo su primer elemento la parte escalar. A veces resulta útil esta forma de multiplicación ya que reduce el producto de cuaterniones a un producto matricial.</p>
+<p><strong>Rotación inversa con un cuaternión unitario</strong></p>
+<p>Al igual que con matrices de rotación, si <span class="math inline">\(\ssv{A}{Q}{B}\)</span> representa la orientación del sistema <span class="math inline">\(\frame B\)</span> con respecto al sistema <span class="math inline">\(\frame A\)</span>, el cuaternión <span class="math inline">\(\ssv{B}{Q}{A}\)</span> representa la orientación de <span class="math inline">\(\frame A\)</span> con respecto a <span class="math inline">\(\frame B\)</span>. Ambos cuaterniones están relacionados usando la inversa, de tal modo que <span class="math display">\[  
+    \ssv{B}{Q}{A} = \ssv{A}{Q}{B}^{*},
+\]</span> donde <span class="math inline">\(Q^{*}=(w,-\bepsilon)\)</span> denota la conjugada de <span class="math inline">\(Q=(w,\bepsilon)\)</span>. Para cuaterniones unitarios, la conjugada es igual a la inversa . Algunas propiedades útiles de la conjugada son:</p>
+<ul>
+<li><p><span class="math inline">\((Q_1 \circ Q_2)^*=Q_2^* \circ Q_1^*\)</span></p></li>
+<li><p><span class="math inline">\((Q_1+Q_2)^*=Q_1^*+Q_2^*\)</span>, y <span class="math inline">\((Q^*)^*=Q\)</span></p></li>
+</ul>
+<!-- TODO: Añadir más ejemplos a cuaterniones (composición de cuaterniones, multiplicación, eje-ángulo dado un cuaternión). Citar Mason 
+-->
+</section>
+</section>
+<section id="aplicación-de-parametrizaciones-a-vectores" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="aplicación-de-parametrizaciones-a-vectores"><span class="header-section-number">3.5</span> Aplicación de Parametrizaciones a Vectores</h2>
+<p>La sección anterior mostró las principales parametrizaciones de la orientación como descripciones de la orientación de un sistema de referencia con respecto a otro, usando menos parámetros que una matriz de rotación. En esta sección se muestra cómo aplicar estas parametrizaciones a un vector para representar un vector en diferentes sistemas de referencia. Usando una interpretación diferente, pero matemáticamente equivalente, se muestra cómo rotar un vector en un mismo sistema de referencia.</p>
+<p>La forma más directa de aplicar la rotación a un vector consiste en transformar la parametrización en una matriz de rotación, y multiplicar la matriz de rotación con el vector correspondiente como se vio anteriormente. En el caso de ángulos de Euler de cualquier tipo, o ángulos <em>roll, pitch, yaw</em>, esta es la manera usual de proceder. Para la representación usando eje-ángulo también es posible, pero existe una manera más directa y matemáticamente eficiente de transformar vectores sin tener que generar la matriz de rotación asociada. Igualmente, para cuaterniones existe una manera de aplicarlos directamente a los vectores sin pasar por la matriz de rotación.</p>
+<section id="rotación-usando-eje-ángulo" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="rotación-usando-eje-ángulo"><span class="header-section-number">3.5.1</span> Rotación usando Eje-ángulo</h3>
+<p>La representación eje-ángulo, que expresa el giro de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u\)</span>, es equivalente a la matriz de rotación <span class="math inline">\(\Rot(\theta,\u)\)</span> dada por la fórmula de Rodrigues en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>. Para aplicar esta rotación a un vector <span class="math inline">\(\vv\)</span>, se puede iniciar con la aplicación directa de la matriz de rotación equivalente. Al vector rotado se le denominará <span class="math inline">\(\vv_{rot}\)</span>, tal que <span class="math display">\[
+\vv_{rot} = \Rot(\theta,\u) \vv.
+\]</span> Se puede reemplazar la matriz de rotación por su equivalente en términos de eje <span class="math inline">\(\u\)</span> y ángulo <span class="math inline">\(\theta\)</span> usando, la fórmula de Rodrigues dada en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>, llegando a <span class="math display">\[
+\begin{align*}
+\vv_{rot} &amp; = (I + \hat{\u} \sen\theta + \hat{\u}^2(1-\cos\theta))\vv \\
+&amp;= \vv + \hat{\u}\vv \sen\theta +
+\hat{\u}\hat{\u}\vv(1-\cos\theta),
+\end{align*}
+\]</span> donde en la última expresión se escribió <span class="math inline">\(\hat{\u}^2\)</span> como <span class="math inline">\(\hat{\u} \hat{\u}\)</span>. El producto de la matriz antisimétrica con un vector puede ser reemplazado por el producto cruz, usando el vector asociado con la matriz antisimétrica. Por ejemplo, <span class="math inline">\(\hat{\u} \vv=\u \times \vv\)</span>, y <span class="math inline">\(\hat{\u} \hat{\u} \vv=\u \times (\u \times \vv)\)</span>. Realizando estos reemplazos en la expresión de <span class="math inline">\(\vv_{rot}\)</span> se tiene <span class="math display">\[
+\vv_{rot} = \vv + (\u \times \vv) \sen\theta + \u\times (\u \times \vv) (1-\cos\theta).
+\]</span> En la expresión resultante se puede utilizar la siguiente propiedad del triple producto vectorial:<br>
+<span class="math inline">\(\a \times (\vect b \times \vect c)=\vect b(\a \cdot \vect c)-\vect c(\a \cdot \vect b)\)</span>. Aplicando esta propiedad, y simplificando términos, ya que <span class="math inline">\(\u \cdot \u=1\)</span> por tratarse de un vector unitario, se llega a <span class="math display">\[
+\begin{align*}
+\vv_{rot}
+&amp;= \vv + (\u \times \vv) \sen\theta +
+[\u (\u \cdot \vv)-\vv (\u \cdot \u)] (1-\cos\theta) \\
+&amp;= \vv + (\u \times \vv) \sen\theta +
+\u (\u \cdot \vv) (1-\cos\theta)-\vv (1-\cos\theta).
+\end{align*}
+\]</span> Simplificando términos se tiene finalmente <span id="eq-formula-rodrigues-vector"><span class="math display">\[
+\boxed{
+    \vv_{rot} = \vv\cos\theta + (\u \times \vv) \sen\theta +
+    \u (\u \cdot \vv) (1-\cos\theta)
+}
+\tag{3.25}\]</span></span> Esta expresión a veces es denominada la <em>forma vectorial de la fórmula de Rodrigues</em>, y es una forma eficiente de rotar un vector <span class="math inline">\(\vv\)</span>, en un mismo sistema de referencia, dado un eje <span class="math inline">\(\u\)</span> y un ángulo de rotación <span class="math inline">\(\theta\)</span>. Debido a que esta expresión representa la aplicación de la rotación a un vector determinado, se puede interpretar también como el paso del vector <span class="math inline">\(\vv\)</span> de un sistema rotado, el cual está representado por la rotación de <span class="math inline">\(\theta\)</span> alrededor de <span class="math inline">\(\u\)</span>, al sistema base.</p>
+<p>Se puede, de manera alternativa, reemplazar <span class="math inline">\(\u \times \vv\)</span> por la matriz antisimétrica asociada <span class="math inline">\(\hat\u \times \vv\)</span>, pero se dejó el producto cruz en la expresión anterior por ser la forma más común de la forma vectorial de Rodrigues. Otra representación, a veces utilizada, de esta expresión se puede deducir a partir de las líneas anteriores a <a href="#eq-formula-rodrigues-vector">Ecuación&nbsp;<span>3.25</span></a>, y es igual a <span class="math display">\[
+\vv_{rot}
+= \u(\u \cdot \vv) + (\u \times \vv) \sen\theta -
+\u\times (\u \times \vv) \cos\theta.
+\]</span> Sin embargo, aquí se utilizará <a href="#eq-formula-rodrigues-vector">Ecuación&nbsp;<span>3.25</span></a> por ser más compacta.</p>
+<!-- % TODO: añadir ejemplo -->
+</section>
+<section id="rotación-usando-cuaterniones-unitarios" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="rotación-usando-cuaterniones-unitarios"><span class="header-section-number">3.5.2</span> Rotación usando Cuaterniones Unitarios</h3>
+<p>Los cuaterniones tienen parte escalar y parte vectorial. Cuando se utilizan para representar valores escalares, su parte vectorial es nula, y cuando son utilizados con el fin de representar vectores, su parte escalar es nula. Un vector (puro) <span class="math inline">\(\vv=(v_x,v_y,v_z) \in \R^3\)</span> se representa en forma de cuaternión como <span class="math inline">\(\tilde \vv \in \mathbb Q\)</span> tal que <span class="math display">\[
+\tilde \vv = (0, \vv) = (0, v_x, v_y, v_z),
+\]</span> donde la parte escalar es <span class="math inline">\(w=0\)</span> y la parte vectorial es <span class="math inline">\(\bepsilon=\vv\)</span>. Cabe resaltar que este cuaternión <span class="math inline">\(\tilde \vv\)</span> asociado con el vector <span class="math inline">\(\vv\)</span> no es unitario, ya que no representa una rotación sino un vector tridimensional.</p>
+<p>La rotación de un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje <span class="math inline">\(\u\)</span> se puede aplicar a un vector <span class="math inline">\(\vv \in \R^3\)</span>, escrito en forma de cuaternión como <span class="math inline">\(\tilde\vv=(0,\vv)\)</span>, a través del producto con el cuaternión unitario <span class="math inline">\(Q=(\cos(\frac{\theta}{2}), \u \sen(\frac{\theta}{2}))\)</span> que representa dicha rotación. El cuaternión asociado con el vector resultante de la rotación, <span class="math inline">\(\tilde\vv_{rot}\)</span>, queda dado por: <span id="eq-rotacion-vector-cuaternion"><span class="math display">\[
+\tilde \vv_{rot} = Q \circ \tilde \vv \circ Q^*,
+\tag{3.26}\]</span></span> donde el vector rotado es <span class="math inline">\(\vv_{rot}\)</span> y es el componente vectorial de <span class="math inline">\(\tilde \vv_{rot}\)</span>. Este cuaternión resultante siempre tendrá parte escalar cero, ya que reprenta a un vector puro; es decir, siempre tendrá la forma <span class="math inline">\(\tilde \vv_{rot}=(0, \vv_{rot})\)</span>. La aplicación de la rotación, en el caso de cuaterniones unitarios, siempre implica una multiplicación por la derecha y por la izquierda: por la derecha con el cuaternión conjugado <span class="math inline">\(Q^{*}\)</span>, y por la izquierda con <span class="math inline">\(Q\)</span>. La demostración que el producto dado en <a href="#eq-rotacion-vector-cuaternion">Ecuación&nbsp;<span>3.26</span></a> en realidad rota el vector <span class="math inline">\(\vv\)</span> se da a continuación.</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<div id="exm-rotacion-vector-usando-cuaternion" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.10 (Rotación de un vector usando un cuaternión) </strong></span>Rotar el vector <span class="math inline">\(\vv=(3,5,2)\)</span> un ángulo de <span class="math inline">\(60^{\circ}\)</span> alrededor del eje <span class="math inline">\((2,0,0)\)</span> usando a) un cuaternión, b) una matriz de rotación.</p>
+<p><em>Solución:</em></p>
+<ol type="a">
+<li><p>El vector <span class="math inline">\(\vv=(2,0,0)\)</span> tiene que ser primero convertido en un cuaternión equivalente, obteniéndose <span class="math inline">\(\hat \vv = (0, 2,0,0)\)</span>. Por otro lado, el cuaternión unitario que representa la orientación deseada es <span class="math inline">\(Q=(\cos(30^{\circ}), \sen(60^{\circ}), 0, 0)=(0.866, 0.5, 0, 0)\)</span>. Aplicando <a href="#eq-rotacion-vector-cuaternion">Ecuación&nbsp;<span>3.26</span></a> se tiene que el vector rotado <span class="math inline">\(\hat\vv_{rot}\)</span> es <span class="math display">\[
+\hat{\vv}_{rot} = (0.866, 0.5, 0, 0) \circ (0,2,0,0) \circ (0.866, -0.5, 0, 0).
+\]</span> Realizando el producto de cuaterniones se obtiene <span class="math display">\[
+\begin{align*}
+\hat{\vv}_{rot} &amp; = (-1.5, 2.6, 3.33, 4.23) \circ (0.866, -0.5, 0, 0) \\
+&amp; = (0, 3, 0.768,5.33).
+\end{align*}
+\]</span> Así, el vector rotado estará dado por la parte vectorial del cuaternión <span class="math inline">\(\hat\vv\)</span>; es decir, <span class="math inline">\(\vv_{rot}=(2,0.768,5.33)\)</span>.</p></li>
+<li><p>Para usar la matriz de rotación, se debe multiplicar la matriz de rotación que describe el giro deseado alrededor del eje <span class="math inline">\(\x\)</span> con el vector inicial. El resultado será: <span class="math display">\[
+\vv_{rot} = \bm{1 &amp; 0 &amp; 0 \\ 0 &amp; \cos(60^{\circ}) &amp; -\sen(60^{\circ}) \\ 0 &amp; \sen(60^{\circ}) &amp; \cos(60^{\circ})} \bm{3 \\ 5 \\ 2} = \bm{3 \\ 0.768 \\ 5.33}.
+\]</span> Se verifica que ambos resultados son iguales.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<dl>
+<dt><strong>Demostración</strong></dt>
+<dd>
+<p>Para demostrar que el producto anterior rota el vector <span class="math inline">\(\vv\)</span> según la rotación representada por el cuaternión <span class="math inline">\(Q=(w,\bepsilon)\)</span>, se realizará la expansión de los términos del producto mostrando de manera explícita los componentes escalar y vectorial. Considerando que <span class="math inline">\(Q^{*}=(w,-\bepsilon)\)</span>, a partir de en <a href="#eq-rotacion-vector-cuaternion">Ecuación&nbsp;<span>3.26</span></a> se tiene <span class="math display">\[
+\tilde \vv_{rot} = (w,\bepsilon) \circ (0,\vv) \circ (w,-\bepsilon).
+\]</span> Aplicando la definición de producto de cuaterniones, primero a los dos términos de la izquierda, y luego al resultado con el cuaternión de la derecha se obtiene <span class="math display">\[
+\begin{align*}
+\tilde \vv_{rot} &amp; = (-\bepsilon^T \vv, w \vv + \bepsilon \times \vv) \circ
+(w,-\bepsilon) \\
+\tilde \vv_{rot} &amp; = \left( -w(\bepsilon^T\vv)+(w\vv+\bepsilon \times
+\vv)^T\bepsilon,  ~ (\bepsilon^T\vv)\bepsilon +
+w (w\vv+\bepsilon \times \vv)
+- (w\vv+\bepsilon \times \vv)\times \bepsilon \right)
+\end{align*}
+\]</span> Aplicando la transpuesta indicada, la parte escalar del cuaternión resultante es <span class="math display">\[
+-w(\bepsilon^T\vv) + w (\vv^T) \bepsilon + (\bepsilon \times
+\vv)^T\bepsilon = \bepsilon^T(\bepsilon \times
+\vv) = 0,
+\]</span> ya que el producto punto de dos vectores mutualmente perpendiculares es cero: <span class="math inline">\(\bepsilon^T(\bepsilon \times \vv) = \bepsilon \cdot (\bepsilon \times \vv) = 0\)</span>. Por tanto, el cuaternión resultante no tiene parte escalar, lo cual muestra que es un vector puro. La parte vectorial del cuaternión resultante constituye el vector rotado y, realizando algunas simplificaciones, es: <span class="math display">\[
+\vv_{rot} =(\bepsilon \cdot \vv)\bepsilon + w^2\vv+ 2w(\bepsilon \times \vv)
+-(\bepsilon \times \vv)\times \bepsilon.
+\]</span> La propiedad del triple producto vectorial establece que <span class="math inline">\((\a \times \vect b) \times \vect c= (\vect c \cdot \a)\vect b -(\vect c \cdot \vect b)\a\)</span>, por lo que se tiene que <span class="math inline">\((\bepsilon \times \vv) \times \bepsilon = (\bepsilon \cdot \bepsilon)\vv - (\bepsilon \cdot \vv)\bepsilon = \Vert \bepsilon \Vert^2 \vv - (\bepsilon \cdot \vv) \bepsilon\)</span>. Reemplazando este resultado en la expresión anterior, y agrupando términos similares se llega a <span id="eq-vrot-intermedio"><span class="math display">\[
+\begin{align}
+\vv_{rot} &amp; =(\bepsilon \cdot \vv)\bepsilon + w^2\vv+
+2 w (\bepsilon \times \vv) + (\bepsilon \cdot \vv) \bepsilon
+- \Vert \bepsilon \Vert^2 \vv \\
+\vv_{rot} &amp; = 2 (\bepsilon \cdot \vv)\bepsilon +
+(w^2 - \Vert \bepsilon \Vert^2)\vv+
+2 w (\bepsilon \times \vv).
+\end{align}
+\tag{3.27}\]</span></span> Para encontrar la relación de esta expresión con el eje <span class="math inline">\(\u\)</span> y el ángulo <span class="math inline">\(\theta\)</span> de rotación, se reemplaza <span class="math inline">\(w = \cos \frac{\theta}{2}\)</span> y <span class="math inline">\(\bepsilon = \u\sen\frac{\theta}{2}\)</span>, obteniéndose: <span class="math display">\[
+\vv_{rot} =2\sen^2\frac{\theta}{2} (\u \cdot \vv)\u +
+\left(\cos^2\frac{\theta}{2} -
+\sen^2\frac{\theta}{2} \right) \vv+ 2 \cos\frac{\theta}{2}
+\sen\frac{\theta}{2} (\u \times \vv).
+\]</span> Finalmente, aplicando algunas propiedades trigonométricas básicas, se simplifica la expresión anterior a <span class="math display">\[
+\vv_{rot}=(1-\cos \theta) (\u \cdot \vv)\u + \cos \theta~ \vv
++ \sen\theta (\u \times \vv),
+\]</span> y esta expresión obtenida es exactamente igual a la rotación de un vector cuando se aplica la fórmula de Rodrigues dada en <a href="#eq-formula-rodrigues-vector">Ecuación&nbsp;<span>3.25</span></a>. Así, se demuestra que el producto dado en <a href="#eq-rotacion-vector-cuaternion">Ecuación&nbsp;<span>3.26</span></a> es equivalente a <a href="#eq-formula-rodrigues-vector">Ecuación&nbsp;<span>3.25</span></a> y representa la rotación del vector un ángulo <span class="math inline">\(\theta\)</span> alrededor de un eje unitario <span class="math inline">\(\u\)</span>.</p>
+</dd>
+<dt><strong>Relación con la Matriz de Rotación</strong></dt>
+<dd>
+<p>Como se acaba de demostrar, el vector <span class="math inline">\(\vv_{rot}\)</span> que se obtiene como resultado de aplicar una rotación a un a un vector <span class="math inline">\(\vv\)</span>, a través de un cuaternión <span class="math inline">\(Q=(w,\bepsilon)\)</span>, se representa como <span class="math inline">\(\tilde \vv_{rot} = Q \circ \tilde \vv \circ Q^*\)</span>. Luego de algunas simplificaciones se llega a <a href="#eq-vrot-intermedio">Ecuación&nbsp;<span>3.27</span></a>. Utilizando algunas propiedades de operaciones con vectores, <a href="#eq-vrot-intermedio">Ecuación&nbsp;<span>3.27</span></a> se puede representar de manera equivalente como <span class="math display">\[
+\vv_{rot} = 2 \bepsilon (\bepsilon^T \vv) +
+(w^2 - \Vert \bepsilon \Vert^2)\vv+ 2 w (\hat \bepsilon \vv),
+\]</span> donde <span class="math inline">\(\hat\bepsilon\)</span> es la matriz antisimétrica asociada con <span class="math inline">\(\bepsilon\)</span> (considerando a <span class="math inline">\(\bepsilon\)</span> como un vector). Debido a que <span class="math inline">\(\vv\)</span> aparece a la derecha en todos los términos, se puede factorizar, quedando <span class="math display">\[
+\vv_{rot} = \left(2\bepsilon \bepsilon^T + (w^2-\Vert \bepsilon \Vert^2) I +
+2 w \hat \bepsilon \right) \vv.
+\]</span> Esta relación muestra una transformación lineal que convierte <span class="math inline">\(\vv\)</span> en <span class="math inline">\(\vv_{rot}\)</span>, la cual es la matriz de rotación. Es decir, se tiene <span class="math inline">\(\vv_{rot}=\Rot \vv\)</span> con <span id="eq-matriz-rotacion-cuaternion-compacta"><span class="math display">\[
+\Rot = \left(2\bepsilon \bepsilon^T + (w^2-\Vert \bepsilon \Vert^2) I +
+2 w \hat \bepsilon \right).
+\tag{3.28}\]</span></span> Esta matriz de rotación <span class="math inline">\(\Rot\)</span> es equivalente a la rotación descrita por el cuaternión <span class="math inline">\(Q=(w,\bepsilon)\)</span>. Desarrollando término a término se puede mostrar que se obtiene la misma matriz dada en <a href="#eq-matriz-rotacion-cuaternion">Ecuación&nbsp;<span>3.22</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="sec-coordenadas-exponenciales" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-coordenadas-exponenciales"><span class="header-section-number">3.6</span> Coordenadas Exponenciales</h2>
+<!-- % TODO (Explicar en unas 3-4 líneas qué es una coordenada exponencial, importancia,
+% cómo lleva a eje-ángulo que es una parametrización) -->
+<section id="ecuación-fundamental-del-movimiento-de-rotación" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="ecuación-fundamental-del-movimiento-de-rotación"><span class="header-section-number">3.6.1</span> Ecuación Fundamental del Movimiento de Rotación</h3>
+<p>Considerando que la matriz de rotación <span class="math inline">\(\Rot(t)\)</span> depende del tiempo, es posible tomar su derivada temporal. Usando la regla de la cadena, se puede derivar con respecto al tiempo la igualdad <span class="math inline">\(\Rot(t) \Rot(t)^T=I\)</span>, que se cumple para toda matriz de rotación, llegando a: <span class="math display">\[
+\dot{\Rot}\Rot^T + \Rot \dot{\Rot}^T = 0,
+\]</span> donde por simplicidad se ha obviado la dependencia del tiempo. Aplicando la propiedad de la transpuesta <span class="math inline">\((\dot{\Rot}\Rot^T)^T=\Rot\dot{\Rot}^T\)</span>, y reordenando los términos, se tiene <span class="math display">\[
+\dot{\Rot}\Rot^T=-(\dot{\Rot}\Rot^T)^T.
+\]</span> A partir de esta expresión, se puede observar que <span class="math inline">\(\dot{\Rot}\Rot^T\)</span> es una matriz antisimétrica. Esta matriz antisimétrica se denomina, usualmente, <span class="math inline">\(\hat{\bomega}\)</span> y queda definida como: <span class="math display">\[
+\hat{\bomega} = \dot{\Rot}\Rot^T.
+\]</span> Multiplicando por <span class="math inline">\(\Rot\)</span> a la derecha de ambos miembros de la igualdad, esta definición de <span class="math inline">\(\hat{\bomega}\)</span> lleva a la siguiente ecuación diferencial: <span id="eq-derivada-rotacion"><span class="math display">\[
+%\boxed{
+    \dot{\Rot}=\hat{\bomega} \Rot
+%}
+\tag{3.29}\]</span></span> la cual es denominada la <em>ecuación fundamental del movimiento de rotación</em>. Esta ecuación diferencial, a su vez, describe la derivada de una matriz de rotación. Su solución utilizando la condición inicial <span class="math inline">\(\Rot(0)=I\)</span>, que es equivalente al hecho que inicialmente no existe rotación, es <span id="eq-rot-exp"><span class="math display">\[
+%\boxed{
+\Rot = e^{\hat{\bomega}t}.
+%}.
+\tag{3.30}\]</span></span> La solución dada en <a href="#eq-rot-exp">Ecuación&nbsp;<span>3.30</span></a> puede ser verificada por sustitución en <a href="#eq-derivada-rotacion">Ecuación&nbsp;<span>3.29</span></a>. La expresión <a href="#eq-rot-exp">Ecuación&nbsp;<span>3.30</span></a> muestra que una matriz de rotación puede también ser expresada como la exponencial de una matriz antisimétrica <span class="math inline">\(\hat \bomega\)</span> que, como se verá en la <a href="#sec-significado-omega"><span>Sección&nbsp;3.6.2</span></a>, representa la velocidad angular. Existen varias formas de calcular <a href="#eq-rot-exp">Ecuación&nbsp;<span>3.30</span></a>; la más utilizada en robótica se muestra en la <a href="#sec-exponencial-matrix"><span>Sección&nbsp;3.6.3</span></a>.</p>
+</section>
+<section id="sec-significado-omega" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-significado-omega"><span class="header-section-number">3.6.2</span> Significado Físico de <span class="math inline">\(\hat{\omega}\)</span></h3>
+<p>Considérese un punto <span class="math inline">\(\p\)</span> ubicado en un cuerpo rígido y considérese, además, un sistema de referencia fijo <span class="math inline">\(\frame F\)</span> de tal modo que el punto <span class="math inline">\(\p\)</span> en el sistema <span class="math inline">\(\frame F\)</span> se representa como <span class="math inline">\(\sv{F}{\p}\)</span> (como se muestra en la <a href="#fig-interpretacion-omega">Figura&nbsp;<span>3.5</span></a>). Se asumirá que el cuerpo rígido gira con una velocidad angular <span class="math inline">\(\bomega\)</span> cuyo eje pasa pasa por el origen del sistema de referencia <span class="math inline">\(\frame F\)</span>.</p>
+<div id="fig-interpretacion-omega" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/represent/interpretacion-w.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3.5: Cuerpo rígido y sistema de referencia <span class="math inline">\(\frame F\)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>Bajo estas condiciones el punto <span class="math inline">\(\p\)</span> fijo en el cuerpo rígido girará con la misma velocidad angular <span class="math inline">\(\bomega=(\omega_x,\omega_y,\omega_z)\)</span> y con una velocidad lineal dada por <span class="math display">\[
+\ssv{F}{\dot \p}{} = \bomega \times \ssv{F}{\p}{}
+\]</span> que es un resultado elemental de mecánica clásica. Se puede considerar un sistema adicional <span class="math inline">\(\frame B\)</span>, con el mismo origen que <span class="math inline">\(\frame F\)</span> pero que se encuentra fijo en el cuerpo; es decir, cuando el cuerpo rota, el sistema <span class="math inline">\(\frame B\)</span> rota junto con el cuerpo. El punto <span class="math inline">\(\p\)</span> del cuerpo rígido se puede describir como <span class="math inline">\(\ssv{B}{\p}{}\)</span> en el sistema <span class="math inline">\(\frame B\)</span>, y es constante con respecto a este sistema. La rotación entre ambos sistemas, <span class="math inline">\(\frame B\)</span> y <span class="math inline">\(\frame F\)</span>, se describe mediante la matriz de rotación <span class="math inline">\(\ssr{F}{B}\)</span>. Usando esta matriz, el punto <span class="math inline">\(\ssv{B}{\p}{}\)</span> se expresa en el sistema de referencia como <span class="math display">\[
+\ssv{F}{\p}{} = \ssr{F}{B} \ssv{B}{\p}{}.
+\]</span> La derivada de esta expresión, usando la derivada de la matriz de rotación dada en <a href="#eq-derivada-rotacion">Ecuación&nbsp;<span>3.29</span></a> y tomando en cuenta que <span class="math inline">\(\ssv{B}{\p}{}~\)</span> es constante, resulta en <span class="math display">\[
+\begin{align*}
+\ssv{F}{\dot \p}{} &amp; = \ssdr{F}{B} \ssv{B}{\p}{} \\
+\ssv{F}{\dot \p}{} &amp; = \hat \bomega  \ssr{F\!}{B} \ssv{B}{\p}{} \\
+\ssv{F}{\dot \p}{} &amp; = \hat \bomega  \ssv{F\!}{\p}{}.
+\end{align*}
+\]</span> Comparando esta última expresión con la obtenida anteriormente utilizando el criterio puramente físico, se observa que ambas ecuaciones relacionan los mismos elementos y por tanto <span class="math inline">\(\bomega \times\! = \hat \bomega\)</span>. Así, la matriz <span class="math inline">\(\hat \bomega\)</span> es la matriz antisimétrica asociada con la velocidad angular <span class="math inline">\(\bomega\)</span> del cuerpo rígido y está dada por <span class="math display">\[
+\hat\bomega = \bm{0 &amp; -\omega_z &amp; \omega_y \\ \omega_z &amp; 0 &amp; -\omega_x \\
+    -\omega_y &amp; \omega_x &amp; 0}.
+\]</span> Esto justifica el uso de la variable <span class="math inline">\(\hat \bomega\)</span>, donde <span class="math inline">\(\bomega\)</span> hace referencia a la velocidad angular, para referirse a esta matriz.</p>
+<p><strong>Álgebra de Lie del Grupo de Rotación</strong></p>
+<p>Es posible asociar a cualquier grupo de Lie, <span class="math inline">\(G\)</span>, un <em>álgebra de Lie</em> que captura completamente la estructura local del grupo. Matemáticamente el espacio vectorial que forma el álgebra de Lie es el espacio tangente al grupo <span class="math inline">\(G\)</span> en el elemento identidad. Para el grupo de Lie de rotación <span class="math inline">\(SO(3)\)</span> se puede, informalmente, pensar que su álgebra de Lie denominado <span class="math inline">\(so(3)\)</span> es su espacio tangente, el cual representa la velocidad angular. Este espacio tangente está dado por las denominadas matrices antisimétricas, descritas en el ´<a href="ap_elementos_matematicos.html#sec-ap-matrices-antisimetricas">apéndice&nbsp;<span>A.2.3</span></a>, llamadas <em>skew-symmetric</em> en inglés.</p>
+<p>El espacio <span class="math inline">\(so(3)\)</span>, el cual constituye un álgebra de Lie del grupo de matrices de rotación <span class="math inline">\(SO(3)\)</span>, es el espacio de matrices antisimétricas en <span class="math inline">\(\R^{3 \times 3}\)</span> y está definido como: <span id="eq-definicion-so3"><span class="math display">\[
+so(3) = \{ \hat{\bomega} \in \mathbb{R}^{3 \times 3}:
+\hat{\bomega}^T=-\hat{\bomega} \} \subset \mathbb{R}^{3 \times 3}.
+\tag{3.31}\]</span></span></p>
+<p>El espacio <span class="math inline">\(so(3)\)</span> es también un espacio vectorial debido a que es cerrado bajo la suma y bajo la multiplicación con un escalar; es decir, dados <span class="math inline">\(\hat{\omega}_1, \hat{\omega}_2 \in so(3), \lambda \in \mathbb R\)</span>, se tiene <span class="math inline">\(\hat{\omega}_1+\hat{\omega}_2 \in so(3)\)</span>, y <span class="math inline">\(\lambda \hat{\omega}_1 \in so(3)\)</span>. Los elementos de <span class="math inline">\(so(3)\)</span> son en realidad representaciones de la velocidad angular <span class="math inline">\(\omega\)</span> en formato de matriz antisimétrica, lo cual se justifica con el hecho de que son tangentes al espacio de las matrices de rotación.</p>
+<!-- Más aún, $so(3)$ puede identificarse con $\mathbb{R}^3$ usando el hecho adicional que $(v+w)^{\wedge}=\hat{v} + \hat{w}$. -->
+<!-- A continuación se hará un repaso de las matrices que son elementos de este espacio. -->
+<!-- Citar: Selig pag 52 -->
+</section>
+<section id="sec-exponencial-matrix" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="sec-exponencial-matrix"><span class="header-section-number">3.6.3</span> Exponencial de una Matriz</h3>
+<p>Sea un vector <span class="math inline">\(\bomega\)</span> con matriz antisimétrica asociada <span class="math inline">\(\hat \bomega\)</span>. La exponencial de esta matriz antisimétrica multiplicada con la variable escalar <span class="math inline">\(t\)</span>, <span class="math inline">\(e^{\hat{\bomega} t}\)</span>, se puede obtener utilizando la expansión de Taylor: <span class="math display">\[
+e^{\hat{\bomega} t} = I + \hat{\bomega} t + \dfrac{\hat{\bomega}^2 t^2}{2!} +
+\dfrac{\hat{\bomega}^3 t^3}{3!} + \dfrac{\hat{\bomega}^4 t^4}{4!} +
+\dfrac{\hat{\bomega}^5 t^5}{5!} + \dfrac{\hat{\bomega}^6 t^6}{6!} + \cdots.
+\]</span> Utilizando las propiedades de las matrices antisimétricas, dadas en el <a href="ap_elementos_matematicos.html#sec-ap-matrices-antisimetricas">apéndice&nbsp;<span>A.2.3</span></a>, se puede simplificar esta expresión llegando a: <span class="math display">\[
+\begin{align*}
+e^{\hat{\bomega} t}
+= &amp; I + \hat{\bomega} \left( t - \dfrac{t^3 \Vert \bomega \Vert^2}{3!} +
+\dfrac{ t^5 \Vert \bomega \Vert^4}{5!} - \cdots \right) \\
+&amp; + \hat{\bomega}^2
+\left(\dfrac{ t^2}{2!} - \dfrac{ t^4 \Vert \bomega \Vert^2}{4!} +
+\dfrac{t^6 \Vert \bomega \Vert^4}{6!} - \cdots \right)   
+\end{align*}
+\]</span> que, usando las expansiones de Taylor del seno y coseno, puede escribirse de forma compacta como <span id="eq-exponencial-matriz-generica"><span class="math display">\[
+e^{\hat{\bomega} t}
+= I + \dfrac{\hat{\bomega}}{\Vert \bomega \Vert} \sin(\Vert \bomega \Vert t)
++ \dfrac{\hat{\bomega}^2}{\Vert \bomega \Vert^2}(1-\cos(\Vert \bomega \Vert
+t)).
+\tag{3.32}\]</span></span> Esta representación de la exponencial de una matriz es la más utilizada en robótica, pero existen otras formas de calcular la exponencial que son de utilidad en el análisis de sistemas lineales, como por ejemplo, a través de la descomposición de Jordan.</p>
+<!-- 
+TODO: {Ejemplo.} Dado un vector $\bomega=(2,1,3)$ y un valor de $t=1$, calcular la matriz $e^{\hat\bomega t}$.
+-->
+<p>Físicamente, el mapa exponencial <span class="math inline">\(e^{\hat{\bomega} t}\)</span> representa una rotación durante un tiempo <span class="math inline">\(t\)</span> con una velocidad angular <span class="math inline">\(\bomega\)</span>; es decir, una rotación total de <span class="math inline">\(\Vert \bomega \Vert t\)</span> alrededor del eje unitario <span class="math inline">\(\frac{\bomega}{\Vert \bomega \Vert}\)</span>. Sin embargo, y sin pérdida de generalidad, es posible tomar una velocidad angular unitaria <span class="math inline">\(\Vert \bomega \Vert = 1\)</span>, y reemplazar <span class="math inline">\(t\)</span> con el desplazamiento angular total <span class="math inline">\(\theta\)</span>. Bajo estas suposiciones, la matriz exponencial <span class="math inline">\(e^{\hat{\bomega} \theta}\)</span>, con <span class="math inline">\(\Vert \bomega \Vert = 1\)</span>, representa una rotación de <span class="math inline">\(\theta\)</span> radianes alrededor del eje unitario de rotación <span class="math inline">\(\bomega\)</span>. Considerando este eje unitario, es posible simplificar la expresión <a href="#eq-exponencial-matriz-generica">Ecuación&nbsp;<span>3.32</span></a> obteniendo: <span id="eq-formula-rodrigues-matriz"><span class="math display">\[
+%\boxed{
+    e^{\hat{\bomega} \theta} = I + \hat{\bomega} \sin\theta +
+    \hat{\bomega}^2(1-\cos\theta)
+%}
+\tag{3.33}\]</span></span> que se denomina <em>la fórmula de Rodrigues</em> y es exactamente igual a la expresión obtenida previamente en <a href="#eq-eje-angulo-rodrigues">Ecuación&nbsp;<span>3.11</span></a>. A veces <a href="#eq-formula-rodrigues-matriz">Ecuación&nbsp;<span>3.33</span></a> es también denominada la forma exponencial de la fórmula de Rodrigues, y brinda una manera eficiente de calcular <span class="math inline">\(e^{\hat{\bomega} \theta}\)</span>. Recordar que, como se vio en la <a href="#sec-significado-omega"><span>Sección&nbsp;3.6.2</span></a>, se tiene que <span class="math inline">\(\hat \omega \in so(3)\)</span>, donde <span class="math inline">\(so(3)\)</span> es un álgebra de Lie del grupo de rotación.</p>
+<p>Más formalmente, el mapa exponencial es suryectivo en <span class="math inline">\(SO(3)\)</span>, es decir, <span class="math inline">\(so(3) \rightarrow SO(3)\)</span> es suryectivo. Si <span class="math inline">\(\Rot \in SO(3)\)</span>, existen <span class="math inline">\(\bomega \in \mathbb{R}^3, \Vert \bomega \Vert = 1\)</span> y <span class="math inline">\(\theta \in \mathbb{R}\)</span> tales que <span class="math display">\[
+\Rot(\bomega, \theta) = e^{\hat{\bomega} \theta}.
+\]</span> Esta expresión significa que dado un eje unitario <span class="math inline">\(\hat \bomega\)</span> y un ángulo de rotación <span class="math inline">\(\theta\)</span> alrededor de dicho eje, es siempre posible calcular una matriz de rotación equivalente. Una consecuencia es el denominado teorema de Euler.</p>
+<dl>
+<dt><strong>Teorema de Euler</strong></dt>
+<dd>
+<p>Cualquier orientación <span class="math inline">\(\Rot \in SO(3)\)</span> es equivalente a una rotación alrededor de un eje unitario fijo <span class="math inline">\(\bomega \in \mathbb{R}^3\)</span> de un ángulo <span class="math inline">\(\theta \in [0,2\pi)\)</span>.</p>
+</dd>
+</dl>
+<!--
+
+## Otras Representaciones {#sec-otras-representaciones-pose}
+
+Cuaterniones duales, screws
+
+
+%\bibliographystyle{IEEEtran}
+
+% \bibliographystyle{ieeetr}
+% {\footnotesize
+%   \bibliography{refs}
+% }
+
+\section{Ejercicios}
+
+\begin{enumerate}
+\item Demostrar que una transformación de cuerpo rígido preserva el producto
+  punto. 
+\item Demostrar que una transformación de cuerpo rígido convierte un sistema
+  coordenado ortonormal en otro sistema coordenado ortonormal.
+\item Encontrar los vectores unitarios en coordenadas cilíndricas y sus
+  respectivas derivadas.
+\item Encontrar el gradiente, rotacional, divergencia y Laplaciano en
+  coordenadas cilíndricas.
+\item Encontrar los componentes de velocidad y aceleración en coordenadas
+  cilíndricas. 
+\item Encontrar la expresión de una recta arbitraria en coordenadas
+  cilíndricas.
+\item Se tiene la siguiente representación en coordenadas cilíndricas (ecuación
+  TODO). Encontrar el equivalente en coordenadas Cartesianas y graficar.
+\item Encontrar los vectores unitarios en coordenadas esféricas y sus
+  derivadas.
+\item Encontrar los componentes de velocidad y aceleración en coordenadas
+  esféricas.
+\item Demostrar las relaciones de coordenadas cilíndricas con coordenadas
+  esféricas.
+\item Explicar (demostrar) cómo se obtiene cada una de las rotaciones alrededor
+  de los ejes $x$ y $y$.
+\item Demostrar, desarrollando términos, que $\hat{\a}^2 =\a \a^T - \Vert \a
+  \Vert^2 I$ y $\hat{\a}^3 =-\Vert \a \Vert^2 \hat{\a}$.
+
+\end{enumerate} -->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./cr_posicion_orientacion.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Posición y Orientación de Cuerpos Rígidos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./referencias.html" class="pagination-link">
+        <span class="nav-page-text">Referencias</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2023, Oscar E. Ramos. Todos los derechos reservados.</div>   
+    <div class="nav-footer-right">Introducción a la Robótica - Oscar E. Ramos</div>
+  </div>
+</footer>
+
+
+
+</body></html>
